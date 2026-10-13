@@ -25,7 +25,8 @@ Stage A(단방향) → B(양방향) → C(호출)를 순서대로 보여주는 F
 
 ## Decisions so far
 
-<!-- 닫힌 티켓마다 한 줄: [제목](링크): 한 줄 요지 -->
+- [Stage 구성 방식의 트레이드오프 조사](issues/01-research-stage-structure.md): 단일 앱 쌍(`app/`, `web/`) 내 단계별 모듈 분리 + 탭/라우트 실시간 전환 구조에 선형 Git 커밋 히스토리를 결합하는 방식을 추천.
+- [webview_flutter와 Next.js로 Stage A/B/C를 구현하는 메커니즘 조사](issues/02-research-bridge-mechanism.md): webview_flutter 4.14.1의 `addJavaScriptChannel`/`runJavaScript`와 Web의 id 매칭 Promise 패턴, Next.js App Router `'use client'` + `CustomEvent`, Android/iOS 로컬 네트워크 설정 사실 확인.
 
 ## Not yet specified
 
