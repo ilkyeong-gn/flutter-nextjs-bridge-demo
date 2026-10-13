@@ -1,1 +1,16 @@
 .worktrees/
+.DS_Store
+*.log
+
+# Node
+**/node_modules/
+**/.next/
+**/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Flutter
+**/.dart_tool/
+**/.flutter-plugins-dependencies
+**/build/
+**/local.properties
