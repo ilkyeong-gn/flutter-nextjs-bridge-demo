@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:app/config.dart';
+import 'package:app/bridge/stage_a_bridge.dart';
 
 enum Stage {
   stageA('stage-a', 'Stage A'),
@@ -19,10 +20,12 @@ void main() {
 
 class HostApp extends StatelessWidget {
   final Widget? webViewWidget;
+  final void Function(String text)? onShowSnackBar;
 
   const HostApp({
     super.key,
     this.webViewWidget,
+    this.onShowSnackBar,
   });
 
   @override
@@ -35,6 +38,7 @@ class HostApp extends StatelessWidget {
       ),
       home: HostHomeScreen(
         webViewWidget: webViewWidget,
+        onShowSnackBar: onShowSnackBar,
       ),
     );
   }
@@ -42,10 +46,12 @@ class HostApp extends StatelessWidget {
 
 class HostHomeScreen extends StatefulWidget {
   final Widget? webViewWidget;
+  final void Function(String text)? onShowSnackBar;
 
   const HostHomeScreen({
     super.key,
     this.webViewWidget,
+    this.onShowSnackBar,
   });
 
   @override
@@ -62,8 +68,15 @@ class _HostHomeScreenState extends State<HostHomeScreen> {
     if (widget.webViewWidget == null) {
       final baseUrl = getBaseUrl();
       _controller = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..loadRequest(Uri.parse('$baseUrl/${_selectedStage.path}'));
+        ..setJavaScriptMode(JavaScriptMode.unrestricted);
+
+      StageABridge.register(
+        _controller!,
+        context,
+        onShowSnackBar: widget.onShowSnackBar,
+      );
+
+      _controller!.loadRequest(Uri.parse('$baseUrl/${_selectedStage.path}'));
     }
   }
 
