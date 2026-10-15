@@ -97,6 +97,7 @@ Host ---(window.__onFlutterResponse)--------->  Web (Promise Resolve/Reject)
 - [Flutter SDK](https://docs.flutter.dev/get-started/install) 3.13.5+
 - [Node.js](https://nodejs.org/) v20+ 및 [pnpm](https://pnpm.io/) 10+
 - iOS Simulator (macOS) 또는 Android Emulator
+  - 📖 **초보자를 위한 가상 기기 환경 구성 안내**: [docs/environment-setup.md](docs/environment-setup.md)에서 iOS/Android 파트별 상세 설정을 확인하실 수 있습니다.
 
 ---
 
@@ -157,6 +158,7 @@ flutter test
 ---
 
 ## 📚 관련 문서 및 사양
+- 초보자를 위한 로컬 환경 구성 가이드 (iOS/Android): [docs/environment-setup.md](docs/environment-setup.md)
 - 전체 기능 요구사항 및 세부 통신 규약: [docs/spec.md](docs/spec.md)
 - 도메인 용어 정의: [GLOSSARY.md](GLOSSARY.md)
 - 작업 트래킹: [GitHub Issues (#1 ~ #10)](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues)
