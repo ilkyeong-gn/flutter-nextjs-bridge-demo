@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:app/config.dart';
-import 'package:app/bridge/stage_b_bridge.dart';
+import 'package:app/bridge/stage_c_bridge.dart';
 
 enum Stage {
   stageA('stage-a', 'Stage A'),
@@ -24,6 +24,7 @@ class HostApp extends StatelessWidget {
   final Stage initialStage;
   final WebViewController? controller;
   final void Function(int counter)? onCounterIncremented;
+  final void Function(StageCResponse response)? onResponseSent;
 
   const HostApp({
     super.key,
@@ -32,6 +33,7 @@ class HostApp extends StatelessWidget {
     this.initialStage = Stage.stageA,
     this.controller,
     this.onCounterIncremented,
+    this.onResponseSent,
   });
 
   @override
@@ -48,6 +50,7 @@ class HostApp extends StatelessWidget {
         initialStage: initialStage,
         controller: controller,
         onCounterIncremented: onCounterIncremented,
+        onResponseSent: onResponseSent,
       ),
     );
   }
@@ -59,6 +62,7 @@ class HostHomeScreen extends StatefulWidget {
   final Stage initialStage;
   final WebViewController? controller;
   final void Function(int counter)? onCounterIncremented;
+  final void Function(StageCResponse response)? onResponseSent;
 
   const HostHomeScreen({
     super.key,
@@ -67,6 +71,7 @@ class HostHomeScreen extends StatefulWidget {
     this.initialStage = Stage.stageA,
     this.controller,
     this.onCounterIncremented,
+    this.onResponseSent,
   });
 
   @override
@@ -89,18 +94,20 @@ class _HostHomeScreenState extends State<HostHomeScreen> {
       _controller = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted);
 
-      StageBBridge.register(
+      StageCBridge.register(
         _controller!,
         context,
         onShowSnackBar: widget.onShowSnackBar,
+        onResponseSent: widget.onResponseSent,
       );
 
       _controller!.loadRequest(Uri.parse('$baseUrl/${_selectedStage.path}'));
     } else if (_controller != null) {
-      StageBBridge.register(
+      StageCBridge.register(
         _controller!,
         context,
         onShowSnackBar: widget.onShowSnackBar,
+        onResponseSent: widget.onResponseSent,
       );
     }
   }
@@ -121,7 +128,7 @@ class _HostHomeScreenState extends State<HostHomeScreen> {
       _counter++;
     });
     if (_controller != null) {
-      StageBBridge.sendIncrementCounter(_controller!, _counter);
+      StageCBridge.sendIncrementCounter(_controller!, _counter);
     }
     widget.onCounterIncremented?.call(_counter);
   }

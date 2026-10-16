@@ -11,7 +11,7 @@ Flutter(Host) 앱이 Next.js(Web) 페이지를 WebView로 임베드하고, 둘 �
 | **인프라** | 모노레포 환경 구축 및 WebView 기본 연결 | **완료 (Merged)** | [#7](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/7) |
 | **Stage A** | Web → Host 단방향 Message (SnackBar 표시) | **완료** | [#8](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/8) |
 | **Stage B** | Host → Web 양방향 Event (CustomEvent 카운터 동기화) | **완료** | [#9](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/9) |
-| **Stage C** | Web ↔ Host 양방향 Call (Promise 기반 RPC 기기 정보 조회) | **진행 예정 (Ready)** | [#10](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/10) |
+| **Stage C** | Web ↔ Host 양방향 Call (Promise 기반 RPC 기기 정보 조회) | **완료** | [#10](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/10) |
 
 ---
 
@@ -70,7 +70,8 @@ Host ---(window.__onFlutterResponse)--------->  Web (Promise Resolve/Reject)
 │   ├── lib/
 │   │   ├── bridge/
 │   │   │   ├── stage_a_bridge.dart                # Stage A: FlutterBridge 채널 등록 및 SnackBar 표시
-│   │   │   └── stage_b_bridge.dart                # Stage B: runJavaScript CustomEvent 카운터 발송
+│   │   │   ├── stage_b_bridge.dart                # Stage B: runJavaScript CustomEvent 카운터 발송
+│   │   │   └── stage_c_bridge.dart                # Stage C: Web ↔ Host 양방향 RPC 응답 및 기기 정보 반환
 │   │   ├── config.dart                        # 플랫폼별(Android/iOS) WebView Base URL 분기
 │   │   └── main.dart                          # 진입점 및 Stage SegmentedButton 네비게이션
 │   ├── android/app/src/main/AndroidManifest.xml # usesCleartextTraffic 설정
@@ -82,12 +83,13 @@ Host ---(window.__onFlutterResponse)--------->  Web (Promise Resolve/Reject)
     │   ├── page.tsx                           # /stage-a 리다이렉트 진입점
     │   ├── stage-a/page.tsx                   # Stage A 화면 (텍스트 입력 및 전송)
     │   ├── stage-b/page.tsx                   # Stage B 화면 (실시간 카운터 수신 및 SnackBar 전송)
-    │   └── stage-c/page.tsx                   # Stage C 화면
+    │   └── stage-c/page.tsx                   # Stage C 화면 (기기 정보 호출 및 에러 테스트)
     ├── src/components/                        # HostBadge, StageNav 등 공통 UI 컴포넌트
     ├── src/lib/bridge/
     │   ├── detection.ts                       # 브릿지 감지(useFlutterBridge)
     │   ├── stageA.ts                          # Stage A: sendSnackBarMessage 클라이언트
-    │   └── stageB.ts                          # Stage B: useFlutterCounter 커스텀 훅
+    │   ├── stageB.ts                          # Stage B: useFlutterCounter 커스텀 훅
+    │   └── stageC.ts                          # Stage C: callHost Promise RPC 함수
     └── package.json                           # Next.js 15+, React 19, Vitest
 ```
 
