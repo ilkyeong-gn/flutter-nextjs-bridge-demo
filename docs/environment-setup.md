@@ -240,6 +240,9 @@ Found 3 connected devices:
   - **해결**: 오류가 아닙니다. `sdkmanager`가 Android CLI(`android sdk`)로 대체되었다는 안내이며, `cmdline-tools`가 설치되어 있으면 자동으로 Android CLI가 사용됩니다. 4단계 안내에 따라 진행하고, 이후 `flutter doctor`에서 `Android toolchain`이 `[✓]`인지 확인하세요.
 - **Q: Android 에뮬레이터에서 Web 서버에 연결이 안 됩니다.**
   - **해결**: Android 에뮬레이터는 호스트 PC의 `localhost` 대신 가상 루프백 주소인 `http://10.0.2.2:3000`을 통해 PC에 접근합니다. 본 프로젝트는 이미 플랫폼 분기(`app/lib/config.dart`)와 `android:usesCleartextTraffic="true"` 설정이 적용되어 있으므로 별도 수정 없이 동작합니다.
+- **Q: Android 에뮬레이터에서만 `⚠️ Host 외부에서 실행 중 (브릿지 비활성화)` 배지가 뜨고 전송 버튼이 비활성화됩니다. (iOS는 정상)**
+  - **원인**: 에뮬레이터가 `10.0.2.2`로 접속하는데, Next.js dev 서버는 기본적으로 `localhost` 외 origin의 dev 리소스(`/_next/*`) 요청을 차단합니다. JS가 로드되지 않아 hydration이 일어나지 않으면 브릿지 감지 코드가 실행되지 않고 SSR 초기값(비활성)에 머뭅니다. 웹 서버 로그에 `Cross-origin access to Next.js dev resources is blocked by default` 경고가 출력됩니다.
+  - **해결**: `web/next.config.ts`의 `allowedDevOrigins`에 `10.0.2.2`가 포함되어 있는지 확인하고, **Web 개발 서버를 재시작**(`pnpm dev`)한 뒤 앱을 다시 로드하세요. 설정 변경은 서버 재시작 후에만 적용됩니다.
 
 ---
 
