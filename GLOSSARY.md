@@ -1,8 +1,18 @@
-# Flutter WebView Bridge Demo
+# Flutter WebView Bridge
 
-A Flutter 앱이 Next.js 페이지를 WebView로 띄우고, 둘이 브릿지로 대화하는 가장 단순한 형태를 단계별로 보여주는 데모.
+Flutter 앱이 Next.js 페이지를 WebView로 띄우고, 둘이 Bridge로 대화하는 하이브리드 앱의 언어. Bridge 능력을 단계별로 보여주는 Demo와, 실제 앱을 만들 때 참고하는 Reference App을 함께 다룬다.
 
 ## Language
+
+### 결과물
+
+**Demo (데모)**:
+Stage를 따라 Bridge 능력을 한 단계씩 보여주는 학습용 구현.
+_Avoid_: 예제, 샘플
+
+**Reference App (레퍼런스 앱)**:
+실제 하이브리드 앱을 만들 때 구조와 패턴을 그대로 가져다 쓰도록 만든 참고 구현. 실제로 배포·운영하는 제품은 아니다.
+_Avoid_: 실전 예시, 템플릿, 보일러플레이트, 샘플 앱, PoC
 
 ### 참여자
 
@@ -17,6 +27,20 @@ _Avoid_: 프론트, 웹뷰(컴포넌트와 혼동), 클라이언트
 **Bridge (브릿지)**:
 Host와 Web 사이의 메시지 통로와 그 통신 규약.
 _Avoid_: 채널, 인터페이스
+
+### 화면과 기능
+
+**Host Screen (Host 화면)**:
+Host가 Flutter로 직접 그리는 화면.
+_Avoid_: 네이티브 화면
+
+**Web Screen (Web 화면)**:
+Host의 WebView 안에 Web을 띄운 화면.
+_Avoid_: 웹뷰 화면
+
+**Host Capability (Host 기능)**:
+Host가 Bridge를 통해 Web에 빌려주는 기기·앱 기능(카메라, 사진 선택, 공유 등).
+_Avoid_: 네이티브 기능, 플러그인
 
 ### 메시지
 
