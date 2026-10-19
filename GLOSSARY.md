@@ -72,6 +72,14 @@ _Avoid_: 요청, RPC, invoke
 Web이 문서를 불러올 때마다 가장 먼저 보내는 Call. Web이 준비됐음을 알리고, Host가 지원하는 계약 버전과 기능 목록을 받는다.
 _Avoid_: 초기화, init, ready
 
+**Bridge Contract (Bridge 계약)**:
+Bridge로 오가는 Call·Message·Event의 이름과 모양, 그리고 그 버전(major.minor)의 정의. 한 원천에만 적는다.
+_Avoid_: 프로토콜, 스펙, 인터페이스, 스키마
+
+**Capability List (기능 목록)**:
+핸드셰이크에서 Host가 알려 주는, 지금 이 Host에서 쓸 수 있는 Call·Message·Event 이름의 목록. Web은 기능마다 이 목록을 보고 분기한다.
+_Avoid_: 기능 플래그, capabilities
+
 ### 단계
 
 **Stage (단계)**:
