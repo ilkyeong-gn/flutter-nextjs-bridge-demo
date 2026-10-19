@@ -18,6 +18,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
+import 'renderer.dart';
+
 // iOS 시뮬레이터는 Mac의 localhost를 그대로 쓰고, Android 에뮬레이터는 10.0.2.2가 Mac을 가리킨다.
 final _host = Platform.isAndroid ? '10.0.2.2' : 'localhost';
 final _mainUrl = 'http://$_host:8080/index.html';
@@ -55,7 +57,8 @@ Future<void> report(String event, [Object? data]) async {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   unawaited(report('app.launch'));
-  runApp(const MaterialApp(home: ExperimentPage()));
+  // MODE=renderer는 Android 렌더러 종료 처리 실측(renderer.dart). 기본값은 #48의 출처 확인 실측이다.
+  runApp(const MaterialApp(home: String.fromEnvironment('MODE') == 'renderer' ? RendererPage() : ExperimentPage()));
 }
 
 class ExperimentPage extends StatefulWidget {

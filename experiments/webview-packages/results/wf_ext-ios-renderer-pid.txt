@@ -1,0 +1,2 @@
+89546 RuntimeRoot/System/Library/ExtensionKit/Extensions/WebContentExtension.appex/com.apple.WebKit.WebContent -BSServiceDomains {} -LaunchArguments eyJlbmhhbmNlZFNlY3VyaXR5IjpmYWxzZSwidHlwZSI6OCwic2VydmljZU5hbWUiOiJjb20uYXBwbGUuV2ViS2l0LldlYkNvbnRlbnQifQ==
+kill -9 89546 

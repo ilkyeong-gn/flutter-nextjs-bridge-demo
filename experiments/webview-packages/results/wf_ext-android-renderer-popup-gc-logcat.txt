@@ -1,0 +1,273 @@
+10-19 15:05:50.889  2011  2170 I Finsky  : [56] AIM: AppInfoManager-Perf > OnDeviceAppInfo > cacheHitCount=0, cacheMissCount=1. Missed  in cache (limit 10) : [dev.wayfinder.exp.wf_ext]
+10-19 15:05:50.890  2011 20196 I Finsky  : [290] Asset module broadcast after update successful for package dev.wayfinder.exp.wf_ext.
+10-19 15:05:50.923  2011  2150 I Finsky  : [53] AIM: AppInfoManager-Perf > ItemModel > CacheSize=0, cacheHitCount=0, cacheMissCount=1, total appsWithNoServerDataCount=0. Missed  in cache (limit 10) : [dev.wayfinder.exp.wf_ext]
+10-19 15:05:50.926  2011  2153 I Finsky  : [54] AIM: AppInfoManager-Perf > ItemModel > CacheSize=0, cacheHitCount=0, cacheMissCount=1, total appsWithNoServerDataCount=0. Missed  in cache (limit 10) : [dev.wayfinder.exp.wf_ext]
+10-19 15:05:50.928  2011  2158 I Finsky  : [55] ItemStore: Not cached: dev.wayfinder.exp.wf_ext
+10-19 15:05:50.928  2011  2150 I Finsky  : [53] ItemStore: Not cached: dev.wayfinder.exp.wf_ext
+10-19 15:05:50.938  2011  2158 E Finsky  : [55] ItemStore: getItems RPC failed for item dev.wayfinder.exp.wf_ext
+10-19 15:05:50.938  2011  2158 E Finsky  : [55] ItemStore: getItems RPC failed for item dev.wayfinder.exp.wf_ext
+10-19 15:05:50.954  1683 20213 I AiAiEcho: AppIndexer Package:[dev.wayfinder.exp.wf_ext] UserProfile:[0] Enabled:[true].
+10-19 15:05:50.954  1683 20213 I AiAiEcho: AppFetcherImplV2 updateApps package:[dev.wayfinder.exp.wf_ext], userId:[0], reason:[package is updated.].
+10-19 15:05:50.974  1045  1127 D AlphabeticIndexCompat: computeSectionName: cs: wf_ext sectionName: W
+10-19 15:05:50.975  1045  1045 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: W with appInfoTitle: wf_ext
+10-19 15:05:51.030  1045  1045 D TopTaskTracker: handleTaskMovedToFront: TaskInfo{userId=0 taskId=19 effectiveUid=10231 seqId=0 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=dev.wayfinder.exp.wf_ext/.MainActivity } baseActivity=ComponentInfo{dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity} topActivity=ComponentInfo{dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity} origActivity=null realActivity=ComponentInfo{dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=1226626 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@c48c223} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 142 - 0, 0) topActivityInfo=ActivityInfo{338320 dev.wayfinder.exp.wf_ext.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0 idealTaskOrientation=-1} topActivityMainWindowFrame=null}
+10-19 15:05:51.038   649   663 V ActivityTaskManager: TaskLaunchParamsModifier: phase=2 task=Task{8a8bb61 #19 type=standard I=dev.wayfinder.exp.wf_ext/.MainActivity} activity=ActivityRecord{35954376 u0 dev.wayfinder.exp.wf_ext/.MainActivity t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@215740115 inherit-from-task=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@215740115 skip-bounds-fullscreen
+10-19 15:05:51.038   649   663 I ActivityTaskManager: START u0 {flg=0x10000000 xflg=0x5 cmp=dev.wayfinder.exp.wf_ext/.MainActivity (has extras)} with LAUNCH_SINGLE_TOP from uid 2000 (com.android.shell) (BAL_ALLOW_SHELL_UID) result code=0
+10-19 15:05:51.048   649   678 I ActivityManager: Start proc 20221:dev.wayfinder.exp.wf_ext/u0a231 for next-top-activity {dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity}
+10-19 15:05:51.048   649  1536 D DifferentDisplayCheck: Focus gained for Task Task{8a8bb61 #19 type=standard I=dev.wayfinder.exp.wf_ext/.MainActivity} on display 0
+10-19 15:05:51.050 20221 20221 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10231/pid_20221
+10-19 15:05:51.051 20221 20221 I Zygote  : Process 20221 created for dev.wayfinder.exp.wf_ext
+10-19 15:05:51.052 20221 20221 I nder.exp.wf_ext: Late-enabling -Xcheck:jni
+10-19 15:05:51.074 20221 20221 I nder.exp.wf_ext: Using generational CollectorTypeCMC GC.
+10-19 15:05:51.077 20221 20221 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-19 15:05:51.081   936  1099 I Surface : Creating surface for consumer VRI[wf_ext]#12(BLAST Consumer)12 with slotExpansion=1 for 64 slots
+10-19 15:05:51.094 20221 20221 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-19 15:05:51.094 20221 20221 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+10-19 15:05:51.181  1045  1045 D TopTaskTracker: handleTaskMovedToFront: TaskInfo{userId=0 taskId=19 effectiveUid=10231 seqId=0 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=dev.wayfinder.exp.wf_ext/.MainActivity } baseActivity=ComponentInfo{dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity} topActivity=ComponentInfo{dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity} origActivity=null realActivity=ComponentInfo{dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=1226645 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@c48c223} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{54986aa dev.wayfinder.exp.wf_ext.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isInteractive=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0 idealTaskOrientation=-1} topActivityMainWindowFrame=null}
+10-19 15:05:51.234 20221 20221 D nativeloader: Configuring clns-9 for other apk /data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/lib/arm64:/data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/dev.wayfinder.exp.wf_ext
+10-19 15:05:51.235 20221 20221 D ActivityThread: Set OS env TMPDIR to /data/user/0/dev.wayfinder.exp.wf_ext/cache
+10-19 15:05:51.236 20221 20221 V GraphicsEnvironment: Currently set values for:
+10-19 15:05:51.236 20221 20221 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-19 15:05:51.236 20221 20221 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-19 15:05:51.236 20221 20221 V GraphicsEnvironment: dev.wayfinder.exp.wf_ext is not listed in per-application setting
+10-19 15:05:51.236 20221 20221 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+10-19 15:05:51.243 20221 20221 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-19 15:05:51.259 20221 20242 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-19 15:05:51.267 20221 20221 I ProtoLog: ProtoLog ready to log to logcat
+10-19 15:05:51.267 20221 20221 D nder.exp.wf_ext: Initializing ProtoLog
+10-19 15:05:51.267 20221 20221 D ProtoLog: Initializing ProtoLog DataSource
+10-19 15:05:51.278 20221 20221 I ProtoLogConfigListener: Connected and registered client with 1 groups to ProtoLogConfigurationService (viewerConfig=null)
+10-19 15:05:51.286 20221 20249 D FlutterJNI: Beginning load of flutter...
+10-19 15:05:51.287 20221 20242 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+10-19 15:05:51.287 20221 20242 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+10-19 15:05:51.288 20221 20242 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:51.289 20221 20250 I ResourceExtractor: Found extracted resources res_timestamp-1-1792389870542
+10-19 15:05:51.289 20221 20250 I ResourceExtractor: Resource version mismatch res_timestamp-1-1792389950742
+10-19 15:05:51.293 20221 20242 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-19 15:05:51.293 20221 20242 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-19 15:05:51.307 20221 20249 D nativeloader: Load /data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/base.apk!/lib/arm64-v8a/libflutter.so using class loader ns clns-9 (caller=/data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/base.apk): ok
+10-19 15:05:51.307 20221 20249 D FlutterJNI: flutter (null) was loaded normally!
+10-19 15:05:51.313 20221 20262 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+10-19 15:05:51.334  1285 20263 I ProximityAuth: [RecentAppsMediator] Package added: (user=UserHandle{0}) dev.wayfinder.exp.wf_ext
+10-19 15:05:51.356  1285 20265 W SQLiteLog: (28) double-quoted string literal: "dev.wayfinder.exp.wf_ext"
+10-19 15:05:51.618 20221 20250 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+10-19 15:05:51.618 20221 20250 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+10-19 15:05:51.683 20221 20250 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+10-19 15:05:51.688 20221 20221 W nder.exp.wf_ext: type=1400 audit(0.0:296): avc:  denied  { read } for  name="max_map_count" dev="proc" ino=54381 scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:05:51.692 20221 20280 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:51.700 20221 20280 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+10-19 15:05:51.701 20221 20281 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:51.729 20221 20286 I flutter : The Dart VM service is listening on http://127.0.0.1:41465/jgMECmc3jbk=/
+10-19 15:05:51.792 20221 20221 I nder.exp.wf_ext: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported,test-api) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-19 15:05:51.792 20221 20221 I nder.exp.wf_ext: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-19 15:05:51.793 20221 20221 I nder.exp.wf_ext: hiddenapi: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-19 15:05:51.793 20221 20221 I nder.exp.wf_ext: hiddenapi: Accessing hidden method Landroid/util/LongArray;->get(I)J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+10-19 15:05:51.795 20221 20221 D AccessibilityBridge: Setting not found: accessibility_display_inversion_enabled, using default: 0
+10-19 15:05:51.802 20221 20221 D FlutterRenderer: Width is zero. 0,0
+10-19 15:05:51.804 20221 20221 D CompatChangeReporter: Compat change id reported: 377864165; UID 10231; state: ENABLED
+10-19 15:05:51.809 20221 20221 W HWUI    : Unknown dataspace 0
+10-19 15:05:51.822 20221 20291 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:51.908 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"app.launch","data":null,"t":1792389951906}
+10-19 15:05:52.167 20221 20221 I Choreographer: Skipped 54 frames!  The application may be doing too much work on its main thread.
+10-19 15:05:52.167 20221 20221 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@3db6653
+10-19 15:05:52.168 20221 20305 D WindowOnBackDispatcher: setOnBackInvokedCallbackInfo: android.app.Activity$$ExternalSyntheticLambda0@3db6653
+10-19 15:05:52.168   649   964 D CoreBackPreview: Window{58091f2 u0 dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@830fc8f, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-19 15:05:52.171 20221 20221 I WindowExtensionsImpl: Initializing Window Extensions, vendor API level=10, activity embedding enabled=true
+10-19 15:05:52.172 20221 20221 W UiContextUtils: Requested context is a non-UI Context. Creating a UI-Context with display: 0. Context: Context=android.app.Application@7360615, of which baseContext=android.app.ContextImpl@c46cb97
+10-19 15:05:52.177 20221 20226 I nder.exp.wf_ext: Compiler allocated 4565KB to compile void android.view.ViewRootImpl.performTraversals(long)
+10-19 15:05:52.177 20221 20221 D VRI[MainActivity]: WindowInsets changed: 1080x2424 statusBars:[0,142,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,174,0,84] 
+10-19 15:05:52.177 20221 20221 D FlutterRenderer: Width is zero. 0,0
+10-19 15:05:52.178 20221 20221 I Surface : Creating surface for consumer unnamed-20221-0 with slotExpansion=1 for 64 slots
+10-19 15:05:52.179 20221 20221 I Surface : Creating surface for consumer VRI[MainActivity]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+10-19 15:05:52.180 20221 20221 D FlutterJNI: Sending viewport metrics to the engine.
+10-19 15:05:52.186 20221 20221 I Surface : Creating surface for consumer unnamed-20221-1 with slotExpansion=1 for 64 slots
+10-19 15:05:52.187 20221 20221 I Surface : Creating surface for consumer cef7369 SurfaceView[dev.wayfinder.exp.wf_ext/dev.wayfinder.exp.wf_ext.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-19 15:05:52.472 20221 20221 D FlutterJNI: Sending viewport metrics to the engine.
+10-19 15:05:52.487   649   667 I ActivityTaskManager: Displayed dev.wayfinder.exp.wf_ext/.MainActivity for user 0: +1s471ms
+10-19 15:05:52.487   649   667 I ActivityTaskManager: Fully drawn dev.wayfinder.exp.wf_ext/.MainActivity: +1s471ms
+10-19 15:05:52.494 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"scenario","data":{"name":"popup-gc","hostPid":20221},"t":1792389952494}
+10-19 15:05:52.536 20221 20221 D WindowLayoutComponentImpl: Register WindowLayoutInfoListener on Context=dev.wayfinder.exp.wf_ext.MainActivity@7f1968f, of which baseContext=android.app.ContextImpl@e971352
+10-19 15:05:52.570 20221 20221 I WebViewFactory: Loading com.google.android.webview version 149.0.7827.5 (code 782700504)
+10-19 15:05:52.574 20221 20221 V ResourcesManager: The following library key has been added: com.google.android.webview -> ResourcesKey{ mHash=817757a7 mResDir=null mSplitDirs=[] mOverlayDirs=[] mLibDirs=[/data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/WebViewGoogle.apk,/system/framework/android.test.base.jar,/system_ext/framework/androidx.window.extensions.jar] mDisplayId=0 mOverrideConfig=v37 mCompatInfo={420dpi always-compat} mLoaders=[]}
+10-19 15:05:52.575 20221 20221 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/android.test.base.jar
+10-19 15:05:52.575 20221 20221 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-19 15:05:52.576 20221 20221 D nativeloader: Configuring clns-10 for other apk /data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/WebViewGoogle.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/lib/arm64:/data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/WebViewGoogle.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+10-19 15:05:52.606 20221 20221 I cr_WVCFactoryProvider: version=149.0.7827.5 (782700504) minSdkVersion=29 multiprocess=true packageId=2 splits=<none>
+10-19 15:05:52.610 20221 20221 D nativeloader: Load /data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/WebViewGoogle.apk!/lib/arm64-v8a/libwebviewchromium.so using class loader ns clns-10 (caller=/data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/WebViewGoogle.apk): ok
+10-19 15:05:52.611 20221 20221 D nativeloader: Load /system/lib64/libwebviewchromium_plat_support.so using class loader ns clns-10 (caller=/data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/WebViewGoogle.apk): ok
+10-19 15:05:52.621 20221 20330 I chromium: [1019/150552.611973:INFO:android_webview/browser/variations/variations_seed_loader.cc:67] Failed to open file for reading.: No such file or directory (2)
+10-19 15:05:52.631 20221 20221 I cr_LibraryLoader: Successfully loaded native library
+10-19 15:05:52.633 20221 20221 I cr_CachingUmaRecorder: Flushed 41 samples from 21 histograms, 0 samples were dropped.
+10-19 15:05:52.636 20221 20221 I cr_ChildProcLH: ScopedServiceBindingBatch.tryActivate: false
+10-19 15:05:52.637 20221 20221 I cr_CombinedPProvider: #registerProvider() provider:WV.wk@2d81667 isPolicyCacheEnabled:false policyProvidersSize:0
+10-19 15:05:52.637 20221 20221 I cr_PolicyProvider: #setManagerAndSource() 0
+10-19 15:05:52.638 20221 20221 I cr_DisplayManager: Is Display Topology available: false
+10-19 15:05:52.638 20221 20330 I cr_policy: registerReceiver succeeded after 0ms
+10-19 15:05:52.645 20333 20333 E libc    : SetHeapTaggingLevel: re-enabling tagging after it was disabled is not supported
+10-19 15:05:52.646 20333 20333 I Zygote  : Process 20333 created for dev.wayfinder.exp.wf_ext:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+10-19 15:05:52.646 20333 20333 I ocessService0:0: Using generational CollectorTypeCMC GC.
+10-19 15:05:52.647 20221 20221 I cr_CombinedPProvider: #linkNativeInternal() 1
+10-19 15:05:52.658 20221 20221 I cr_AppResProvider: #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+10-19 15:05:52.658 20221 20221 I cr_PolicyProvider: #notifySettingsAvailable() 0
+10-19 15:05:52.658 20221 20221 I cr_CombinedPProvider: #onSettingsAvailable() 0
+10-19 15:05:52.658 20221 20221 I cr_CombinedPProvider: #flushPolicies()
+10-19 15:05:52.659   649   678 I ActivityManager: Start proc 20333:dev.wayfinder.exp.wf_ext:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0i14 for bound-service {dev.wayfinder.exp.wf_ext/org.chromium.content.app.SandboxedProcessService0:0}
+10-19 15:05:52.662 20333 20333 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-19 15:05:52.678 20333 20333 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/android.test.base.jar
+10-19 15:05:52.678 20333 20333 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-19 15:05:52.684 20333 20333 I cr_WebViewApkApp: version=149.0.7827.5 (782700504) minSdkVersion=29 processName=dev.wayfinder.exp.wf_ext:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 splits=<none>
+10-19 15:05:52.685 20333 20333 I cr_ChildProcessService: Creating new ChildProcessService pid=20333
+10-19 15:05:52.703 20221 20355 W chromium: [WARNING:net/dns/dns_config_service_android.cc:69] Failed to read DnsConfig.
+10-19 15:05:52.708 20221 20221 W chromium: [WARNING:android_webview/browser/network_service/net_helpers.cc:137] HTTP Cache size is: 20971520
+10-19 15:05:52.731 20221 20221 I cr_AppResProvider: #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+10-19 15:05:52.731 20221 20221 I cr_PolicyProvider: #notifySettingsAvailable() 0
+10-19 15:05:52.731 20221 20221 I cr_CombinedPProvider: #onSettingsAvailable() 0
+10-19 15:05:52.731 20221 20221 I cr_CombinedPProvider: #flushPolicies()
+10-19 15:05:52.731 20221 20363 I CameraManagerGlobal: Connecting to camera service
+10-19 15:05:52.809 20221 20221 D FlutterJNI: Sending viewport metrics to the engine.
+10-19 15:05:52.828  8450  8450 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1552 onStartInput(EditorInfo{EditorInfo{packageName=dev.wayfinder.exp.wf_ext, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+10-19 15:05:52.830 20221 20221 D InsetsController: hide(ime())
+10-19 15:05:52.836   649   913 W PackageConfigPersister: App-specific configuration not found for packageName: dev.wayfinder.exp.wf_ext and userId: 0
+10-19 15:05:52.838 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"guard.install","data":{"wv":"A1","identifier":1,"installed":true,"innerClass":"io.flutter.plugins.webviewflutter.WebViewClientProxyApi$WebViewClientImpl","innerSuperclass":"android.webkit.WebViewClient","innerIsWebViewClientCompat":false},"t":1792389952838}
+10-19 15:05:52.868 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"created","data":{"wv":"A1","identifier":1,"guarded":true,"originBridge":["SecureBridge","SecureBridgeAll","docStartScript"]},"t":1792389952868}
+10-19 15:05:52.873 20221 20345 E chromium: [ERROR:third_party/crashpad/crashpad/util/file/directory_reader_posix.cc:43] opendir /data/user/0/dev.wayfinder.exp.wf_ext/cache/WebView/Crashpad/attachments/31fd274f-3c1d-464e-9a83-4be9c5893fa2: No such file or directory (2)
+10-19 15:05:52.923 20221 20221 I PlatformViewsChannel: Using legacy platform view rendering strategy.
+10-19 15:05:52.924 20221 20221 I PlatformViewsController: Hosting view in view hierarchy for platform view: 0
+10-19 15:05:52.926 20221 20221 I PlatformViewsController: PlatformView is using SurfaceProducer backend
+10-19 15:05:52.926 20221 20221 I Surface : Creating surface for consumer unnamed-20221-2 with slotExpansion=1 for 64 slots
+10-19 15:05:52.926 20221 20221 I Surface : Creating surface for consumer ImageReader-1x1f22m7-20221-0 with slotExpansion=1 for 64 slots
+10-19 15:05:52.989 20221 20351 W cr_media: BLUETOOTH_CONNECT permission is missing.
+10-19 15:05:52.990 20221 20351 W cr_media: getBluetoothAdapter() requires BLUETOOTH permission
+10-19 15:05:52.990 20221 20351 W cr_media: registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.log"
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.log.level"
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.log.prefix"
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.gallium.print.options"
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.log.file.auto"
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.log.file"
+10-19 15:05:52.996 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:52.996 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:52.996 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:52.998 20221 20221 D FlutterJNI: Sending viewport metrics to the engine.
+10-19 15:05:52.999 20221 20351 D AudioSystem: onNewService: media.audio_policy service obtained 0xb4007ffcf80658e0
+10-19 15:05:52.999 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:52.999 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:52.999 20221 20351 D AudioSystem: getService: IAudioPolicyService retrieved: 0xb4007ffcf80658e0  cached: 0xb4007ffcf80658e0
+10-19 15:05:52.999 20221 20351 I AudioPortEventHandler: init: AudioPortEventHandler successfully initialized
+10-19 15:05:53.001 20221 20366 D vulkan  : searching for layers in '/data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/lib/arm64'
+10-19 15:05:53.001 20221 20366 D vulkan  : searching for layers in '/data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/base.apk!/lib/arm64-v8a'
+10-19 15:05:53.002 20333 20347 I cr_LibraryLoader: Successfully loaded native library
+10-19 15:05:53.003 20221 20221 I Surface : Creating surface for consumer unnamed-20221-3 with slotExpansion=1 for 64 slots
+10-19 15:05:53.003 20333 20347 I cr_CachingUmaRecorder: Flushed 2 samples from 2 histograms, 0 samples were dropped.
+10-19 15:05:53.004 20333 20347 W chromium: [WARNING:content/app/android/content_main_android.cc:82] android_setCpu already initialized
+10-19 15:05:53.004 20221 20366 D vulkan  : added global layer 'VK_LAYER_KHRONOS_validation' from library '/data/app/~~SmRZUC36sfjxzpJ2SEQdoQ==/dev.wayfinder.exp.wf_ext-vB2n5f-NGYTK4G_mvaaPuQ==/base.apk!/lib/arm64-v8a/libVkLayer_khronos_validation.so'
+10-19 15:05:53.004 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.004 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.004 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.004 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.005 20221 20221 I Surface : Creating surface for consumer ImageReader-1080x1649f22m7-20221-1 with slotExpansion=1 for 64 slots
+10-19 15:05:53.005 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.005 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.005 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.005 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.vk.trace"
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.vk.trace.per.submit"
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.vk.trace.frame"
+10-19 15:05:53.005 20221 20366 W libc    : Access denied finding property "vendor.mesa.vk.trace.trigger"
+10-19 15:05:53.006 20221 20369 I AudioManager: broadcastDeviceListChange_sync: device update event from native but no device diff found
+10-19 15:05:53.008 20221 20366 W libc    : Access denied finding property "vendor.mesa.vk.wsi.debug"
+10-19 15:05:53.008 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.008 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.008 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.008 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.009 20221 20366 W libc    : Access denied finding property "vendor.mesa.vk.wsi.present.mode"
+10-19 15:05:53.009 20221 20366 W libc    : Access denied finding property "vendor.mesa.vk.wsi.headless.swapchain"
+10-19 15:05:53.009 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.009 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.009 20333 20347 W chromium: [WARNING:content/child/runtime_features.cc:544] Fenced frames cannot be enabled in this configuration. Use --enable-features=FencedFrames instead.
+10-19 15:05:53.009 20333 20347 W chromium: [WARNING:content/child/runtime_features.cc:569] Topics cannot be enabled in this configuration. Use --enable-features=BrowsingTopics in addition.
+10-19 15:05:53.009 20333 20347 W chromium: [WARNING:content/child/runtime_features.cc:590] SharedStorage cannot be enabled in this configuration. Use --enable-features=SharedStorageAPI in addition.
+10-19 15:05:53.009 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.009 20221 20366 E MESA    : Failed to open rendernode: No such file or directory
+10-19 15:05:53.009 20221 20366 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-19 15:05:53.010 20333 20373 I chromium: [INFO:third_party/skia/src/ports/SkFontMgr_android_parser.cpp:724] [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+10-19 15:05:53.010 20333 20373 I chromium: 
+10-19 15:05:53.129 20221 20221 D FlutterJNI: Sending viewport metrics to the engine.
+10-19 15:05:53.178 20221 20360 W cr_VAUtil: Unknown profile: 8 for codec video/hevc
+10-19 15:05:53.186 20221 20280 E ConsumerBase: [ImageReader-1x1f22m7-20221-0] abandonLocked: ConsumerBase is abandoned!
+10-19 15:05:53.206 20221 20221 I nder.exp.wf_ext: hiddenapi: Accessing hidden field Landroid/graphics/Bitmap;->mNativePtr:J (runtime_flags=0, domain=platform, api=unsupported) from Lcom/android/webview/chromium/WebViewChromium; (domain=app, TargetSdkVersion=36) using JNI: allowed
+10-19 15:05:53.524 20221 20221 D androidtc: Initializing SystemTextClassifier, type = System
+10-19 15:05:53.621   649   679 I ActivityManager: Process PhantomProcessRecord {12c855d 20379:20333:dev.wayfinder.exp.wf_ext:com.google.android.webview:sandboxed_process0:org.chromium.content.app.Sa/u0a89014i14} died
+10-19 15:05:56.307 20221 20221 I nder.exp.wf_ext: Explicit concurrent mark compact GC freed 4503KB AllocSpace bytes, 22(832KB) LOS objects, 49% free, 3836KB/7673KB, paused 36us,895us total 59.464ms
+10-19 15:05:56.317 20221 20221 I nder.exp.wf_ext: Explicit concurrent mark compact GC freed 208KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3756KB/7513KB, paused 255us,671us total 8.699ms
+10-19 15:05:57.212 20221 20435 D ProfileInstaller: Installing profile for dev.wayfinder.exp.wf_ext
+10-19 15:05:57.338 20221 20221 I nder.exp.wf_ext: Explicit concurrent mark compact GC freed 304KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3772KB/7545KB, paused 28us,2.481ms total 16.807ms
+10-19 15:05:57.347 20221 20221 I nder.exp.wf_ext: Explicit concurrent mark compact GC freed 96KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3772KB/7545KB, paused 22us,1.120ms total 8.619ms
+10-19 15:05:58.369 20221 20221 I nder.exp.wf_ext: Explicit concurrent mark compact GC freed 96KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3772KB/7545KB, paused 39us,2.194ms total 17.125ms
+10-19 15:05:58.380 20221 20221 I nder.exp.wf_ext: Explicit concurrent mark compact GC freed 96KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3772KB/7545KB, paused 30us,1.261ms total 10.338ms
+10-19 15:05:59.384 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"popup.gc","data":{"wv":"A1"},"t":1792389959384}
+10-19 15:05:59.390 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"renderer.before","data":{"hostPid":20221},"t":1792389959390}
+10-19 15:05:59.393 20333 20347 E chromium: [ERROR:third_party/blink/common/chrome_debug_urls.cc:135] Intentionally crashing (with null pointer dereference) because user navigated to chrome://crash/
+10-19 15:05:59.408 20463 20463 W linker64: type=1400 audit(0.0:297): avc:  denied  { search } for  name="tests" dev="dm-5" ino=65540 scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:05:59.408 20463 20463 W linker64: type=1400 audit(0.0:298): avc:  denied  { search } for  name="tests" dev="dm-5" ino=65540 scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:05:59.408 20463 20463 W linker64: type=1400 audit(0.0:299): avc:  denied  { search } for  name="tests" dev="dm-5" ino=65540 scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:05:59.408 20463 20463 W linker64: type=1400 audit(0.0:300): avc:  denied  { search } for  name="tests" dev="dm-5" ino=65540 scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:object_r:shell_test_data_file:s0 tclass=dir permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:06:00.620 20463 20463 W linker64: type=1400 audit(0.0:301): avc:  denied  { getsched } for  scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:r:isolated_app:s0:c512,c768 tclass=process permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:06:00.620 20463 20463 W linker64: type=1400 audit(0.0:302): avc:  denied  { getsched } for  scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:r:isolated_app:s0:c512,c768 tclass=process permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:06:00.620 20463 20463 W linker64: type=1400 audit(0.0:303): avc:  denied  { getsched } for  scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:r:isolated_app:s0:c512,c768 tclass=process permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:06:00.620 20463 20463 W linker64: type=1400 audit(0.0:304): avc:  denied  { getsched } for  scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:r:isolated_app:s0:c512,c768 tclass=process permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:06:00.620 20463 20463 W linker64: type=1400 audit(0.0:305): avc:  denied  { getsched } for  scontext=u:r:untrusted_app_34:s0:c231,c256,c512,c768 tcontext=u:r:isolated_app:s0:c512,c768 tclass=process permissive=0 app=dev.wayfinder.exp.wf_ext
+10-19 15:06:00.822 20333 20347 E libc    : failed to connect to tombstoned: Operation not permitted
+10-19 15:06:00.828 20333 20347 W libc    : Access denied finding property "ro.misctrl.16kb_before"
+10-19 15:06:00.907 20333 20347 W libc    : Access denied finding property "ro.debuggable"
+10-19 15:06:00.907 20333 20347 W libc    : Access denied finding property "ro.debuggable"
+10-19 15:06:00.907 20333 20347 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+10-19 15:06:00.907 20333 20347 F DEBUG   : Build fingerprint: 'google/sdk_gphone16k_arm64/emu64a16k:17/CP41.260831.007/16416850:user/dev-keys'
+10-19 15:06:00.907 20333 20347 F DEBUG   : Kernel Release: '6.12.81-android16-6-g4f69fc7b210c-ab16167562'
+10-19 15:06:00.907 20333 20347 F DEBUG   : Revision: '0'
+10-19 15:06:00.907 20333 20347 F DEBUG   : ABI: 'arm64'
+10-19 15:06:00.907 20333 20347 F DEBUG   : Timestamp: 2026-10-19 15:06:00.828129922+0900
+10-19 15:06:00.907 20333 20347 F DEBUG   : Process uptime: 9s
+10-19 15:06:00.907 20333 20347 F DEBUG   : Page size: 16384 bytes
+10-19 15:06:00.907 20333 20347 F DEBUG   : Executable: <unknown>
+10-19 15:06:00.907 20333 20347 F DEBUG   : Cmdline: dev.wayfinder.exp.wf_ext:com.google.android.webview:sandboxed_process0:org.chromium.content.app.Sa
+10-19 15:06:00.907 20333 20347 F DEBUG   : pid: 20333, ppid: 1007, tid: 20347, name: CrRendererMain  >>> dev.wayfinder.exp.wf_ext:com.google.android.webview:sandboxed_process0:org.chromium.content.app.Sa <<<
+10-19 15:06:00.907 20333 20347 F DEBUG   : uid: 99014
+10-19 15:06:00.907 20333 20347 F DEBUG   : tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+10-19 15:06:00.907 20333 20347 F DEBUG   : pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+10-19 15:06:00.907 20333 20347 F DEBUG   : esr: 0000000092000046 (Data Abort Exception 0x24)
+10-19 15:06:00.907 20333 20347 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0000000000000000 (write)
+10-19 15:06:00.907 20333 20347 F DEBUG   : Cause: null pointer dereference
+10-19 15:06:00.907 20333 20347 F DEBUG   : 
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x0  00007ffbb4fcbb0c  x1  0000000000000000  x2  0000000000000000  x3  ffffffffffffffff
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x4  ffffffffffffffff  x5  0000000000000000  x6  2e6d6e6c6c6e622e  x7  7f7f7f7f7f7f7f7f
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x8  0000000000000000  x9  00007ffbb4ffd000  x10 00007ffbb525ae90  x11 000000000000c23c
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x12 0000000000000010  x13 000000000007dd88  x14 000000c19ee3be22  x15 0000000029aaaaab
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x16 00007ffbb113669c  x17 00007ffbaf4f7084  x18 00007ffba45bc000  x19 00007ffc0892c3b0
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x20 00007ffc0892c260  x21 00007ffbb4ef6000  x22 00007ff4008f7140  x23 00007ffbaf4f7084
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x24 00007ffbb5002000  x25 0000000000000000  x26 00007ff400b16400  x27 0000000000000000
+10-19 15:06:00.907 20333 20347 F DEBUG   :     x28 00007ffbb4efd000  x29 00007ffc0892c240
+10-19 15:06:00.907 20333 20347 F DEBUG   :     lr  00007ffbad9ff0fc  sp  00007ffc0892c240  pc  00007ffbad9ff100  pst 0000000060001000
+10-19 15:06:00.907 20333 20347 F DEBUG   :     esr 0000000092000046  vg  0000000000000000
+10-19 15:06:00.907 20333 20347 F DEBUG   : 
+10-19 15:06:00.907 20333 20347 F DEBUG   : 1 total frames
+10-19 15:06:00.907 20333 20347 F DEBUG   : backtrace:
+10-19 15:06:00.907 20333 20347 F DEBUG   :       #00 pc 00000000019ff100  /data/app/~~HEhaU4j3wkE420vHRZh3HA==/com.google.android.webview-Ji5PyIpK6todsqK0d6Y1uQ==/WebViewGoogle.apk!libwebviewchromium.so (offset 0xdd8000) (BuildId: 0edff7ff49bdda33c3513bd5720892d9b2682657)
+10-19 15:06:00.907 20333 20347 F DEBUG   : 
+10-19 15:06:00.907 20333 20347 F DEBUG   : Note: To display stack pointer information, use the pbtombstone tool:
+10-19 15:06:00.907 20333 20347 F DEBUG   :         pbtombstone --display-sp tombstone_XX.pb
+10-19 15:06:00.915   649  1838 I ActivityManager: Process dev.wayfinder.exp.wf_ext:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 (pid 20333) has died: fg BTOP
+10-19 15:06:00.915 20221 20332 W cr_ChildProcessConn: onServiceDisconnected (crash or killed by oom): pid=20333 bindings:W  S
+10-19 15:06:00.915   649  1838 W ActivityManager: Scheduling restart of crashed service dev.wayfinder.exp.wf_ext/org.chromium.content.app.SandboxedProcessService0:0 in 1119ms for connection
+10-19 15:06:00.918 20221 20221 E chromium: [ERROR:android_webview/browser/aw_browser_terminator.cc:175] Renderer process (20333) crash detected (code 11).
+10-19 15:06:00.918 20221 20221 W RendererGuard: onRenderProcessGone {identifier=1, didCrash=true, rendererPriorityAtExit=2, hostPid=20221}
+10-19 15:06:00.919 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"renderer.gone","data":{"wv":"A1","identifier":1,"didCrash":true,"rendererPriorityAtExit":2,"hostPid":20221},"t":1792389960919}
+10-19 15:06:00.922 20221 20345 E chromium: [ERROR:third_party/crashpad/crashpad/util/file/directory_reader_posix.cc:43] opendir /data/user/0/dev.wayfinder.exp.wf_ext/cache/WebView/Crashpad/attachments/310884c8-db2c-44a1-8bf0-0de52eb4bda7: No such file or directory (2)
+10-19 15:06:03.925 20221 20221 I flutter : EXP {"src":"dart","app":"wf_ext","platform":"android","runId":"1792389951906","event":"survived","data":{"hostPid":20221},"t":1792389963925}
+10-19 15:06:22.660 20221 20746 I nder.exp.wf_ext: Explicit concurrent mark compact GC freed 384KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 3804KB/7609KB, paused 9us,460us total 4.872ms

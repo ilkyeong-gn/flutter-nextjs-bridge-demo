@@ -1,0 +1,6 @@
+1s host=20221 renderer=20333 20379 
+2s host=20221 renderer=20333 
+7s host=20221 renderer=20333 20466 
+8s host=20221 renderer=없음
+ AppContexts: 7 Activities: 1
+ Death Recipients: 3 WebViews: 1
