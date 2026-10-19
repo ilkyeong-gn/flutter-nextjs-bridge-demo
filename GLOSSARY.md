@@ -56,9 +56,21 @@ _Avoid_: 패킷, 신호
 Host가 Web에 보내는 Message.
 _Avoid_: 푸시, 알림
 
+**State Event (상태 Event)**:
+최신 값만 의미가 있는 Event. 멤버십, 세션, 안 읽은 수처럼 지금의 상태를 알린다.
+_Avoid_: sticky 이벤트
+
+**One-off Event (일회 Event)**:
+일어난 사건을 한 번만 전하는 Event. 딥링크 이동처럼 빠뜨리거나 두 번 전하면 안 된다.
+_Avoid_: 알림 이벤트
+
 **Call (호출)**:
-Web이 Host에 보내고 응답을 기다리는 요청과 그 응답의 한 쌍.
+Web이 Host에 보내고 응답을 기다리는 요청과 그 응답의 한 쌍. Host가 Web에 묻는 Call은 없다.
 _Avoid_: 요청, RPC, invoke
+
+**Handshake (핸드셰이크)**:
+Web이 문서를 불러올 때마다 가장 먼저 보내는 Call. Web이 준비됐음을 알리고, Host가 지원하는 계약 버전과 기능 목록을 받는다.
+_Avoid_: 초기화, init, ready
 
 ### 단계
 
