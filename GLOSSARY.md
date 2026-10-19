@@ -88,6 +88,20 @@ _Avoid_: 프로토콜, 스펙, 인터페이스, 스키마
 핸드셰이크에서 Host가 알려 주는, 지금 이 Host에서 쓸 수 있는 Call·Message·Event 이름의 목록. Web은 기능마다 이 목록을 보고 분기한다.
 _Avoid_: 기능 플래그, capabilities
 
+### 로그인
+
+**Login Session (로그인 세션)**:
+사용자가 한 번 로그인해서 서버에 생긴 세션. Host와 Web이 모두 여기에 묶이고, 이 세션이 끝나면 둘 다 비로그인이 된다.
+_Avoid_: 세션(단독), 토큰
+
+**Web Session (Web 세션)**:
+로그인 세션에 묶여 WebView의 요청을 인증하는 서버 세션.
+_Avoid_: 웹 쿠키, 웹 토큰
+
+**Session Handoff (핸드오프)**:
+Host가 가진 로그인 세션으로 Web 세션을 만드는 일.
+_Avoid_: 쿠키 주입, 토큰 전달
+
 ### 단계
 
 **Stage (단계)**:
