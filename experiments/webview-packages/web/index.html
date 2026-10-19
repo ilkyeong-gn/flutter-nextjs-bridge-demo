@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>main</title>
+  <style>
+    body { font: 13px system-ui; margin: 10px; }
+    iframe { width: 100%; height: 120px; border: 1px solid #888; }
+    pre { white-space: pre-wrap; font-size: 10px; margin: 4px 0; }
+  </style>
+</head>
+<body data-role="main">
+  <b>main <span id="origin"></span></b>
+  <pre id="out"></pre>
+  <div>출처가 다른 iframe (:8081)</div>
+  <iframe id="cross" src="http://__HOST__:8081/frame.html?label=cross"></iframe>
+  <div>출처가 같은 iframe (:8080)</div>
+  <iframe id="same" src="/frame.html?label=same"></iframe>
+  <script src="/probe.js"></script>
+</body>
+</html>
