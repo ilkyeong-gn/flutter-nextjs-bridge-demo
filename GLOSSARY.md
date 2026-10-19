@@ -42,6 +42,14 @@ _Avoid_: 웹뷰 화면
 Web 화면 안에 들어 있지만 Web이 아닌 출처에서 온 프레임이나 스크립트.
 _Avoid_: 외부 콘텐츠, 써드파티
 
+**Allowed Origin (허용 출처)**:
+Bridge가 열리고 Web 화면의 메인 프레임이 머물 수 있는 Web의 출처.
+_Avoid_: 화이트리스트, 신뢰 도메인
+
+**Route Table (경로 표)**:
+앱 안에서 열 수 있는 Web 화면 경로의 목록. 경로마다 딥링크와 콘텐츠 속 링크로 열 수 있는지가 표시된다.
+_Avoid_: 라우트 목록, URL 허용 목록
+
 **Host Capability (Host 기능)**:
 Host가 Bridge를 통해 Web에 빌려주는 기기·앱 기능(카메라, 사진 선택, 공유 등).
 _Avoid_: 네이티브 기능, 플러그인
