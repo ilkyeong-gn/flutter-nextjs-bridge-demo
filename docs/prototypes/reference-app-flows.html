@@ -1,0 +1,1426 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference App 화면 흐름</title>
+<!--
+  PROTOTYPE — 버릴 코드. 질문 하나에 답하려고 만든 파일이다.
+  질문: Reference App(가상의 미니멀 팬덤 앱)은 어떤 화면으로 이루어지고,
+        사용자는 S1–S5를 실제로 어떤 순서로 지나가는가?
+  위쪽 <script>의 Model은 DOM을 모르는 순수 모듈(상태, 동작) → 상태이고, 아래쪽 페이지가 그것을 그린다.
+-->
+<style>
+  :root{
+    --bg:#f4f5f7; --panel:#fff; --ink:#1c2230; --muted:#6b7280; --faint:#9aa1ad; --line:#e3e6eb;
+    --accent:#2563eb; --accent-soft:#e8f0ff;
+    --host:#0f766e; --host-soft:#e3f3f1; --web:#7c3aed; --web-soft:#efe7fe; --os:#475569;
+    --changed:#fff3b0; --danger:#dc2626; --warn:#92400e; --warn-soft:#fff7e6;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Segoe UI",sans-serif}
+  button{font:inherit;color:inherit;cursor:pointer}
+  button:disabled{cursor:default}
+  .top{max-width:1540px;margin:0 auto;padding:22px 28px 4px}
+  .top h1{margin:0;font-size:20px;letter-spacing:-.01em}
+  .proto{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:5px;background:#111;color:#fff;font-size:11px;font-weight:600;vertical-align:3px}
+  .top p{margin:6px 0 0;color:var(--muted);max-width:1040px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .layout{max-width:1540px;margin:0 auto;padding:14px 28px 56px;display:grid;grid-template-columns:minmax(300px,370px) 384px minmax(360px,1fr);gap:20px;align-items:start}
+  @media (max-width:1220px){.layout{grid-template-columns:1fr;max-width:780px}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+  .panel h2{margin:0 0 10px;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+  .muted{color:var(--muted)} .sm{font-size:12px}
+
+  /* 안내(walkthrough) */
+  .wtabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .wtabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;font-size:12px}
+  .wtabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .walk h3{margin:0 0 6px;font-size:16px}
+  .walk p{margin:0 0 8px;font-size:13px}
+  .walk .watch{color:var(--warn)}
+  .restart{border:1px solid var(--line);background:#fff;border-radius:8px;padding:3px 10px;font-size:12px}
+  .steps{list-style:none;margin:12px 0 0;padding:0;counter-reset:st}
+  .steps li{position:relative;padding:0 0 10px 30px;counter-increment:st}
+  .steps li::before{content:counter(st);position:absolute;left:0;top:5px;width:20px;height:20px;border-radius:50%;background:var(--line);color:var(--muted);font-size:11px;display:grid;place-items:center}
+  .steps li.done::before{content:"✓";background:#dcfce7;color:#166534}
+  .steps li.cur::before{background:var(--accent);color:#fff}
+  .steps button{width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 10px}
+  .steps li.cur button{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+  .steps li.done button{color:var(--muted)}
+  .steps li.todo button{color:var(--faint)}
+  .steps .note{font-size:12px;color:var(--muted);margin-top:3px}
+  .finish{margin-top:6px;padding:8px 10px;border-radius:10px;background:#f0fdf4;color:#166534;font-size:12px}
+
+  /* 결정 후보 */
+  fieldset.opt{border:0;border-top:1px solid var(--line);margin:0;padding:10px 0 8px}
+  fieldset.opt:first-of-type{border-top:0;padding-top:0}
+  fieldset.opt legend{padding:0;font-weight:650;font-size:13px}
+  .grp{display:inline-block;font-size:10.5px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-right:6px;vertical-align:1px}
+  fieldset.opt label{display:flex;gap:6px;align-items:flex-start;font-size:13px;margin-top:4px;cursor:pointer}
+  fieldset.opt input{margin-top:4px}
+  .sug{font-size:10.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:0 5px;white-space:nowrap}
+  .owner-note{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+  /* 폰 */
+  .phone{width:360px;height:740px;margin:0 auto 12px;padding:10px;border-radius:46px;background:#0d0f14;box-shadow:0 18px 40px rgba(15,20,30,.22)}
+  .scr{position:relative;height:100%;border-radius:36px;overflow:hidden;background:#fff;display:flex;flex-direction:column;font-size:13px}
+  .sbar{flex:none;height:30px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:12px;font-weight:600}
+  .sbar.dark{background:#1b2440;color:#fff}
+  .layer{flex:none;display:flex;justify-content:space-between;gap:8px;padding:2px 12px;font-size:10.5px;color:#fff;white-space:nowrap;overflow:hidden}
+  .layer span:last-child{opacity:.85;overflow:hidden;text-overflow:ellipsis}
+  .layer.host{background:var(--host)} .layer.web{background:var(--web)} .layer.os{background:var(--os)}
+  .frame{position:relative;flex:1;min-height:0;display:flex;flex-direction:column}
+  .frame.web{box-shadow:inset 0 0 0 2px var(--web-soft)}
+  .ab{flex:none;height:46px;display:flex;align-items:center;gap:4px;padding:0 8px;border-bottom:1px solid var(--line);font-weight:650}
+  .ab .sp{flex:1}
+  .ib{border:0;background:none;width:32px;height:32px;border-radius:8px;font-size:20px;line-height:1}
+  .ct{flex:1;overflow:auto;padding:12px}
+  .tb{flex:none;height:56px;display:flex;border-top:1px solid var(--line);background:#fff}
+  .tb.host{box-shadow:inset 0 3px 0 var(--host)} .tb.web{box-shadow:inset 0 3px 0 var(--web)}
+  .tb button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:var(--muted);position:relative}
+  .tb .ic{font-size:17px;line-height:1.2}
+  .tb button.on{color:var(--ink);font-weight:700}
+  .dot{position:absolute;top:5px;left:calc(50% + 6px);min-width:16px;height:16px;border-radius:8px;background:var(--danger);color:#fff;font-size:10px;display:grid;place-items:center;padding:0 4px;font-style:normal;font-weight:700}
+  .cover{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:linear-gradient(135deg,#eef2ff,#fdf2f8);margin-bottom:10px;cursor:pointer}
+  .avatar{width:38px;height:38px;border-radius:50%;background:#c7d2fe;display:grid;place-items:center;font-weight:700;font-size:12px;flex:none}
+  .avatar.lg{width:54px;height:54px;font-size:15px}
+  .seg{display:flex;gap:4px;margin:6px 0 8px}
+  .seg button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 10px;font-size:12px}
+  .seg button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .scroll{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);background:#f8fafc;border:1px dashed var(--line);border-radius:8px;padding:3px 8px;margin-bottom:8px}
+  .card{border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin-bottom:8px;cursor:pointer}
+  .card .t{font-weight:650}
+  .thumbs{display:flex;gap:4px;margin:6px 0}
+  .g{display:inline-block;width:52px;height:52px;border-radius:8px;background:#e5e7eb;font-style:normal;font-size:10px;color:#475569;text-align:center;line-height:52px}
+  .meta{display:flex;gap:10px;align-items:center;margin-top:6px;font-size:12px;color:var(--muted)}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:1px 9px;font-size:12px}
+  .chip.on{color:#be123c;border-color:#fecdd3;background:#fff1f2}
+  .lockbox{margin:10px 0;padding:14px;border-radius:12px;background:#f8fafc;border:1px dashed #cbd5e1;text-align:center}
+  .lk{font-size:11px;color:var(--muted)}
+  .btn{display:inline-block;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 12px;font-weight:600;margin-top:8px}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.wide{display:block;width:100%}
+  .btn.small{padding:3px 10px;margin:0;font-size:12px}
+  .mini{border:1px solid var(--line);background:#fff;border-radius:7px;padding:1px 8px;font-size:11.5px}
+  .mini.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .lnk{color:var(--accent);text-decoration:underline;cursor:pointer}
+  .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:8px 0}
+  .photos button{border:0;border-radius:8px;background:#e5e7eb;height:80px;font-size:11px;color:#475569}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  .grid .g{width:auto;height:70px}
+  .li{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;border-bottom:1px solid var(--line)}
+  .li.link{cursor:pointer}
+  .msg{background:#f1f5f9;border-radius:14px 14px 14px 4px;padding:7px 11px;margin:0 30px 7px 0;width:fit-content}
+  .room{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+  .badge{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--danger);color:#fff;font-size:10.5px;padding:0 5px;font-weight:700;margin-left:4px}
+  .plan{border:1px solid var(--line);border-radius:12px;padding:12px;background:linear-gradient(135deg,#fff7ed,#fdf2f8)}
+  .plan ul{margin:6px 0 0;padding-left:18px}
+  .okbox{margin-top:10px;padding:10px;border-radius:10px;background:#f0fdf4;color:#166534;text-align:center;font-weight:600}
+  .center-col{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding-top:28px}
+  .logo{text-align:center;font-size:22px;font-weight:800;margin-bottom:10px}
+  .field{border:1px solid var(--line);border-radius:10px;padding:9px 11px;color:var(--muted)}
+  .empty{text-align:center;color:var(--muted);padding:40px 8px}
+  .warn{margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--warn-soft);color:var(--warn);font-size:12px}
+  .ta{display:block;width:100%;min-height:90px;border:1px solid var(--line);border-radius:10px;padding:10px;text-align:left;background:#fff}
+  .ta.blank{color:var(--faint)}
+  .atts{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+  .atts .g{width:44px;height:44px;line-height:44px}
+  .up{margin-top:10px;padding:9px 10px;border-radius:10px;background:#f8fafc;border:1px solid var(--line);font-size:12px}
+  .bar{height:6px;border-radius:3px;background:#e5e7eb;margin:5px 0;overflow:hidden}
+  .bar b{display:block;height:100%;background:var(--accent)}
+  .fab{position:absolute;right:14px;bottom:14px;border:0;background:var(--ink);color:#fff;border-radius:999px;padding:10px 14px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+  .viewer{flex:1;display:flex;flex-direction:column;background:#0b0b0b;color:#fff}
+  .vtop{display:flex;justify-content:space-between;align-items:center;padding:6px 8px}
+  .vimg{flex:1;margin:16px;border-radius:6px;background:#334155;display:grid;place-items:center;color:#cbd5e1;transition:none}
+  .vimg.zoom{margin:-30px;font-size:22px}
+  .vbar{display:flex;justify-content:center;gap:10px;padding:14px}
+  .vbar button{border:1px solid #475569;background:#111827;color:#fff;border-radius:10px;padding:6px 14px}
+  .ib.light{color:#fff}
+  .home{flex:1;background:linear-gradient(160deg,#1b2440,#3b2a5c);color:#fff;padding:40px 26px;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+  .appicon{width:62px;height:62px;border-radius:16px;border:0;background:linear-gradient(135deg,#a78bfa,#f472b6);color:#fff;font-size:24px;font-weight:800}
+  .home .hint{margin-top:auto;color:#cbd5e1;font-size:12px}
+  .ov{position:absolute;inset:0;background:rgba(0,0,0,.38);display:flex;z-index:5}
+  .ov.bottom{align-items:flex-end} .ov.center{align-items:center;justify-content:center}
+  .sheet{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:10px 14px 18px}
+  .sheet .st{font-weight:700;margin:2px 0 6px}
+  .sheet .opt-btn{display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:none;padding:11px 2px}
+  .sheet .pick{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .sheet .grid .g{height:52px}
+  .who{display:inline-block;font-size:10px;font-weight:700;color:#fff;border-radius:4px;padding:0 5px;margin-bottom:4px}
+  .who.host{background:var(--host)} .who.web{background:var(--web)} .who.os{background:var(--os)}
+  .dlg{background:#fff;width:80%;border-radius:16px;padding:16px 16px 12px;text-align:center}
+  .dlg.os{background:#f2f2f7}
+  .dlg h4{margin:2px 0 4px;font-size:14px}
+  .dlg p{margin:0 0 10px;color:var(--muted);font-size:12.5px}
+  .dlg .row{display:flex;gap:8px}
+  .dlg .row button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px}
+  .dlg .row button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .dlg .row button.danger{background:var(--danger);color:#fff;border-color:var(--danger)}
+  .banner{position:absolute;top:36px;left:8px;right:8px;z-index:6;background:#fff;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.2);padding:9px 12px;cursor:pointer;color:var(--ink)}
+  .toast{position:absolute;left:50%;bottom:66px;transform:translateX(-50%);background:rgba(17,17,17,.92);color:#fff;padding:7px 14px;border-radius:16px;font-size:12px;z-index:7;max-width:90%;text-align:center}
+  .legend-phone{display:flex;justify-content:center;gap:14px;font-size:11.5px;color:var(--muted);margin-bottom:12px}
+  .legend-phone i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+
+  /* 폰 밖 */
+  .wrow{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
+  .wrow:first-of-type{border-top:0}
+  .wl{width:64px;font-size:12px;font-weight:700;color:var(--muted)}
+  .wbtn,.segb{border:1px solid var(--line);background:#fff;border-radius:8px;padding:2px 9px;font-size:12px}
+  .segb.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* 상태 */
+  .kv{display:grid;grid-template-columns:150px 1fr;gap:8px;padding:5px 6px;border-radius:6px;font-size:13px}
+  .kv span{color:var(--muted)}
+  .kv b{font-weight:600}
+  .kv.changed,.stacks.changed{background:var(--changed)}
+  .stacks{border-radius:8px;padding:4px 6px}
+  .stk{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:4px 0;font-size:12px;opacity:.62}
+  .stk.on{opacity:1}
+  .stk .tn{width:92px;color:var(--muted);font-weight:600}
+  .c2{display:inline-block;border-radius:6px;padding:1px 7px;font-size:11.5px;border:1px solid}
+  .c2.host{color:var(--host);border-color:#99d5cd;background:var(--host-soft)}
+  .c2.web{color:var(--web);border-color:#d4c1fb;background:var(--web-soft)}
+  .arr{color:var(--faint)}
+  .trace{max-height:420px;overflow:auto}
+  .tr{display:flex;gap:6px;align-items:baseline;padding:3px 4px;border-radius:6px;font-size:12.5px}
+  .tr.new{background:var(--changed)}
+  .tr .n{width:22px;flex:none;color:var(--faint);font-size:11px;text-align:right}
+  .tr .w{flex:none;font-size:10.5px;font-weight:700;border-radius:4px;padding:0 5px;color:#fff;background:var(--faint)}
+  .tr .w.host{background:var(--host)} .tr .w.web{background:var(--web)} .tr .w.bridge{background:var(--accent)} .tr .w.os{background:var(--os)} .tr .w.server{background:#b45309}
+  .tr .k{flex:none;font-size:10.5px;font-weight:700;color:var(--accent);border:1px solid #bfd3ff;border-radius:4px;padding:0 4px}
+  table.cat{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.cat th,table.cat td{text-align:left;padding:6px 6px;border-top:1px solid var(--line);vertical-align:top}
+  table.cat th{color:var(--muted);font-weight:600;border-top:0}
+  .tag{display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:0 6px;white-space:nowrap}
+  .tag.host{color:var(--host);background:var(--host-soft)} .tag.web{color:var(--web);background:var(--web-soft)} .tag.os{color:var(--os);background:#eef2f6}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Reference App 화면 흐름<span class="proto">PROTOTYPE · 버릴 코드</span></h1>
+  <p><b>2026-10-19 결정</b>: 결정 후보의 "제안"을 그대로 확정했다. 결정 기록은 이슈 <a href="https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/27">「가상 팬덤 앱의 화면 목록과 S1–S5 흐름」</a>에 있다.</p>
+  <p><b>이 프로토타입이 답하려는 질문</b>: Reference App(가상의 미니멀 팬덤 앱)은 어떤 화면으로 이루어지고, 사용자는 S1–S5를 실제로 어떤 순서로 지나가는가? 왼쪽 안내를 따라 눌러 보거나, 폰 화면과 "폰 밖에서 일어나는 일"을 마음대로 눌러 본다. 갈리는 지점은 오른쪽 "결정 후보"에서 바꿔 보며 비교한다.</p>
+  <div class="legend">
+    <span><i style="background:var(--host)"></i>Host 화면 · Host가 그린 부분</span>
+    <span><i style="background:var(--web)"></i>Web 화면 · Web이 그린 부분</span>
+    <span><i style="background:var(--os)"></i>OS(권한 창, 설정, 브라우저)</span>
+    <span><i style="background:var(--accent)"></i>Bridge를 건넌 일 (Event · Call · Message)</span>
+    <span><i style="background:var(--changed);border:1px solid #e9d66b"></i>방금 바뀐 것</span>
+  </div>
+</header>
+
+<main class="layout">
+  <section>
+    <div class="panel walk">
+      <h2>안내 따라 하기</h2>
+      <div class="wtabs" id="wtabs"></div>
+      <div id="walk"></div>
+    </div>
+    <div class="panel">
+      <h2>결정 후보</h2>
+      <div class="sm muted" style="margin-bottom:8px">바꾸면 지금 안내를 처음부터 다시 시작한다. "제안"은 지금의 추천이다.</div>
+      <div id="opts"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="phone"><div class="scr" id="phone"></div></div>
+    <div class="legend-phone"><span><i style="background:var(--host)"></i>Host</span><span><i style="background:var(--web)"></i>Web</span><span>폰 화면의 글자·버튼은 모두 누를 수 있다</span></div>
+    <div class="panel">
+      <h2>폰 밖에서 일어나는 일</h2>
+      <div id="world"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="panel">
+      <h2>지금 상태</h2>
+      <div id="state"></div>
+      <div style="margin-top:10px" class="sm muted">화면 쌓임 (왼쪽이 아래, 오른쪽이 맨 위)</div>
+      <div class="stacks" id="stacks"></div>
+    </div>
+    <div class="panel">
+      <h2>일어난 일 (최신이 위)</h2>
+      <div class="trace" id="trace"></div>
+    </div>
+    <div class="panel">
+      <h2>화면 목록과 Host · Web 후보</h2>
+      <div id="catalog"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+// =====================================================================
+// Model: 화면 흐름 상태 기계. DOM을 모른다. 페이지는 reduce(state, action)만 부른다.
+// =====================================================================
+const Model = (() => {
+  const DOMAIN = 'fan.example';
+  const LIMITS = { photos: 10, videos: 1, videoMB: 100 };
+
+  // 화면 목록. kind: host = Host 화면, web = Web 화면. cover = 탭 막대를 덮고 아래에서 올라오는 화면.
+  const SCREENS = {
+    home:       { name: '홈',            kind: 'web',  path: '/' },
+    community:  { name: '커뮤니티',       kind: 'web',  path: '/community' },
+    post:       { name: '게시글',         kind: 'web',  path: '/posts/:id' },
+    compose:    { name: '글쓰기',         kind: 'web',  path: '/compose', cover: true },
+    artist:     { name: '아티스트 프로필', kind: 'web',  path: '/artist' },
+    messages:   { name: '메시지 목록',     kind: 'host' },
+    room:       { name: '메시지 방',       kind: 'host' },
+    membership: { name: '멤버십',         kind: 'host' },
+    viewer:     { name: '이미지 뷰어',     kind: 'host', cover: true },
+    login:      { name: '로그인',         kind: null, path: '/login' },   // 결정 후보 loginAt이 정함
+    my:         { name: '마이',           kind: 'host', path: '/my' },
+  };
+
+  const TABSETS = {
+    A: { label: '3탭: 커뮤니티(Web) · 메시지(Host) · 마이(Host)', bar: 'host',
+         tabs: [ { id: 'community', label: '커뮤니티', icon: '📰', root: 'community' },
+                 { id: 'messages', label: '메시지', icon: '💬', root: 'messages' },
+                 { id: 'my', label: '마이', icon: '👤', root: 'my' } ],
+         owner: { post: 'community', artist: 'community' } },
+    B: { label: '4탭: 홈(Web) · 커뮤니티(Web) · 메시지(Host) · 마이(Host)', bar: 'host',
+         tabs: [ { id: 'home', label: '홈', icon: '🏠', root: 'home' },
+                 { id: 'community', label: '커뮤니티', icon: '📰', root: 'community' },
+                 { id: 'messages', label: '메시지', icon: '💬', root: 'messages' },
+                 { id: 'my', label: '마이', icon: '👤', root: 'my' } ],
+         owner: { post: 'community', artist: 'home' } },
+    C: { label: '탭 막대까지 Web이 그림: 커뮤니티 · 메시지(누르면 Host 화면) · 마이(Web)', bar: 'web',
+         tabs: [ { id: 'community', label: '커뮤니티', icon: '📰', root: 'community' },
+                 { id: 'messages', label: '메시지', icon: '💬', opens: 'messages' },
+                 { id: 'my', label: '마이', icon: '👤', root: 'my' } ],
+         owner: { post: 'community', artist: 'community' }, kinds: { my: 'web' } },
+  };
+
+  const OPTIONS = {
+    tabs:        { group: '탭', label: '하단 탭 구성', suggest: 'A',
+                   choices: { A: TABSETS.A.label, B: TABSETS.B.label, C: TABSETS.C.label } },
+    tabReturn:   { group: '탭', label: '다른 탭에 갔다가 돌아오면', suggest: 'top',
+                   choices: { top: '그 탭의 첫 화면, 맨 위부터', keep: '보던 화면과 스크롤 그대로' } },
+    loginAt:     { group: 'S1', label: '로그인 화면', suggest: 'host', decidedIn: '로그인과 세션 설계 (S1)',
+                   choices: { host: 'Host 화면 (탭 막대를 덮음)', web: 'Web 화면 (지금 탭에 쌓임)' } },
+    loginPrompt: { group: 'S1', label: '비로그인으로 좋아요·글쓰기 등을 누르면', suggest: 'confirm',
+                   choices: { confirm: '안내 창 먼저 ("로그인하면 …할 수 있어요")', direct: '바로 로그인 화면' } },
+    afterLogin:  { group: 'S1', label: '로그인한 뒤', suggest: 'resume',
+                   choices: { resume: '원래 화면으로 돌아가 누르던 동작까지 마침 (결제는 빼고)', back: '원래 화면으로 돌아가기만' } },
+    sessionEnd:  { group: 'S1', label: '서버가 세션을 끊었을 때', suggest: 'login',
+                   choices: { login: '안내하고 지금 화면 위에 로그인 화면 (닫으면 비로그인으로 그 자리)', stay: '안내만 하고 보던 화면에 남음', home: '첫 탭 첫 화면으로 보냄' } },
+    linkLand:    { group: 'S3', label: '링크·알림으로 연 화면의 자리', suggest: 'owner',
+                   choices: { owner: '그 화면이 속한 탭에 쌓음 (뒤로 → 그 탭의 목록)', over: '지금 화면 위에 쌓음 (뒤로 → 보던 화면)' } },
+    linkBusy:    { group: 'S3', label: '글쓰기 중에 링크·알림이 오면', suggest: 'over',
+                   choices: { over: '글쓰기 위에 열고, 뒤로 오면 이어 씀', ask: '나갈지 먼저 물음' } },
+  };
+  const DEFAULT_OPTS = Object.fromEntries(Object.entries(OPTIONS).map(([k, o]) => [k, o.suggest]));
+
+  const POSTS = {
+    p5: { by: 'artist', title: '오늘 리허설 끝!', body: '내일 무대에서 만나요.', photos: 1, likes: 120, comments: 45 },
+    p1: { by: 'fanA', title: '어제 무대 직캠 모음', body: '어제 무대 너무 좋았어요. 직접 찍은 사진 올려요!', photos: 3, likes: 12, comments: 4 },
+    p2: { by: 'artist', title: '연습실 비하인드', body: '이번 주 연습실에서 찍은 사진이에요. 멤버십 회원에게 먼저 보여 줄게요.', photos: 3, likes: 88, comments: 31, members: true },
+    p3: { by: 'fanB', title: '토요일 공연 같이 가실 분', body: '토요일 공연 같이 가실 분 구해요.', photos: 0, likes: 4, comments: 9 },
+    p4: { by: 'staff', title: '팬미팅 예매 안내', body: '팬미팅 예매는 외부 예매 사이트에서 진행돼요.', photos: 0, likes: 30, comments: 2, external: 'https://tickets.example/fanmeeting' },
+  };
+  const FEED = ['p5', 'p1', 'p2', 'p3', 'p4'];
+  const ACTION_NAMES = { like: '좋아요', compose: '글쓰기', submit: '글 등록', openRoom: '메시지 보기', openMembership: '멤버십 보기' };
+
+  // ---------- 도우미 ----------
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const last = a => a[a.length - 1];
+  const tabset = s => TABSETS[s.opts.tabs];
+  const tabById = (s, id) => tabset(s).tabs.find(t => t.id === id);
+  function kindOf(s, screen) {
+    if (screen === 'login') return s.opts.loginAt;
+    return (tabset(s).kinds || {})[screen] || SCREENS[screen].kind;
+  }
+  function route(s, screen, params) {
+    s.seq += 1;
+    return { key: s.seq, screen, params: { ...(params || {}) }, web: { scroll: 0, tab: screen === 'artist' ? '글' : '전체' } };
+  }
+  const stackOf = s => s.stacks[s.tab];
+  function top(s) {
+    if (s.app !== 'running') return null;
+    return s.covers.length ? last(s.covers) : last(stackOf(s));
+  }
+  function pathOf(s, r) {
+    if (!r || kindOf(s, r.screen) !== 'web') return null;
+    return SCREENS[r.screen].path.replace(':id', r.params.id || '');
+  }
+  const placeName = (s, r) => r ? (pathOf(s, r) || SCREENS[r.screen].name) : '—';
+  const whoAt = s => (top(s) && kindOf(s, top(s).screen) === 'web') ? 'Web' : 'Host';
+  const hasMembership = s => s.session === 'in' && s.membership;
+  const draftDirty = s => !!(s.draft && (s.draft.text || s.draft.items.length));
+  const composeOpen = s => s.covers.some(r => r.screen === 'compose');
+  const getPost = (s, id) => POSTS[id] ? { id, ...POSTS[id] } : (s.myPosts.find(p => p.id === id) || null);
+  const photosLeft = s => LIMITS.photos - (s.draft ? s.draft.items.filter(i => i.t === 'photo').length : 0);
+  const videosLeft = s => LIMITS.videos - (s.draft ? s.draft.items.filter(i => i.t === 'video').length : 0);
+  const fmtMB = mb => mb >= 1000 ? (mb / 1000).toFixed(1) + 'GB' : mb + 'MB';
+  function log(s, who, text, kind) {
+    s.trace.unshift({ n: s.n, who, kind: kind || '', text });
+    if (s.trace.length > 120) s.trace.length = 120;
+  }
+  function ownerTab(s, screen) {
+    const ts = tabset(s);
+    if (ts.owner[screen]) return ts.owner[screen];
+    const t = ts.tabs.find(t => t.root === screen);
+    return t ? t.id : ts.tabs.find(t => t.root).id;
+  }
+  function allRoutes(s) {
+    const out = [];
+    for (const k of Object.keys(s.stacks)) out.push(...s.stacks[k]);
+    out.push(...s.covers);
+    return out;
+  }
+  function boot(s) {
+    const ts = tabset(s);
+    s.covers = []; s.sheet = null; s.dialog = null; s.exitArmed = false; s.stacks = {};
+    for (const t of ts.tabs) if (t.root) s.stacks[t.id] = [route(s, t.root)];
+    s.tab = ts.tabs[0].id;
+  }
+  function push(s, r) {
+    const asCover = SCREENS[r.screen].cover || (r.screen === 'login' && s.opts.loginAt === 'host') || s.covers.length > 0;
+    if (asCover) s.covers.push(r); else stackOf(s).push(r);
+  }
+  function onLeave(s, r) {
+    if (r.screen === 'login' && s.pending) { s.pending = null; log(s, kindOf(s, 'login') === 'web' ? 'Web' : 'Host', '로그인 화면을 닫음 → 하려던 동작은 취소'); }
+    if (r.screen === 'compose') s.draft = null;
+  }
+  function removeTop(s) {
+    const r = s.covers.length ? s.covers.pop() : stackOf(s).pop();
+    onLeave(s, r);
+    return r;
+  }
+  function afterPop(s, popped) {
+    const now = top(s);
+    if (now && kindOf(s, popped.screen) === 'host' && kindOf(s, now.screen) === 'web') {
+      log(s, 'Host→Web', 'Web 화면이 다시 보임 → 가려진 동안 바뀐 상태(로그인·멤버십·안 읽은 수)를 한 번 더 알림', 'Event');
+    }
+  }
+  function openScreen(s, screen, params) {
+    const from = top(s);
+    const r = route(s, screen, params);
+    push(s, r);
+    const fk = from ? kindOf(s, from.screen) : 'host', tk = kindOf(s, screen);
+    if (fk === 'web' && tk === 'web') log(s, 'Web', `${pathOf(s, r)} 로 이동`);
+    else if (fk === 'web') log(s, 'Web→Host', `Host 화면을 열어 달라고 요청: ${SCREENS[screen].name}`);
+    else if (tk === 'web') log(s, 'Host', `Web 화면 열기: ${pathOf(s, r)}`);
+    else log(s, 'Host', `Host 화면 열기: ${SCREENS[screen].name}`);
+    return r;
+  }
+  function parseTarget(url) {
+    let u; try { u = new URL(url); } catch (e) { return null; }
+    if (u.protocol !== 'https:' || u.hostname !== DOMAIN) return { external: true };
+    const m = u.pathname.match(/^\/posts\/([\w-]+)$/);
+    if (m) return { screen: 'post', params: { id: m[1] } };
+    if (u.pathname === '/artist') return { screen: 'artist', params: {} };
+    if (u.pathname === '/community') return { screen: 'community', params: {} };
+    return null;
+  }
+
+  // ---------- 로그인·세션 ----------
+  function gate(s, action) {
+    if (s.session === 'in') return false;
+    if (s.opts.loginPrompt === 'confirm') {
+      s.dialog = { kind: 'needLogin', then: action, by: whoAt(s) };
+      log(s, whoAt(s), `로그인이 필요한 동작(${ACTION_NAMES[action.type] || action.type}) → 안내 창`);
+    } else openLogin(s, action);
+    return true;
+  }
+  function openLogin(s, action) {
+    s.dialog = null; s.sheet = null;
+    const from = top(s);
+    s.pending = { key: from.key, action: action || null };
+    const fk = kindOf(s, from.screen);
+    const back = placeName(s, from);
+    push(s, route(s, 'login'));
+    if (s.opts.loginAt === 'host') log(s, fk === 'web' ? 'Web→Host' : 'Host', `로그인 화면 띄움 (끝나면 ${back}(으)로)`, fk === 'web' ? 'Call' : '');
+    else log(s, fk === 'web' ? 'Web' : 'Host', `Web 로그인 화면 열기: /login?next=${back}`);
+  }
+  function sessionEnded(s, who, action) {
+    if (who === 'web') { log(s, 'Web', '요청이 401로 거절됨'); log(s, 'Web→Host', '세션 끝남', 'Message'); }
+    else log(s, 'Host', '요청이 401로 거절됨');
+    log(s, 'Host', '저장된 세션을 지우고 Host 화면을 비로그인으로');
+    log(s, 'Host→Web', '세션 끝남 → 열린 Web 화면 모두 비로그인으로', 'Event');
+    s.session = 'out'; s.server = 'ok'; s.pending = null;
+    const mode = s.opts.sessionEnd;
+    if (mode === 'home') {
+      const lost = draftDirty(s);
+      boot(s); s.draft = null;
+      if (lost) log(s, 'Web', '⚠ 쓰던 글이 사라짐');
+      s.toast = '로그인이 끝났어요. 처음 화면으로 갈게요';
+    } else if (mode === 'login') {
+      s.sheet = null; s.dialog = null;
+      openLogin(s, action || null);
+      s.toast = '로그인이 끝났어요. 다시 로그인해 주세요';
+    } else {
+      s.toast = '로그인이 끝났어요. 다시 로그인하면 이어서 할 수 있어요';
+    }
+  }
+  function authed(s, who, action) {
+    if (s.server !== 'revoked') return true;
+    sessionEnded(s, who, action);
+    return false;
+  }
+
+  // ---------- 링크·알림 진입 ----------
+  function arrive(s, target, cold) {
+    s.browser = null; s.settingsOpen = false;
+    if (!target || target.external) {
+      if (cold) { s.toast = '열 수 없는 주소라 첫 화면을 보여 줘요'; log(s, 'Host', '경로 표에 없는 주소 → 첫 화면'); }
+      else { s.toast = '열 수 없는 주소예요'; log(s, 'Host', '경로 표에 없는 주소 → 보던 화면에 남음'); }
+      return;
+    }
+    s.sheet = null; s.dialog = null;
+    if (cold) log(s, 'Host', '목적지를 보관 → 첫 화면이 준비되면 그리로');
+    if (!cold && composeOpen(s) && draftDirty(s)) {
+      if (s.opts.linkBusy === 'ask') {
+        s.dialog = { kind: 'leave', then: { type: 'arriveTarget', target } };
+        log(s, 'Host', '글쓰기 중 → 나갈지 먼저 물음');
+        return;
+      }
+      const r = route(s, target.screen, target.params);
+      s.covers.push(r);
+      log(s, 'Host', `글쓰기 위에 Web 화면 쌓기: ${pathOf(s, r)} (뒤로 → 글쓰기)`);
+      return;
+    }
+    place(s, target);
+  }
+  function place(s, target) {
+    if (s.opts.linkLand === 'owner') {
+      while (s.covers.length) onLeave(s, s.covers.pop());
+      const tabId = ownerTab(s, target.screen);
+      const switching = s.tab !== tabId;
+      s.tab = tabId;
+      const st = stackOf(s);
+      if (switching && s.opts.tabReturn === 'top') { while (st.length > 1) onLeave(s, st.pop()); st[0].web.scroll = 0; }
+      if (tabById(s, tabId).root === target.screen) { while (st.length > 1) onLeave(s, st.pop()); log(s, 'Host', `${tabById(s, tabId).label} 탭 첫 화면으로`); return; }
+      const r = route(s, target.screen, target.params);
+      st.push(r);
+      log(s, 'Host', `${tabById(s, tabId).label} 탭에 Web 화면 쌓기: ${pathOf(s, r)} (뒤로 → ${placeName(s, st[st.length - 2])})`);
+    } else {
+      const below = top(s);
+      const r = route(s, target.screen, target.params);
+      push(s, r);
+      log(s, 'Host', `지금 화면 위에 Web 화면 쌓기: ${pathOf(s, r)} (뒤로 → ${placeName(s, below)})`);
+    }
+  }
+
+  // ---------- 글쓰기 ----------
+  function deniedCamera(s) {
+    if (s.draft) s.draft.notice = { kind: 'denied' };
+    log(s, 'Host→Web', '결과: 카메라 권한 거부', 'Call');
+    log(s, 'Web', '안내와 [설정 열기] 버튼 표시');
+  }
+  function finishUpload(s) {
+    const d = s.draft;
+    s.seq += 1;
+    s.myPosts.unshift({ id: 'n' + s.seq, by: 'me', title: '오늘 무대 최고였어요', body: '사진 올려요!', photos: d.items.filter(i => i.t === 'photo').length, likes: 0, comments: 0 });
+    const i = s.covers.map(r => r.screen).lastIndexOf('compose');
+    if (i >= 0) s.covers.splice(i, 1);
+    s.draft = null;
+    log(s, 'Web', '올리기 끝 → 글쓰기를 닫고 목록 맨 위에 새 글');
+    s.toast = '글을 올렸어요';
+  }
+
+  // ---------- 메시지 ----------
+  function markRead(s) {
+    if (s.unread === 0) return;
+    s.unread = 0;
+    log(s, 'Host', '메시지를 읽음');
+    log(s, 'Host→Web', '안 읽은 수 0', 'Event');
+  }
+
+  function dismiss(s) {
+    if (s.sheet) { s.sheet = null; log(s, 'Host→Web', '결과: 사용자가 취소', 'Call'); return; }
+    const d = s.dialog;
+    if (!d || d.kind === 'osPerm') return;          // OS 창은 바깥을 눌러도 닫히지 않는다
+    if (d.kind === 'leave') return HANDLERS.leaveAnswer(s, { go: false });
+    if (d.kind === 'cancelUpload') return HANDLERS.cancelUploadAnswer(s, { yes: false });
+    s.dialog = null;
+  }
+
+  // ---------- 동작 ----------
+  const HANDLERS = {
+    // 앱 생명주기
+    launch(s) {
+      if (s.app !== 'killed') return;
+      s.app = 'running'; s.banner = null; boot(s);
+      log(s, 'OS', '앱 아이콘으로 시작');
+      log(s, 'Host', `스플래시 → ${tabset(s).tabs[0].label} 탭의 첫 화면`);
+    },
+    kill(s, a) {
+      if (s.app !== 'running') return;
+      const lost = draftDirty(s);
+      Object.assign(s, { app: 'killed', stacks: {}, tab: null, covers: [], sheet: null, dialog: null, draft: null, pending: null, browser: null, settingsOpen: false, banner: null });
+      log(s, 'OS', `앱 종료${a && a.reason ? ` (${a.reason})` : ''}${lost ? ' — 쓰던 글도 사라짐' : ''}`);
+    },
+    resume(s) {
+      if (s.app !== 'running') return;
+      log(s, 'OS', '백그라운드에 갔다가 다시 앞으로');
+      if (s.session === 'in' && authed(s, 'host', null)) log(s, 'Host', '돌아오면서 세션 확인 → 유효');
+    },
+    platform(s, a) { s.os = a.os; },
+    noop(s, a) { s.toast = a.toast || null; },
+    dismiss(s) { dismiss(s); },
+
+    // 이동
+    tab(s, a) {
+      if (s.app !== 'running' || s.covers.length) return;
+      const ts = tabset(s), t = tabById(s, a.tab);
+      if (!t) return;
+      if (t.opens) { openScreen(s, t.opens); return; }
+      const by = ts.bar === 'web' ? 'Web' : 'Host';
+      if (s.tab === t.id) {
+        const st = stackOf(s), r = last(st);
+        if (r.web.scroll > 0) { r.web.scroll = 0; log(s, by, '같은 탭 다시 누름 → 맨 위로'); }
+        else if (st.length > 1) { while (st.length > 1) onLeave(s, st.pop()); log(s, by, '같은 탭 다시 누름 → 탭의 첫 화면으로'); }
+        return;
+      }
+      s.tab = t.id;
+      const st = stackOf(s);
+      if (s.opts.tabReturn === 'top' && (st.length > 1 || st[0].web.scroll > 0)) {
+        while (st.length > 1) onLeave(s, st.pop());
+        st[0].web.scroll = 0;
+        log(s, by, `${t.label} 탭으로 → 첫 화면, 맨 위부터`);
+      } else {
+        log(s, by, `${t.label} 탭으로 (${ts.bar === 'web' ? 'Web 안에서 이동' : '다른 탭의 화면은 그대로 살아 있음'})`);
+      }
+      if (last(st).screen === 'room') markRead(s);
+    },
+    open(s, a) { if (s.app === 'running') openScreen(s, a.screen, a.params); },
+    back(s, a) {
+      const via = (a && a.via) || 'system';
+      if (s.browser) { s.browser = null; log(s, 'OS', '브라우저에서 앱으로 돌아옴'); return; }
+      if (s.settingsOpen) { s.settingsOpen = false; log(s, 'OS', '설정에서 앱으로 돌아옴'); return; }
+      if (s.app !== 'running') return;
+      if (s.dialog) {
+        if (via === 'system' && s.os === 'android' && s.dialog.kind !== 'osPerm') dismiss(s);
+        return;   // iOS는 창이 열린 동안 스와이프를 막는다
+      }
+      if (s.sheet) { if (!(via === 'system' && s.os === 'ios')) dismiss(s); return; }
+      const r = top(s);
+      if (via === 'system' && s.os === 'ios' && s.covers.length) { s.toast = 'iOS: 아래에서 올라온 화면은 스와이프로 닫지 않아요 (✕)'; return; }
+      if (r.screen === 'compose' && draftDirty(s)) {
+        if (via === 'system') { log(s, 'Host', 'Android 뒤로를 받음 → 글쓰기 중인지 Web에 확인 (Host가 묻고 Web이 답하는 쌍: 아직 이름 없음)'); log(s, 'Web', '작성 중 → 나갈지 묻는 창'); }
+        else log(s, 'Web', '✕ 누름 → 작성 중이라 나갈지 묻는 창 (Host 관여 없음)');
+        s.dialog = { kind: 'leave', then: null };
+        return;
+      }
+      if (s.covers.length || stackOf(s).length > 1) {
+        const x = removeTop(s);
+        log(s, kindOf(s, x.screen) === 'web' ? 'Web' : 'Host', `뒤로: ${SCREENS[x.screen].name} 닫음 → ${placeName(s, top(s))}`);
+        afterPop(s, x);
+        return;
+      }
+      if (via !== 'system' || s.os === 'ios') return;
+      const ts = tabset(s);
+      if (s.tab !== ts.tabs[0].id) { s.tab = ts.tabs[0].id; log(s, 'Host', `탭 첫 화면에서 Android 뒤로 → 첫 탭(${ts.tabs[0].label})으로`); return; }
+      if (!s.exitArmed) { s.exitArmed = true; s.toast = '한 번 더 누르면 종료돼요'; log(s, 'Host', '첫 화면에서 Android 뒤로 → 종료 안내 (2초 안에 한 번 더)'); return; }
+      HANDLERS.kill(s, { reason: 'Android 뒤로 두 번' });
+    },
+    scroll(s) { const r = top(s); if (r && kindOf(s, r.screen) === 'web') r.web.scroll += 600; },
+    innerTab(s, a) {
+      const r = top(s); if (!r) return;
+      r.web.tab = a.tab; r.web.scroll = 0;
+      log(s, 'Web', `안쪽 탭 '${a.tab}' (주소의 쿼리만 바꿔서 뒤로가기 단계는 늘지 않음)`);
+    },
+    tapLink(s, a) {
+      const t = parseTarget(a.url);
+      if (t && t.external) { s.browser = { url: a.url, kind: 'external' }; log(s, 'Web', `링크 누름: ${a.url}`); log(s, 'Host', '허용 목록 밖 → 시스템 브라우저로 넘김'); return; }
+      if (!t) { s.toast = '열 수 없는 링크예요'; return; }
+      openScreen(s, t.screen, t.params);
+    },
+
+    // 로그인·세션
+    like(s, a) {
+      if (gate(s, a)) return;
+      if (!authed(s, 'web', a)) return;
+      s.liked[a.id] = !s.liked[a.id];
+      log(s, 'Web', `좋아요 ${s.liked[a.id] ? '누름' : '취소'}`);
+    },
+    needLoginAnswer(s, a) {
+      const d = s.dialog; s.dialog = null;
+      if (a.go && d) openLogin(s, d.then); else log(s, whoAt(s), '로그인 안내를 닫음');
+    },
+    loginOpen(s) { if (s.session !== 'in') openLogin(s, null); },
+    loginSubmit(s) {
+      const r = top(s); if (!r || r.screen !== 'login') return;
+      const p = s.pending; s.pending = null;
+      if (s.covers.length) s.covers.pop(); else stackOf(s).pop();
+      s.session = 'in'; s.server = 'ok';
+      if (s.opts.loginAt === 'host') {
+        log(s, 'Host', '로그인 성공 → 세션 저장 (갱신은 Host 한 곳에서)');
+        log(s, 'Host→Web', '로그인 상태 바뀜 → 열린 Web 화면 모두 다시 그림', 'Event');
+      } else {
+        log(s, 'Web', '로그인 성공');
+        log(s, 'Web→Host', '로그인됨 → Host 화면과 Host 기능도 이 세션을 알아야 함', 'Message');
+      }
+      const here = top(s);
+      if (p && p.action && here && here.key === p.key && s.opts.afterLogin === 'resume') {
+        log(s, whoAt(s), `돌아와서 하던 동작 마침: ${ACTION_NAMES[p.action.type] || p.action.type}`);
+        HANDLERS[p.action.type](s, p.action);
+        if (!s.toast) s.toast = '로그인했어요';
+      } else {
+        s.toast = '로그인했어요';
+      }
+    },
+    logout(s) {
+      if (s.session !== 'in') return;
+      if (whoAt(s) === 'Web') log(s, 'Web→Host', '로그아웃 요청', 'Call');
+      s.session = 'out';
+      log(s, 'Host', '로그아웃 → 저장된 세션 지움');
+      log(s, 'Host→Web', '로그아웃 → 열린 Web 화면 모두 비로그인으로', 'Event');
+      s.toast = '로그아웃했어요';
+    },
+    revoke(s) {
+      if (s.session !== 'in') { s.toast = '로그인 상태가 아니에요'; return; }
+      s.server = 'revoked';
+      log(s, '서버', '세션을 끊음 (예: 다른 기기에서 비밀번호 변경). 앱은 아직 모름');
+    },
+
+    // 글쓰기 (S2)
+    compose(s, a) {
+      if (gate(s, a)) return;
+      if (composeOpen(s)) return;
+      s.draft = { text: false, items: [], notice: null, upload: null };
+      s.covers.push(route(s, 'compose'));
+      log(s, 'Web', '글쓰기 열기 (탭 막대를 덮고 아래에서 올라옴)');
+    },
+    typeText(s) { if (s.draft) { s.draft.text = true; log(s, 'Web', '글 입력'); } },
+    attach(s) {
+      const d = s.draft; if (!d) return;
+      if (d.upload && d.upload.state === 'running') { s.toast = '올리는 중에는 첨부를 바꿀 수 없어요'; return; }
+      d.notice = null;
+      s.sheet = { kind: 'source' };
+      log(s, 'Web→Host', `사진·영상 고르기 (사진 ${photosLeft(s)}장, 영상 ${videosLeft(s)}개까지)`, 'Call');
+    },
+    source(s, a) {
+      s.sheet = null;
+      if (a.src === 'cancel') { log(s, 'Host→Web', '결과: 사용자가 취소', 'Call'); return; }
+      if (a.src === 'album') { s.sheet = { kind: 'picker', notice: null }; log(s, 'Host', `사진 선택기 (권한 필요 없음, 한 번에 ${photosLeft(s)}장까지)`); return; }
+      if (s.perm.camera === 'ask') { s.dialog = { kind: 'osPerm', what: 'camera' }; log(s, 'OS', '카메라 권한을 묻는 창'); return; }
+      if (s.perm.camera === 'denied') { deniedCamera(s); return; }
+      s.sheet = { kind: 'camera' }; log(s, 'Host', '카메라 열기');
+    },
+    osPermAnswer(s, a) {
+      const d = s.dialog; if (!d || d.kind !== 'osPerm') return;
+      s.dialog = null;
+      if (d.what === 'camera') {
+        s.perm.camera = a.allow ? 'granted' : 'denied';
+        log(s, 'OS', `카메라 권한 ${a.allow ? '허용' : '거부'}`);
+        if (a.allow) { s.sheet = { kind: 'camera' }; log(s, 'Host', '카메라 열기'); } else deniedCamera(s);
+      } else {
+        s.perm.photoAdd = a.allow ? 'granted' : 'denied';
+        log(s, 'OS', `앨범에 추가 권한 ${a.allow ? '허용' : '거부'}`);
+        if (a.allow) { s.toast = '앨범에 저장했어요'; log(s, 'Host', '사진을 앨범에 저장'); }
+        else s.toast = '앨범 권한이 없어 저장하지 못했어요';
+      }
+    },
+    pick(s, a) {
+      const d = s.draft; if (!d || !s.sheet) return;
+      if (a.photos) {
+        const left = photosLeft(s);
+        if (a.photos > left) { s.sheet.notice = `사진은 ${LIMITS.photos}장까지예요. 지금은 ${left}장 더 고를 수 있어요`; log(s, 'Host', `선택기가 ${left}장 넘게 고르지 못하게 막음`); return; }
+        s.sheet = null;
+        for (let i = 0; i < a.photos; i++) d.items.push({ t: 'photo' });
+        log(s, 'Host→Web', `결과: 사진 ${a.photos}장 (미리보기)`, 'Call');
+        return;
+      }
+      s.sheet = null;
+      if (videosLeft(s) < 1) { d.notice = { kind: 'limit', text: `영상은 ${LIMITS.videos}개만 올릴 수 있어요` }; log(s, 'Host→Web', '결과: 영상 개수 초과', 'Call'); return; }
+      if (a.video > LIMITS.videoMB) {
+        d.notice = { kind: 'limit', text: `영상은 ${LIMITS.videoMB}MB까지 올릴 수 있어요 (고른 영상 ${fmtMB(a.video)})` };
+        log(s, 'Host', '용량은 고른 뒤에야 알 수 있음 → 검사해서 거절');
+        log(s, 'Host→Web', '결과: 용량 초과', 'Call');
+        return;
+      }
+      d.items.push({ t: 'video', mb: a.video });
+      log(s, 'Host→Web', `결과: 영상 1개 (${fmtMB(a.video)})`, 'Call');
+    },
+    pickCancel(s) { s.sheet = null; log(s, 'Host→Web', '결과: 사용자가 취소', 'Call'); },
+    shoot(s) {
+      s.sheet = null;
+      if (!s.draft) return;
+      if (photosLeft(s) < 1) { s.draft.notice = { kind: 'limit', text: `사진은 ${LIMITS.photos}장까지예요` }; return; }
+      s.draft.items.push({ t: 'photo' });
+      log(s, 'Host→Web', '결과: 찍은 사진 1장', 'Call');
+    },
+    openSettings(s) { s.settingsOpen = true; log(s, 'Web→Host', '설정 앱 열기', 'Call'); },
+    settingsSet(s, a) { s.perm[a.which] = a.value; log(s, 'OS', `설정에서 ${a.which === 'camera' ? '카메라' : '앨범에 추가'} 권한을 ${a.value === 'granted' ? '허용' : '거부'}으로`); },
+    settingsClose(s) {
+      s.settingsOpen = false;
+      log(s, 'OS', '설정에서 앱으로 돌아옴');
+      if (s.draft && s.draft.notice && s.draft.notice.kind === 'denied') {
+        log(s, 'Web→Host', `돌아와서 카메라 권한을 다시 확인 → ${s.perm.camera === 'granted' ? '허용됨' : '아직 거부'}`, 'Call');
+        if (s.perm.camera === 'granted') s.draft.notice = null;
+      }
+    },
+    setPerm(s, a) { s.perm[a.which] = a.value; },
+    submit(s, a) {
+      const d = s.draft; if (!d) return;
+      if (d.upload && d.upload.state === 'running') return;
+      if (gate(s, a)) return;
+      if (!d.text && !d.items.length) { s.toast = '글이나 사진을 넣어 주세요'; return; }
+      if (!authed(s, 'web', a)) return;
+      d.notice = null;
+      d.upload = { progress: 0, state: 'running' };
+      log(s, 'Web', `등록 → 글과 첨부 ${d.items.length}개 올리기 시작 (누가 올릴지는 S2 설계에서)`);
+    },
+    tick(s) {
+      const u = s.draft && s.draft.upload;
+      if (!u || u.state !== 'running') { s.toast = '올리는 중인 글이 없어요'; return; }
+      u.progress = Math.min(100, u.progress + 25);
+      log(s, '업로드', `${u.progress}%`);
+      if (u.progress >= 100) finishUpload(s);
+    },
+    cancelUpload(s) { const u = s.draft && s.draft.upload; if (u && u.state === 'running') s.dialog = { kind: 'cancelUpload' }; },
+    cancelUploadAnswer(s, a) {
+      s.dialog = null;
+      const u = s.draft && s.draft.upload;
+      if (!a.yes || !u) return;
+      u.state = 'cancelled';
+      log(s, 'Web', `업로드 취소 (${u.progress}%에서). 쓰던 글과 첨부는 남김`);
+    },
+    retry(s) { const d = s.draft; if (d && d.upload) { d.upload = { progress: 0, state: 'running' }; log(s, 'Web', '다시 올리기 (처음부터)'); } },
+    leaveAnswer(s, a) {
+      const d = s.dialog; s.dialog = null;
+      if (!a.go) { log(s, 'Web', '계속 쓰기'); return; }
+      const uploading = !!(s.draft && s.draft.upload && s.draft.upload.state === 'running');
+      const i = s.covers.map(r => r.screen).lastIndexOf('compose');
+      if (i >= 0) s.covers.splice(i);
+      s.draft = null;
+      log(s, 'Web', uploading ? '업로드를 멈추고 글쓰기 닫음 (쓰던 글 버림)' : '글쓰기 닫음 (쓰던 글 버림)');
+      if (d && d.then) HANDLERS[d.then.type](s, d.then);
+    },
+
+    // 링크·알림 (S3)
+    link(s, a) {
+      const t = parseTarget(a.url);
+      if (s.app !== 'running') { log(s, 'OS', `링크로 앱 시작: ${a.url}`); s.app = 'running'; s.banner = null; boot(s); arrive(s, t, true); }
+      else { log(s, 'OS', `켜져 있는 앱에 링크 전달: ${a.url}`); arrive(s, t, false); }
+    },
+    notify(s, a) {
+      const inApp = s.app === 'running' && !s.browser && !s.settingsOpen;
+      s.banner = { text: a.text, target: a.target, inApp };
+      log(s, '서버', `알림 보냄: ${a.text}`);
+      log(s, inApp ? 'Host' : 'OS', inApp ? '앱이 앞에 있음 → 앱 안 배너로 보여 줌' : 'OS 알림 배너');
+    },
+    tapBanner(s) {
+      const b = s.banner; if (!b) return;
+      s.banner = null;
+      if (s.app !== 'running') { log(s, 'OS', '알림을 눌러 앱 시작'); s.app = 'running'; boot(s); arrive(s, b.target, true); }
+      else { log(s, b.inApp ? 'Host' : 'OS', '알림 누름'); arrive(s, b.target, false); }
+    },
+    arriveTarget(s, a) { place(s, a.target); },
+    noAppBrowser(s, a) {
+      s.browser = { url: a.url, kind: 'landing' };
+      log(s, 'OS', '앱이 없는 폰: 브라우저가 링크를 염');
+      log(s, 'Web', '앱 열기·설치 안내 페이지 (브라우저에서 Web이 보여 주는 유일한 화면)');
+    },
+    closeBrowser(s) {
+      if (!s.browser) return;
+      const k = s.browser.kind; s.browser = null;
+      log(s, 'OS', k === 'landing' ? '안내 페이지를 닫음' : '브라우저에서 앱으로 돌아옴');
+    },
+
+    // 멤버십·이미지 (S4)
+    openMembership(s, a) { if (gate(s, a)) return; openScreen(s, 'membership'); },
+    buy(s) {
+      if (s.session !== 'in') { openLogin(s, null); return; }      // 결제는 로그인 뒤에 직접 다시 누르게 한다
+      if (!authed(s, 'host', null)) return;
+      s.membership = true;
+      log(s, 'Host', '가짜 결제 완료 → 멤버십 반영');
+      log(s, 'Host→Web', '멤버십 바뀜 → 열린 Web 화면이 잠금을 그 자리에서 풂', 'Event');
+      if (top(s).screen === 'membership') { const x = removeTop(s); afterPop(s, x); }
+      s.toast = '멤버십에 가입했어요';
+    },
+    expire(s) {
+      if (!s.membership) { s.toast = '멤버십이 없어요'; return; }
+      s.membership = false;
+      log(s, '서버', '멤버십 만료 → Host가 알게 됨');
+      log(s, 'Host→Web', '멤버십 바뀜 → 잠금이 다시 걸림', 'Event');
+      const r = top(s);
+      if (r && r.screen === 'viewer') {
+        const p = getPost(s, r.params.id);
+        if (p && p.members) { removeTop(s); log(s, 'Host', '멤버 전용 사진이라 이미지 뷰어를 닫음'); }
+      }
+      s.toast = '멤버십이 끝났어요';
+    },
+    viewer(s, a) {
+      const p = getPost(s, a.id); if (!p) return;
+      s.covers.push(route(s, 'viewer', { id: a.id, idx: a.idx, zoom: false }));
+      log(s, 'Web→Host', `이미지 뷰어 열기 (사진 ${p.photos}장 중 ${a.idx}번째)`);
+    },
+    zoom(s) { const r = top(s); if (r && r.screen === 'viewer') r.params.zoom = !r.params.zoom; },
+    save(s) {
+      const r = top(s); if (!r || r.screen !== 'viewer') return;
+      if (s.os === 'android') { s.toast = '앨범에 저장했어요'; log(s, 'Host', '사진을 앨범에 저장 (Android는 권한 없이)'); return; }
+      if (s.perm.photoAdd === 'ask') { s.dialog = { kind: 'osPerm', what: 'photoAdd' }; log(s, 'OS', 'iOS: 앨범에 추가해도 되는지 묻는 창'); return; }
+      if (s.perm.photoAdd === 'denied') { s.toast = '앨범 권한이 없어 저장하지 못했어요'; return; }
+      s.toast = '앨범에 저장했어요'; log(s, 'Host', '사진을 앨범에 저장');
+    },
+
+    // 메시지 (S5)
+    openRoom(s, a) {
+      if (gate(s, a)) return;
+      if (!authed(s, 'host', a)) return;
+      openScreen(s, 'room');
+      markRead(s);
+    },
+    newMessage(s) {
+      s.extraMsgs += 1;
+      log(s, '서버', '아티스트가 새 메시지를 보냄');
+      const r = top(s);
+      if (s.app === 'running' && r && r.screen === 'room' && !s.browser) { log(s, 'Host', '메시지 방을 보는 중이라 바로 읽음'); return; }
+      s.unread += 1;
+      log(s, 'Host→Web', `안 읽은 수 ${s.unread}`, 'Event');
+    },
+  };
+
+  function initialState(setup, opts) {
+    setup = setup || {};
+    const s = {
+      n: 0, seq: 0,
+      opts: { ...DEFAULT_OPTS, ...(opts || {}) },
+      os: setup.os || 'ios',
+      app: setup.app || 'running',
+      tab: null, stacks: {}, covers: [],
+      sheet: null, dialog: null, banner: null, toast: null, browser: null, settingsOpen: false,
+      session: setup.session || 'out', server: 'ok', membership: !!setup.membership,
+      pending: null, draft: null,
+      perm: { camera: 'ask', photoAdd: 'ask', ...(setup.perm || {}) },
+      unread: setup.unread == null ? 3 : setup.unread, extraMsgs: 0,
+      liked: {}, myPosts: [], exitArmed: false, trace: [],
+    };
+    if (s.app === 'running') {
+      boot(s);
+      if (setup.tabFor) s.tab = ownerTab(s, setup.tabFor);
+    }
+    log(s, '준비', setup.note || '처음 상태');
+    return s;
+  }
+
+  function reduce(prev, action) {
+    const s = clone(prev);
+    s.n += 1; s.toast = null;
+    if (action.type !== 'back') s.exitArmed = false;
+    const h = HANDLERS[action.type];
+    if (!h) throw new Error('모르는 동작: ' + action.type);
+    h(s, action);
+    return s;
+  }
+
+  return { DOMAIN, LIMITS, SCREENS, TABSETS, OPTIONS, DEFAULT_OPTS, FEED, initialState, reduce,
+           top, kindOf, pathOf, tabset, stackOf, hasMembership, draftDirty, getPost, allRoutes, placeName };
+})();
+</script>
+
+<script>
+// =====================================================================
+// 페이지: Model을 그리고 버튼을 Model 동작으로 바꾼다. (버릴 껍데기)
+// =====================================================================
+const D = Model.DOMAIN;
+const CASTS = {
+  a: { label: '팬룸 · 네온타이드 (4인조 밴드)', app: '팬룸', artist: '네온타이드', short: 'NT', me: '별빛타이디', fanA: '새벽바다', fanB: '파도소리', staff: '팬룸 운영팀' },
+  b: { label: '온스테이지 · 윤슬 (솔로 가수)', app: '온스테이지', artist: '윤슬', short: 'YS', me: '윤슬바라기', fanA: '봄날', fanB: '노을', staff: '온스테이지 운영팀' },
+};
+
+const WALKS = [
+  { id: 'free', short: '자유', title: '자유롭게 눌러 보기', setup: { session: 'out' },
+    situation: '로그인하지 않은 채로 앱이 켜져 있다. 폰 화면과 "폰 밖에서 일어나는 일"을 마음대로 누른다.',
+    watch: '"지금 상태"에서 노랗게 바뀐 칸과 "일어난 일"의 Host·Web·Bridge 기록.', steps: [] },
+  { id: 'S1', short: 'S1 로그인', title: 'S1 로그인과 세션', setup: { session: 'out', tabFor: 'post' },
+    situation: '로그인하지 않은 팬이 커뮤니티를 둘러보다 좋아요를 누른다. 로그인한 뒤 원래 글로 돌아오고, 나중에 서버가 세션을 끊는다.',
+    watch: '로그인 화면이 어디에 뜨는지, 로그인 뒤 어디로 돌아와 무엇을 마치는지, 세션이 끊길 때 Host와 Web이 함께 로그아웃되는지.',
+    steps: [
+      { label: '커뮤니티에서 「어제 무대 직캠 모음」 열기', do: [{ type: 'open', screen: 'post', params: { id: 'p1' } }] },
+      { label: '♥ 좋아요 누르기', do: [{ type: 'like', id: 'p1' }], note: '비로그인이라 로그인을 요구한다' },
+      { label: '안내 창에서 [로그인]', when: o => o.loginPrompt === 'confirm', do: [{ type: 'needLoginAnswer', go: true }] },
+      { label: '로그인 화면에서 [로그인]', do: [{ type: 'loginSubmit' }], note: '어디로 돌아왔나? 좋아요는 눌렸나?' },
+      { label: '(서버) 세션 끊기', do: [{ type: 'revoke' }], note: '화면은 아직 로그인 상태다. 앱은 모른다' },
+      { label: '♥ 한 번 더 누르기 (좋아요 취소 요청)', do: [{ type: 'like', id: 'p1' }], note: '요청이 거절되면서 세션이 끝난 걸 안다. Host와 Web이 함께 로그아웃되나?' },
+      { label: '로그인 화면 닫기', when: o => o.sessionEnd === 'login', do: [{ type: 'back', via: 'ui' }], note: '닫으면 비로그인으로 그 자리에 남는다' },
+      { label: '마이 탭 보기', do: [{ type: 'tab', tab: 'my' }], note: '마이도 비로그인으로 바뀌었나?' },
+    ] },
+  { id: 'S2', short: 'S2 첨부', title: 'S2 사진·영상 첨부 글쓰기', setup: { session: 'in', tabFor: 'post' },
+    situation: '로그인한 팬이 글을 쓰면서 사진을 찍고, 앨범에서 고르고, 큰 영상을 넣으려다 실패한다. 올리다 취소하고, 나가려다 멈춘다.',
+    watch: '권한 거부를 누가 알려 주는지, 개수·용량을 어디서 막는지, 작성 중 이탈을 누가 묻는지.',
+    steps: [
+      { label: '✏️ 글쓰기 열고 글 입력', do: [{ type: 'compose' }, { type: 'typeText' }] },
+      { label: '📷 첨부 → 사진 찍기', do: [{ type: 'attach' }, { type: 'source', src: 'camera' }], note: '카메라는 처음 쓸 때 OS가 권한을 묻는다. 앨범에서 고를 때는 권한이 필요 없다' },
+      { label: '[허용 안 함]', do: [{ type: 'osPermAnswer', allow: false }], note: '거부를 누가 어떻게 알려 주나' },
+      { label: '[설정 열기] → 카메라 허용 → 앱으로 돌아오기', do: [{ type: 'openSettings' }, { type: 'settingsSet', which: 'camera', value: 'granted' }, { type: 'settingsClose' }] },
+      { label: '📷 첨부 → 사진 찍기 → [촬영]', do: [{ type: 'attach' }, { type: 'source', src: 'camera' }, { type: 'shoot' }], note: 'iOS 시뮬레이터에서 카메라가 되는지는 아직 확인 전' },
+      { label: '📷 첨부 → 앨범 → 사진 12장 고르기', do: [{ type: 'attach' }, { type: 'source', src: 'album' }, { type: 'pick', photos: 12 }], note: '개수는 선택기에서 막는다' },
+      { label: '사진 3장 고르기', do: [{ type: 'pick', photos: 3 }] },
+      { label: '📷 첨부 → 앨범 → 1.2GB 영상 고르기', do: [{ type: 'attach' }, { type: 'source', src: 'album' }, { type: 'pick', video: 1200 }], note: '용량은 고른 뒤에야 안다' },
+      { label: '[등록] → 시간 흐르기 두 번', do: [{ type: 'submit' }, { type: 'tick' }, { type: 'tick' }] },
+      { label: '[업로드 취소] → [취소하기]', do: [{ type: 'cancelUpload' }, { type: 'cancelUploadAnswer', yes: true }] },
+      { label: (o, os) => os === 'android' ? 'Android 뒤로 버튼' : '✕ 누르기',
+        do: (o, os) => [{ type: 'back', via: os === 'android' ? 'system' : 'ui' }],
+        note: (o, os) => os === 'android' ? 'Host가 뒤로를 받아 Web에 묻는다' : 'iOS는 아래에서 올라온 화면이라 스와이프가 없다. ✕는 Web의 버튼이다' },
+      { label: '[계속 쓰기]', do: [{ type: 'leaveAnswer', go: false }] },
+      { label: '[다시 올리기] → 끝까지', do: [{ type: 'retry' }, { type: 'tick' }, { type: 'tick' }, { type: 'tick' }, { type: 'tick' }], note: '목록 맨 위에 새 글이 있나' },
+    ] },
+  { id: 'S3', short: 'S3 링크·알림', title: 'S3 공유 링크와 알림으로 들어오기', setup: { app: 'killed', session: 'in' },
+    situation: '앱이 꺼져 있을 때와 켜져 있을 때 공유 링크·알림으로 들어온다. 글을 쓰는 중에도 링크가 온다. 허용 목록 밖 링크는 시스템 브라우저로 간다.',
+    watch: '목적지가 어느 탭의 무엇 위에 쌓이는지, 뒤로 가면 어디인지, 쓰던 글은 어떻게 되는지.',
+    steps: [
+      { label: `앱이 꺼진 상태에서 공유 링크 열기 (/posts/p3)`, do: [{ type: 'link', url: `https://${D}/posts/p3` }], note: '어느 탭의 무엇 위에 쌓였나? (iOS 시뮬레이터에서는 https 대신 커스텀 스킴으로 재현한다)' },
+      { label: '‹ 뒤로', do: [{ type: 'back', via: 'ui' }], note: '목록으로 가나, 앱 첫 화면으로 가나?' },
+      { label: '공지 「팬미팅 예매 안내」 열고 예매 사이트 링크 누르기', do: [{ type: 'open', screen: 'post', params: { id: 'p4' } }, { type: 'tapLink', url: 'https://tickets.example/fanmeeting' }], note: '허용 목록 밖이라 시스템 브라우저로' },
+      { label: '앱으로 돌아오기', do: [{ type: 'closeBrowser' }] },
+      { label: '마이 탭으로 가기', do: [{ type: 'tab', tab: 'my' }] },
+      { label: '(서버) 알림: 아티스트 새 글', do: () => [{ type: 'notify', text: `${cast().artist}이(가) 새 글을 올렸어요`, target: { screen: 'post', params: { id: 'p2' } } }] },
+      { label: '알림 배너 누르기', do: [{ type: 'tapBanner' }], note: 'Host 화면(마이)에서 Web 화면으로. 뒤로 가면 어디?' },
+      { label: '뒤로 → 커뮤니티 탭 → ✏️ 글쓰기 열고 글 입력', do: [{ type: 'back', via: 'ui' }, { type: 'tab', tab: 'community' }, { type: 'compose' }, { type: 'typeText' }] },
+      { label: '공유 링크 열기 (/posts/p1, 글쓰기 중)', do: [{ type: 'link', url: `https://${D}/posts/p1` }], note: '쓰던 글은 어떻게 되나' },
+      { label: '[나가기]', when: o => o.linkBusy === 'ask', do: [{ type: 'leaveAnswer', go: true }] },
+      { label: '‹ 뒤로 → 글쓰기로 돌아왔나', when: o => o.linkBusy === 'over', do: [{ type: 'back', via: 'ui' }] },
+      { label: '앱이 없는 다른 폰에서 같은 링크 열기', do: [{ type: 'noAppBrowser', url: `https://${D}/posts/p3` }], note: '브라우저에서 Web은 안내 페이지만 보여 준다' },
+    ] },
+  { id: 'S4', short: 'S4 멤버 전용', title: 'S4 멤버 전용 글', setup: { session: 'in', tabFor: 'post' },
+    situation: '멤버십이 없는 팬이 멤버 전용 글을 보고 가입한다. 사진을 Host 이미지 뷰어로 크게 보고 저장한다. 나중에 멤버십이 끝난다.',
+    watch: '가입한 뒤 글이 다시 로드되지 않고 그 자리에서 풀리는지, 만료되면 바로 잠기는지.',
+    steps: [
+      { label: '🔒 「연습실 비하인드」 열기', do: [{ type: 'open', screen: 'post', params: { id: 'p2' } }] },
+      { label: '[멤버십 가입하기]', do: [{ type: 'openMembership' }], note: 'Web 화면 위에 Host 화면이 쌓인다' },
+      { label: '[가입하기 (가짜 결제)]', do: [{ type: 'buy' }], note: '돌아온 글이 새로 로드되지 않고 그 자리에서 풀리나' },
+      { label: '사진 2 누르기', do: [{ type: 'viewer', id: 'p2', idx: 2 }] },
+      { label: '[확대] → [저장]', do: [{ type: 'zoom' }, { type: 'save' }], note: (o, os) => os === 'ios' ? 'iOS는 앨범에 추가할 권한을 처음에 묻는다' : 'Android는 권한 없이 저장한다' },
+      { label: '[허용]', when: (o, os) => os === 'ios', do: [{ type: 'osPermAnswer', allow: true }] },
+      { label: '(서버) 멤버십 만료', do: [{ type: 'expire' }], note: '뷰어는 닫히나? 글은 바로 잠기나?' },
+    ] },
+  { id: 'S5', short: 'S5 왕복', title: 'S5 Web과 Host 화면 왕복', setup: { session: 'in', tabFor: 'artist', unread: 3 },
+    situation: 'Web의 아티스트 프로필에서 사진 탭을 스크롤하다 Host 메시지 방에 다녀온다.',
+    watch: '돌아왔을 때 사진 탭과 스크롤이 그대로인지, 안 읽은 수가 Web과 Host 탭 막대에 함께 반영되는지.',
+    steps: [
+      { label: '아티스트 카드 눌러 프로필 열기', do: [{ type: 'open', screen: 'artist' }] },
+      { label: '[사진] 탭 → 아래로 두 번 스크롤', do: [{ type: 'innerTab', tab: '사진' }, { type: 'scroll' }, { type: 'scroll' }] },
+      { label: '💬 메시지 누르기', do: [{ type: 'openRoom' }], note: 'Host 화면이 Web 화면 위에 쌓인다. 읽으면 안 읽은 수가 0' },
+      { label: '‹ 뒤로', do: [{ type: 'back', via: 'ui' }], note: '사진 탭·스크롤 1200px이 그대로인가? 숫자는 0인가?' },
+      { label: '(서버) 아티스트 새 메시지', do: [{ type: 'newMessage' }], note: '보고 있는 Web 화면과 Host 탭 막대의 숫자가 함께 바뀌나' },
+    ] },
+  { id: 'E1', short: '가장자리 1', title: '비로그인으로 멤버 전용 글 링크 열기', setup: { app: 'killed', session: 'out' },
+    situation: '로그인하지 않은 사람이 멤버 전용 글의 공유 링크로 앱을 연다. 로그인과 가입을 거쳐 그 글로 돌아와야 한다.',
+    watch: '로그인 뒤 돌아갈 곳이 링크의 목적지인지, 결제는 자동으로 이어지지 않는지.',
+    steps: [
+      { label: '앱이 꺼진 상태에서 /posts/p2 링크 열기', do: [{ type: 'link', url: `https://${D}/posts/p2` }] },
+      { label: '[로그인하고 가입하기]', do: [{ type: 'openMembership' }] },
+      { label: '안내 창에서 [로그인]', when: o => o.loginPrompt === 'confirm', do: [{ type: 'needLoginAnswer', go: true }] },
+      { label: '로그인 화면에서 [로그인]', do: [{ type: 'loginSubmit' }], note: o => o.afterLogin === 'resume' ? '멤버십 화면까지 이어서 열린다' : '글로 돌아오기만 한다' },
+      { label: '[멤버십 가입하기]', when: o => o.afterLogin === 'back', do: [{ type: 'openMembership' }] },
+      { label: '[가입하기 (가짜 결제)]', do: [{ type: 'buy' }], note: '그 글로 돌아와 잠금이 풀리나' },
+    ] },
+  { id: 'E2', short: '가장자리 2', title: '글쓰기 중에 세션이 끊김', setup: { session: 'in', tabFor: 'post' },
+    situation: '사진까지 넣은 글을 등록하려는 순간 서버에서 세션이 이미 끊겨 있다.',
+    watch: '쓰던 글이 살아남는지, 다시 로그인하면 등록을 이어 가는지.',
+    steps: [
+      { label: '✏️ 글쓰기 → 글 입력 → 앨범에서 사진 3장', do: [{ type: 'compose' }, { type: 'typeText' }, { type: 'attach' }, { type: 'source', src: 'album' }, { type: 'pick', photos: 3 }] },
+      { label: '(서버) 세션 끊기', do: [{ type: 'revoke' }] },
+      { label: '[등록]', do: [{ type: 'submit' }], note: o => o.sessionEnd === 'home' ? '첫 화면으로 보내면 쓰던 글은?' : '쓰던 글은 남아 있나' },
+      { label: '로그인 화면에서 [로그인]', when: o => o.sessionEnd === 'login', do: [{ type: 'loginSubmit' }], note: o => o.afterLogin === 'resume' ? '등록까지 이어서 한다' : '글쓰기로 돌아오기만 한다' },
+      { label: '[등록] 다시 누르기', when: o => o.sessionEnd === 'stay' || (o.sessionEnd === 'login' && o.afterLogin === 'back'), do: [{ type: 'submit' }] },
+      { label: '안내 창에서 [로그인]', when: o => o.sessionEnd === 'stay' && o.loginPrompt === 'confirm', do: [{ type: 'needLoginAnswer', go: true }] },
+      { label: '로그인 화면에서 [로그인]', when: o => o.sessionEnd === 'stay', do: [{ type: 'loginSubmit' }] },
+      { label: '[등록] 한 번 더', when: o => o.sessionEnd === 'stay' && o.afterLogin === 'back', do: [{ type: 'submit' }] },
+      { label: '시간 흐르기 → 끝까지', when: o => o.sessionEnd !== 'home', do: [{ type: 'tick' }, { type: 'tick' }, { type: 'tick' }, { type: 'tick' }] },
+    ] },
+  { id: 'E3', short: '가장자리 3', title: 'Android 뒤로가기와 탭 오가기', setup: { session: 'in', tabFor: 'post', os: 'android' },
+    situation: 'Android에서 글을 보다 다른 탭에 다녀오고, 뒤로 버튼으로 앱을 끝까지 나간다.',
+    watch: '다른 탭에 다녀왔을 때 무엇이 남는지, 첫 화면에서 뒤로를 누르면 어떻게 되는지.',
+    steps: [
+      { label: '「어제 무대 직캠 모음」 열고 아래로 스크롤', do: [{ type: 'open', screen: 'post', params: { id: 'p1' } }, { type: 'scroll' }] },
+      { label: '사진 1 → 이미지 뷰어 → Android 뒤로', do: [{ type: 'viewer', id: 'p1', idx: 1 }, { type: 'back', via: 'system' }] },
+      { label: '마이 탭 → 커뮤니티 탭', do: [{ type: 'tab', tab: 'my' }, { type: 'tab', tab: 'community' }], note: o => o.tabReturn === 'top' ? '커뮤니티의 첫 화면, 맨 위부터' : '보던 글이 그대로' },
+      { label: 'Android 뒤로', when: o => o.tabReturn === 'keep', do: [{ type: 'back', via: 'system' }], note: '목록으로' },
+      { label: 'Android 뒤로', do: [{ type: 'back', via: 'system' }], note: o => o.tabs === 'B' ? '커뮤니티는 첫 탭이 아니라 홈 탭으로' : '"한 번 더 누르면 종료"' },
+      { label: 'Android 뒤로', do: [{ type: 'back', via: 'system' }] },
+      { label: 'Android 뒤로', when: o => o.tabs === 'B', do: [{ type: 'back', via: 'system' }] },
+    ] },
+];
+
+const CATALOG = [
+  { s: 'community', where: '커뮤니티 탭 첫 화면', why: '자주 바뀌는 콘텐츠. 공유 링크의 목적지가 모여 있다' },
+  { s: 'post', where: '목록, 공유 링크, 알림', why: 'S3의 목적지. 멤버 전용이면 그 자리에서 잠긴다 (S4)' },
+  { s: 'compose', where: '목록의 ✏️ (로그인 필요)', why: '입력 폼은 Web, 사진·영상 고르기는 Host 기능 (S2)' },
+  { s: 'artist', where: '커뮤니티 위 아티스트 카드 (4탭이면 홈)', why: 'S5의 출발점. 메시지·커뮤니티로 가는 허브로 키운다면 Host 후보' },
+  { s: 'home', where: '홈 탭 (4탭 구성에만)', why: '소식과 멤버 전용 새 글 모음' },
+  { s: 'messages', where: '메시지 탭 (탭 막대를 Web이 그리면 탭이 Host 화면을 띄움)', why: '메시지는 앱 기능 (가짜 데이터)' },
+  { s: 'room', where: '메시지 목록, 아티스트 프로필의 💬', why: 'S5: Web 화면 위에 쌓이는 Host 화면' },
+  { s: 'membership', where: '잠긴 글의 [가입하기], 마이', why: '앱 결제를 흉내 낸다 (S4). Web 결제로 두면 "Host가 바꾼 상태를 Event로 알림"이 사라진다' },
+  { s: 'viewer', where: '게시글 사진', why: '확대·저장 (S4)' },
+  { s: 'login', where: '로그인 요구 지점, 마이', why: '확정은 「로그인과 세션 설계 (S1)」에서' },
+  { s: 'my', where: '마이 탭', why: '로그아웃, 멤버십. 탭 막대를 Web이 그리면 Web' },
+  { name: '첨부 방법 시트, 사진 선택기, 카메라', tag: 'host', tagText: 'Host', where: '글쓰기의 📷', why: 'Host 기능. 경로는 「사진·영상 첨부와 업로드 설계 (S2)」에서' },
+  { name: '권한 창, 설정 앱, 시스템 브라우저', tag: 'os', tagText: 'OS', where: '카메라, 사진 저장, 허용 목록 밖 링크', why: '앱 밖' },
+  { name: '앱 열기·설치 안내', tag: 'web', tagText: 'Web (브라우저)', where: '앱이 없는 폰에서 공유 링크', why: '일반 브라우저에서 Web이 보여 주는 유일한 화면' },
+];
+
+// ---------- 페이지 상태 ----------
+let ui = { walk: 'S1', step: 0, opts: { ...Model.DEFAULT_OPTS }, cast: 'a', os: 'ios', prevN: 0 };
+let state = null;
+let changed = new Set(), stacksChanged = false;
+
+const $ = sel => document.querySelector(sel);
+const esc = v => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const act = a => ` data-act="${esc(JSON.stringify(a))}"`;
+const range = n => Array.from({ length: n }, (_, i) => i);
+const cast = () => CASTS[ui.cast];
+const val = (v, ...args) => typeof v === 'function' ? v(...args) : v;
+const currentWalk = () => WALKS.find(w => w.id === ui.walk);
+const visibleSteps = w => w.steps.filter(st => !st.when || st.when(ui.opts, state.os));
+
+function startWalk(id) {
+  ui.walk = id; ui.step = 0;
+  const w = currentWalk();
+  const setup = { os: ui.os, ...w.setup };
+  state = Model.initialState(setup, ui.opts);
+  ui.prevN = 0; changed = new Set(); stacksChanged = false;
+  render();
+}
+function apply(actions) {
+  const before = state;
+  for (const a of actions) state = Model.reduce(state, a);
+  markChanges(before, state);
+  render();
+}
+function runStep(i) {
+  const steps = visibleSteps(currentWalk());
+  if (i !== ui.step || !steps[i]) return;
+  const acts = val(steps[i].do, ui.opts, state.os);
+  ui.step += 1;
+  apply(acts);
+}
+function markChanges(before, after) {
+  const a = new Map(summary(before)), b = summary(after);
+  changed = new Set(b.filter(([k, v]) => a.get(k) !== v).map(([k]) => k));
+  const sig = s => JSON.stringify([s.tab, s.stacks, s.covers.map(r => r.key)]);
+  stacksChanged = sig(before) !== sig(after);
+  ui.prevN = before.n;
+}
+
+// ---------- 상태 요약 ----------
+const PV = { ask: '묻기 전', granted: '허용', denied: '거부' };
+function screenTitle(s, r) {
+  const p = r.screen === 'post' ? Model.getPost(s, r.params.id) : null;
+  const name = r.screen === 'post' ? `게시글${p ? ` 「${p.title}」` : ' (없는 글)'}` : Model.SCREENS[r.screen].name;
+  const path = Model.pathOf(s, r);
+  return `${Model.kindOf(s, r.screen) === 'host' ? 'Host' : 'Web'} · ${name}${path ? ` ${path}` : ''}`;
+}
+function summary(s) {
+  const r = Model.top(s);
+  const findRoute = key => Model.allRoutes(s).find(x => x.key === key);
+  const pend = s.pending ? findRoute(s.pending.key) : null;
+  const d = s.draft;
+  const draftText = !d ? '—' : [d.text ? '글 있음' : '빈 글', d.items.length ? `첨부 ${d.items.length}개` : null,
+    d.upload ? (d.upload.state === 'running' ? `업로드 ${d.upload.progress}%` : '업로드 취소됨') : null].filter(Boolean).join(' · ');
+  const layer = s.dialog ? { needLogin: '로그인 안내 창', osPerm: 'OS 권한 창', leave: '나갈지 묻는 창', cancelUpload: '업로드 취소 확인 창' }[s.dialog.kind]
+    : s.sheet ? { source: '첨부 방법 시트', picker: '사진 선택기', camera: '카메라' }[s.sheet.kind] : '—';
+  const webStates = Model.allRoutes(s).filter(x => Model.kindOf(s, x.screen) === 'web' && (x.web.scroll > 0 || (x.screen === 'artist' && x.web.tab !== '글') || (x.screen !== 'artist' && x.web.tab !== '전체')))
+    .map(x => `${Model.SCREENS[x.screen].name}: ${x.web.tab !== '전체' ? `'${x.web.tab}' 탭 · ` : ''}스크롤 ${x.web.scroll}px`).join(' / ') || '—';
+  return [
+    ['앱', s.browser ? (s.browser.kind === 'landing' ? '앱이 없는 폰의 브라우저 (안내 페이지)' : '시스템 브라우저로 나가 있음') : s.settingsOpen ? 'OS 설정 화면' : s.app === 'killed' ? '꺼짐' : '실행 중'],
+    ['지금 화면', r ? screenTitle(s, r) : '—'],
+    ['로그인', s.session === 'in' ? (s.server === 'revoked' ? '로그인 (서버에서는 이미 끊김, 앱은 아직 모름)' : '로그인') : '비로그인'],
+    ['로그인 뒤 돌아갈 곳', s.pending ? `${pend ? Model.placeName(s, pend) : '?'}${s.pending.action ? ` → ${{ like: '좋아요', compose: '글쓰기 열기', submit: '등록', openRoom: '메시지 방 열기', openMembership: '멤버십 화면 열기' }[s.pending.action.type] || s.pending.action.type}` : ''}` : '—'],
+    ['멤버십', s.membership ? (s.session === 'in' ? '있음' : '있음 (비로그인이라 잠김)') : '없음'],
+    ['쓰던 글', draftText],
+    ['열린 창', layer],
+    ['권한', `카메라 ${PV[s.perm.camera]} · 앨범에 추가 ${PV[s.perm.photoAdd]}`],
+    ['안 읽은 메시지', String(s.unread)],
+    ['Web 화면이 들고 있는 상태', webStates],
+  ];
+}
+
+// ---------- 폰 ----------
+function authorName(p) {
+  const c = cast();
+  return { artist: c.artist, fanA: c.fanA, fanB: c.fanB, staff: c.staff, me: c.me }[p.by] || p.by;
+}
+function appbar(s, r, title, right) {
+  const isCover = s.covers.some(x => x.key === r.key);
+  const st = Model.stackOf(s);
+  const isRoot = !isCover && st && st[0].key === r.key;
+  const lead = isCover ? `<button class="ib"${act({ type: 'back', via: 'ui' })}>✕</button>` : isRoot ? '<span style="width:6px"></span>' : `<button class="ib"${act({ type: 'back', via: 'ui' })}>‹</button>`;
+  return `<div class="ab">${lead}<span>${title}</span><span class="sp"></span>${right || ''}</div>`;
+}
+function scrollNote(r) { return `<div class="scroll"><span>스크롤 위치 ${r.web.scroll}px</span><button class="mini"${act({ type: 'scroll' })}>아래로 스크롤 ↓</button></div>`; }
+function postCard(s, id) {
+  const p = Model.getPost(s, id);
+  const locked = p.members && !Model.hasMembership(s);
+  const liked = !!s.liked[id];
+  return `<div class="card"${act({ type: 'open', screen: 'post', params: { id } })}>
+    <div class="sm muted">${esc(authorName(p))} · ${p.by === 'me' ? '방금' : '2시간 전'}</div>
+    <div class="t">${locked ? '🔒 ' : ''}${esc(p.title)}</div>
+    ${locked ? '<div class="lk">멤버십 회원 전용 글</div>' : p.photos ? `<div class="thumbs">${range(Math.min(p.photos, 4)).map(() => '<i class="g"></i>').join('')}</div>` : ''}
+    <div class="meta"><button class="chip${liked ? ' on' : ''}"${act({ type: 'like', id })}>♥ ${p.likes + (liked ? 1 : 0)}</button><span>💬 ${p.comments}</span></div>
+  </div>`;
+}
+const VIEWS = {
+  home(s, r) {
+    const c = cast();
+    return appbar(s, r, c.app) + `<div class="ct">
+      <div class="cover"${act({ type: 'open', screen: 'artist' })}><div class="avatar">${c.short}</div><div><b>${esc(c.artist)}</b><div class="sm muted">아티스트 프로필 ›</div></div></div>
+      <div class="sm muted" style="margin:4px 0">멤버 전용 새 글</div>${postCard(s, 'p2')}
+      <div class="sm muted" style="margin:4px 0">공지</div>${postCard(s, 'p4')}</div>`;
+  },
+  community(s, r) {
+    const c = cast(), w = r.web;
+    const all = [...s.myPosts.map(p => p.id), ...Model.FEED];
+    const ids = w.tab === '아티스트' ? all.filter(id => Model.getPost(s, id).by === 'artist') : w.tab === '팬' ? all.filter(id => ['fanA', 'fanB', 'me'].includes(Model.getPost(s, id).by)) : all;
+    const showCover = Model.tabset(s).owner.artist === 'community';
+    return appbar(s, r, `${c.artist} 커뮤니티`) + `<div class="ct">
+      ${showCover ? `<div class="cover"${act({ type: 'open', screen: 'artist' })}><div class="avatar">${c.short}</div><div><b>${esc(c.artist)}</b><div class="sm muted">아티스트 프로필 ›</div></div></div>` : ''}
+      <div class="seg">${['전체', '아티스트', '팬'].map(t => `<button class="${w.tab === t ? 'on' : ''}"${act({ type: 'innerTab', tab: t })}>${t}</button>`).join('')}</div>
+      ${scrollNote(r)}${ids.map(id => postCard(s, id)).join('')}</div>
+      <button class="fab"${act({ type: 'compose' })}>✏️ 글쓰기</button>`;
+  },
+  post(s, r) {
+    const p = Model.getPost(s, r.params.id);
+    if (!p) return appbar(s, r, '게시글') + `<div class="ct"><div class="empty">글을 찾을 수 없어요<br><span class="sm">지워졌거나 없는 주소예요 (/posts/${esc(r.params.id)})</span></div></div>`;
+    const locked = p.members && !Model.hasMembership(s);
+    const liked = !!s.liked[p.id];
+    let h = `<div class="sm muted">${esc(authorName(p))} · 2시간 전</div><h3 style="margin:2px 0 6px">${locked ? '🔒 ' : ''}${esc(p.title)}</h3>`;
+    if (locked) {
+      h += `<div class="lockbox"><div>🔒 멤버십 회원만 볼 수 있어요</div><div class="sm muted">가입하면 사진과 글을 모두 볼 수 있어요</div>
+        <button class="btn primary"${act({ type: 'openMembership' })}>${s.session === 'in' ? '멤버십 가입하기' : '로그인하고 가입하기'}</button></div>`;
+    } else {
+      h += `<p style="margin:0 0 6px">${esc(p.body)}</p>`;
+      if (p.photos) h += `<div class="photos">${range(p.photos).map(i => `<button${act({ type: 'viewer', id: p.id, idx: i + 1 })}>사진 ${i + 1}</button>`).join('')}</div>`;
+      if (p.external) h += `<p style="margin:6px 0"><a class="lnk"${act({ type: 'tapLink', url: p.external })}>예매 사이트 열기 ↗</a> <span class="sm muted">(tickets.example, 허용 목록 밖)</span></p>`;
+      h += `<p style="margin:6px 0"><a class="lnk"${act({ type: 'tapLink', url: `https://${D}/artist` })}>${esc(cast().artist)} 프로필 보기</a></p>`;
+    }
+    h += `<div class="meta"><button class="chip${liked ? ' on' : ''}"${act({ type: 'like', id: p.id })}>♥ 좋아요 ${p.likes + (liked ? 1 : 0)}</button><span>💬 댓글 ${p.comments}</span></div>`;
+    return appbar(s, r, '게시글') + `<div class="ct">${h}</div>`;
+  },
+  artist(s, r) {
+    const c = cast(), w = r.web;
+    const list = w.tab === '사진'
+      ? `<div class="grid">${range(9).map(i => `<i class="g">${i + 1}</i>`).join('')}</div>`
+      : range(5).map(i => `<div class="li">${esc(c.artist)}의 글 ${i + 1}</div>`).join('');
+    return appbar(s, r, esc(c.artist)) + `<div class="ct">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px"><div class="avatar lg">${c.short}</div><div><b>${esc(c.artist)}</b><div class="sm muted">팔로워 12.3만</div></div></div>
+      <button class="btn wide"${act({ type: 'openRoom' })}>💬 메시지${s.unread ? `<span class="badge">${s.unread}</span>` : ''}</button>
+      <div class="seg" style="margin-top:10px">${['글', '사진'].map(t => `<button class="${w.tab === t ? 'on' : ''}"${act({ type: 'innerTab', tab: t })}>${t}</button>`).join('')}</div>
+      ${scrollNote(r)}${list}</div>`;
+  },
+  messages(s, r) {
+    const c = cast();
+    if (s.session !== 'in') return appbar(s, r, '메시지') + `<div class="ct"><div class="empty">로그인하면 ${esc(c.artist)}의 메시지를 볼 수 있어요<br><button class="btn primary"${act({ type: 'loginOpen' })}>로그인</button></div></div>`;
+    return appbar(s, r, '메시지') + `<div class="ct">
+      <div class="room"${act({ type: 'openRoom' })}><div class="avatar">${c.short}</div><div style="flex:1"><b>${esc(c.artist)}</b><div class="sm muted">${s.extraMsgs ? `새 메시지 ${s.extraMsgs}` : '새 노래 녹음 중이에요'}</div></div>${s.unread ? `<span class="badge">${s.unread}</span>` : ''}</div>
+      <div class="sm muted" style="margin-top:10px">가짜 데이터 · 아티스트 한 명의 방만 있다</div></div>`;
+  },
+  room(s, r) {
+    const c = cast();
+    if (s.session !== 'in') return appbar(s, r, '메시지 방') + `<div class="ct"><div class="empty">로그인이 필요해요<br><button class="btn primary"${act({ type: 'loginOpen' })}>로그인</button></div></div>`;
+    const msgs = ['오늘 연습 끝! 다들 뭐 해요?', '내일 라이브에서 봐요 🌙', '밥 꼭 챙겨 먹기', '새 노래 녹음 중이에요', ...range(s.extraMsgs).map(i => `새 메시지 ${i + 1}`)];
+    return appbar(s, r, esc(c.artist)) + `<div class="ct">${msgs.map(m => `<div class="msg">${esc(m)}</div>`).join('')}<div class="sm muted" style="text-align:center;margin-top:8px">가짜 데이터</div></div>`;
+  },
+  membership(s, r) {
+    const c = cast(), has = Model.hasMembership(s);
+    return appbar(s, r, '멤버십') + `<div class="ct">
+      <div class="plan"><b>${esc(c.artist)} 멤버십</b><div class="sm muted">월 4,900원 · 가짜 결제</div><ul class="sm"><li>멤버 전용 글과 사진</li><li>멤버 전용 사진 저장</li></ul></div>
+      ${has ? '<div class="okbox">가입 중이에요 ✓</div>' : s.session === 'in'
+        ? `<button class="btn primary wide"${act({ type: 'buy' })}>가입하기 (가짜 결제)</button>`
+        : `<button class="btn primary wide"${act({ type: 'loginOpen' })}>로그인하고 가입하기</button>`}</div>`;
+  },
+  viewer(s, r) {
+    const p = Model.getPost(s, r.params.id);
+    return `<div class="viewer"><div class="vtop"><button class="ib light"${act({ type: 'back', via: 'ui' })}>✕</button><span>${r.params.idx} / ${p ? p.photos : '?'}</span><span style="width:32px"></span></div>
+      <div class="vimg${r.params.zoom ? ' zoom' : ''}">사진 ${r.params.idx}${r.params.zoom ? ' (확대)' : ''}</div>
+      <div class="vbar"><button${act({ type: 'zoom' })}>${r.params.zoom ? '축소' : '확대'}</button><button${act({ type: 'save' })}>저장</button></div></div>`;
+  },
+  login(s, r) {
+    const c = cast();
+    return appbar(s, r, '로그인') + `<div class="ct"><div class="center-col">
+      <div class="logo">${esc(c.app)}</div><div class="field">fan@example.com</div><div class="field">••••••••</div>
+      <button class="btn primary wide"${act({ type: 'loginSubmit' })}>로그인</button>
+      <div class="sm muted" style="text-align:center">가짜 계정 · 소셜 로그인은 흉내 내지 않는다</div></div></div>`;
+  },
+  my(s, r) {
+    const c = cast();
+    if (s.session !== 'in') return appbar(s, r, '마이') + `<div class="ct"><div class="empty">로그인하지 않았어요<br><button class="btn primary"${act({ type: 'loginOpen' })}>로그인하기</button></div>
+      <div class="li link"${act({ type: 'openMembership' })}>멤버십<span class="muted">›</span></div><div class="li">앱 버전<span class="muted">1.0.0</span></div></div>`;
+    return appbar(s, r, '마이') + `<div class="ct">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px"><div class="avatar">나</div><div><b>${esc(c.me)}</b><div class="sm muted">fan@example.com</div></div></div>
+      <div class="li link"${act({ type: 'openMembership' })}>멤버십<span class="muted">${s.membership ? '가입 중' : '없음'} ›</span></div>
+      <div class="li">알림<span class="muted">켜짐</span></div><div class="li">앱 버전<span class="muted">1.0.0</span></div>
+      <button class="btn wide"${act({ type: 'logout' })}>로그아웃</button></div>`;
+  },
+  compose(s, r) {
+    const d = s.draft || { text: false, items: [], notice: null, upload: null };
+    const up = d.upload, running = up && up.state === 'running';
+    let h = `<div class="ab"><button class="ib"${act({ type: 'back', via: 'ui' })}>✕</button><span>글쓰기</span><span class="sp"></span><button class="btn primary small"${act({ type: 'submit' })}${running ? ' disabled' : ''}>등록</button></div><div class="ct">`;
+    h += d.text ? `<div class="ta">오늘 무대 최고였어요! 사진 올려요 📸</div>` : `<button class="ta blank"${act({ type: 'typeText' })}>여기를 눌러 글 입력</button>`;
+    h += `<div class="atts">${d.items.map(i => i.t === 'photo' ? '<i class="g"></i>' : `<i class="g">▶ ${i.mb}MB</i>`).join('')}</div>`;
+    h += `<button class="btn wide"${act({ type: 'attach' })}>📷 사진·영상 첨부</button>`;
+    h += `<div class="sm muted" style="margin-top:4px">사진 ${Model.LIMITS.photos}장, 영상 ${Model.LIMITS.videos}개(${Model.LIMITS.videoMB}MB)까지</div>`;
+    if (d.notice) h += d.notice.kind === 'denied'
+      ? `<div class="warn">카메라 권한이 꺼져 있어요. 설정에서 켜면 사진을 찍을 수 있어요 <button class="mini"${act({ type: 'openSettings' })}>설정 열기</button></div>`
+      : `<div class="warn">${esc(d.notice.text)}</div>`;
+    if (up) h += running
+      ? `<div class="up">올리는 중 ${up.progress}%<div class="bar"><b style="width:${up.progress}%"></b></div><button class="mini"${act({ type: 'cancelUpload' })}>업로드 취소</button></div>`
+      : `<div class="up">업로드를 취소했어요. 쓰던 글은 그대로예요 <button class="mini"${act({ type: 'retry' })}>다시 올리기</button></div>`;
+    return h + '</div>';
+  },
+};
+
+function overlays(s) {
+  let h = '';
+  const c = cast();
+  if (s.sheet) {
+    const sh = s.sheet;
+    if (sh.kind === 'source') h += `<div class="ov bottom"><div class="sheet"><span class="who host">Host 기능</span><div class="st">첨부 방법</div>
+      <button class="opt-btn"${act({ type: 'source', src: 'camera' })}>📷 사진 찍기</button><button class="opt-btn"${act({ type: 'source', src: 'album' })}>🖼 앨범에서 고르기</button>
+      <button class="opt-btn muted"${act({ type: 'source', src: 'cancel' })}>취소</button></div></div>`;
+    if (sh.kind === 'picker') h += `<div class="ov bottom"><div class="sheet"><span class="who host">Host · 사진 선택기</span>
+      <div class="grid" style="margin:6px 0">${range(9).map(() => '<i class="g"></i>').join('')}</div>
+      ${sh.notice ? `<div class="warn">${esc(sh.notice)}</div>` : ''}
+      <div class="pick"><button class="mini"${act({ type: 'pick', photos: 3 })}>사진 3장 고르기</button><button class="mini"${act({ type: 'pick', photos: 12 })}>사진 12장 고르기</button>
+      <button class="mini"${act({ type: 'pick', video: 40 })}>영상 40MB</button><button class="mini"${act({ type: 'pick', video: 1200 })}>영상 1.2GB</button></div>
+      <button class="opt-btn muted"${act({ type: 'pickCancel' })}>취소</button></div></div>`;
+    if (sh.kind === 'camera') h += `<div class="ov bottom"><div class="sheet"><span class="who host">Host · 카메라</span><div class="vimg" style="height:160px;margin:8px 0">카메라 화면</div>
+      <button class="btn primary wide"${act({ type: 'shoot' })}>촬영</button><button class="opt-btn muted"${act({ type: 'pickCancel' })}>취소</button></div></div>`;
+  }
+  if (s.dialog) {
+    const d = s.dialog;
+    const box = (who, cls, title, body, buttons) => `<div class="ov center"><div class="dlg ${cls}"><span class="who ${who.toLowerCase()}">${who}</span><h4>${title}</h4>${body ? `<p>${body}</p>` : ''}<div class="row">${buttons.map(([t, a, k]) => `<button class="${k || ''}"${act(a)}>${t}</button>`).join('')}</div></div></div>`;
+    const doing = { like: '좋아요를 누를', compose: '글을 쓸', submit: '글을 올릴', openRoom: '메시지를 볼', openMembership: '멤버십에 가입할' };
+    if (d.kind === 'needLogin') h += box(d.by === 'Web' ? 'Web' : 'Host', '', `로그인하면 ${doing[d.then.type] || '이용할'} 수 있어요`, '', [['나중에', { type: 'needLoginAnswer', go: false }], ['로그인', { type: 'needLoginAnswer', go: true }, 'primary']]);
+    if (d.kind === 'osPerm') h += d.what === 'camera'
+      ? box('OS', 'os', `'${esc(c.app)}'에서 카메라에 접근하려고 해요`, '사진을 찍어 글에 붙이려면 필요해요', [['허용 안 함', { type: 'osPermAnswer', allow: false }], ['허용', { type: 'osPermAnswer', allow: true }, 'primary']])
+      : box('OS', 'os', `'${esc(c.app)}'에서 사진 앨범에 추가하려고 해요`, '', [['허용 안 함', { type: 'osPermAnswer', allow: false }], ['허용', { type: 'osPermAnswer', allow: true }, 'primary']]);
+    if (d.kind === 'leave') {
+      const up = s.draft && s.draft.upload && s.draft.upload.state === 'running';
+      h += box('Web', '', up ? '업로드를 멈추고 나갈까요?' : '작성 중인 글이 있어요', '나가면 쓰던 내용은 저장되지 않아요', [['계속 쓰기', { type: 'leaveAnswer', go: false }], ['나가기', { type: 'leaveAnswer', go: true }, 'danger']]);
+    }
+    if (d.kind === 'cancelUpload') h += box('Web', '', '업로드를 취소할까요?', '쓰던 글과 첨부는 남아 있어요', [['아니요', { type: 'cancelUploadAnswer', yes: false }], ['취소하기', { type: 'cancelUploadAnswer', yes: true }, 'danger']]);
+  }
+  if (s.banner) h += `<div class="banner"${act({ type: 'tapBanner' })}><div class="sm muted">${s.banner.inApp ? 'Host · 앱 안 배너' : 'OS 알림'} · ${esc(c.app)} · 지금</div><div>${esc(s.banner.text)}</div></div>`;
+  if (s.toast) h += `<div class="toast">${esc(s.toast)}</div>`;
+  return h;
+}
+function tabBar(s, by) {
+  const ts = Model.tabset(s);
+  return `<div class="tb ${by}">${ts.tabs.map(t => `<button class="${t.id === s.tab && !t.opens ? 'on' : ''}"${act({ type: 'tab', tab: t.id })}><span class="ic">${t.icon}</span>${t.label}${t.id === 'messages' && s.unread ? `<i class="dot">${s.unread}</i>` : ''}</button>`).join('')}</div>`;
+}
+function renderPhone() {
+  const s = state, c = cast();
+  const sbar = dark => `<div class="sbar${dark ? ' dark' : ''}"><span>9:41</span><span>${s.os === 'ios' ? 'iOS' : 'Android'}</span></div>`;
+  let h;
+  if (s.browser) {
+    const u = new URL(s.browser.url), landing = s.browser.kind === 'landing';
+    const body = landing
+      ? `<div class="ct"><div class="center-col"><div class="logo">${esc(c.app)}</div><p style="text-align:center;margin:0">이 글은 ${esc(c.app)} 앱에서 볼 수 있어요</p>
+          <button class="btn primary wide"${act({ type: 'noop', toast: '앱이 있으면 앱이 열리고, 없으면 스토어로 간다' })}>앱에서 열기</button>
+          <button class="btn wide"${act({ type: 'noop', toast: '스토어로 간다 (흉내만)' })}>앱 설치하기</button>
+          <div class="sm muted" style="text-align:center">앱이 없는 폰이라고 친다 · Web이 그리는 안내 페이지</div></div></div>`
+      : `<div class="ct"><div class="sm muted">앱 밖의 외부 사이트</div><h3 style="margin:4px 0">${esc(u.hostname)}</h3><p>예매 페이지라고 친다.</p></div>`;
+    h = sbar() + `<div class="layer os"><span>${s.os === 'ios' ? 'Safari' : 'Chrome'}</span><span>${esc(u.hostname + u.pathname)}</span></div>
+      <div class="frame${landing ? ' web' : ''}"><div class="ab"><button class="mini"${act({ type: 'closeBrowser' })}>‹ ${landing ? '닫기' : esc(c.app) + '(으)로 돌아가기'}</button></div>${body}</div>`;
+  } else if (s.app !== 'running') {
+    h = sbar(true) + `<div class="home"><button class="appicon"${act({ type: 'launch' })}>${esc(c.app.slice(0, 1))}</button><div style="font-size:12px">${esc(c.app)}</div>
+      <div class="hint">앱이 꺼져 있다. 아이콘을 누르거나, 아래 "폰 밖에서 일어나는 일"에서 링크·알림으로 연다.</div></div>`;
+  } else if (s.settingsOpen) {
+    const row = k => `<div class="li">${k === 'camera' ? '카메라' : '사진 앨범에 추가'}<span><button class="mini${s.perm[k] === 'denied' ? ' on' : ''}"${act({ type: 'settingsSet', which: k, value: 'denied' })}>허용 안 함</button> <button class="mini${s.perm[k] === 'granted' ? ' on' : ''}"${act({ type: 'settingsSet', which: k, value: 'granted' })}>허용</button></span></div>`;
+    h = sbar() + `<div class="layer os"><span>OS 설정</span><span>${esc(c.app)}</span></div><div class="frame"><div class="ab"><button class="mini"${act({ type: 'settingsClose' })}>‹ ${esc(c.app)}(으)로 돌아가기</button></div><div class="ct">${row('camera')}${row('photoAdd')}</div></div>`;
+  } else {
+    const r = Model.top(s), kind = Model.kindOf(s, r.screen), ts = Model.tabset(s);
+    const covered = s.covers.length > 0;
+    const showTabs = !covered && (ts.bar === 'host' || kind === 'web');
+    const path = Model.pathOf(s, r);
+    const where = covered ? '탭 막대를 덮음' : (Model.stackOf(s).length > 1 ? `${ts.tabs.find(t => t.id === s.tab).label} 탭에 쌓임` : `${ts.tabs.find(t => t.id === s.tab).label} 탭의 첫 화면`);
+    h = sbar() + `<div class="layer ${kind}"><span>${kind === 'host' ? 'Host 화면 · Flutter' : 'Web 화면 · WebView'} · ${where}</span><span>${path ? esc(D + path) : ''}</span></div>`;
+    h += `<div class="frame ${kind}">${VIEWS[r.screen](s, r)}${showTabs && ts.bar === 'web' ? tabBar(s, 'web') : ''}</div>`;
+    if (showTabs && ts.bar === 'host') h += tabBar(s, 'host');
+  }
+  $('#phone').innerHTML = h + overlays(s);
+}
+
+// ---------- 패널 ----------
+function renderWorld() {
+  const s = state, c = cast();
+  const b = (label, a) => `<button class="wbtn"${act(a)}>${label}</button>`;
+  const perm = k => ['ask', 'granted', 'denied'].map(v => `<button class="segb${s.perm[k] === v ? ' on' : ''}"${act({ type: 'setPerm', which: k, value: v })}>${PV[v]}</button>`).join('');
+  $('#world').innerHTML = `
+    <div class="wrow"><span class="wl">플랫폼</span>${['ios', 'android'].map(o => `<button class="segb${s.os === o ? ' on' : ''}" data-os="${o}">${o === 'ios' ? 'iOS' : 'Android'}</button>`).join('')}<span class="sm muted">바꾸면 지금 안내를 처음부터</span></div>
+    <div class="wrow"><span class="wl">손짓</span>${b(s.os === 'ios' ? '뒤로 (왼쪽 가장자리 스와이프)' : '뒤로 (Android 뒤로 버튼)', { type: 'back', via: 'system' })}</div>
+    <div class="wrow"><span class="wl">앱</span>${b('앱 완전히 종료', { type: 'kill' })}${b('백그라운드 갔다 오기', { type: 'resume' })}</div>
+    <div class="wrow"><span class="wl">공유 링크</span>${b('/posts/p3', { type: 'link', url: `https://${D}/posts/p3` })}${b('/posts/p2 멤버 전용', { type: 'link', url: `https://${D}/posts/p2` })}${b('/artist', { type: 'link', url: `https://${D}/artist` })}${b('/posts/p9 없는 글', { type: 'link', url: `https://${D}/posts/p9` })}${b('/shop 모르는 경로', { type: 'link', url: `https://${D}/shop` })}${b('앱 없는 폰에서 열기', { type: 'noAppBrowser', url: `https://${D}/posts/p3` })}</div>
+    <div class="wrow"><span class="wl">알림</span>${b('아티스트 새 글 (멤버 전용)', { type: 'notify', text: `${c.artist}이(가) 새 글을 올렸어요`, target: { screen: 'post', params: { id: 'p2' } } })}${b('관심 글에 새 댓글', { type: 'notify', text: '「어제 무대 직캠 모음」에 새 댓글', target: { screen: 'post', params: { id: 'p1' } } })}${b('새 공지', { type: 'notify', text: '공지: 팬미팅 예매 안내', target: { screen: 'post', params: { id: 'p4' } } })}</div>
+    <div class="wrow"><span class="wl">서버</span>${b('세션 끊기', { type: 'revoke' })}${b('멤버십 만료', { type: 'expire' })}${b('아티스트 새 메시지', { type: 'newMessage' })}</div>
+    <div class="wrow"><span class="wl">시간</span>${b('업로드 +25%', { type: 'tick' })}</div>
+    <div class="wrow"><span class="wl">권한</span><span class="sm">카메라</span>${perm('camera')}<span class="sm" style="margin-left:6px">앨범에 추가</span>${perm('photoAdd')}</div>`;
+}
+function renderState() {
+  const s = state;
+  $('#state').innerHTML = summary(s).map(([k, v]) => `<div class="kv${changed.has(k) ? ' changed' : ''}"><span>${k}</span><b>${esc(v)}</b></div>`).join('');
+  const chip = r => `<span class="c2 ${Model.kindOf(s, r.screen)}">${Model.kindOf(s, r.screen) === 'host' ? 'H' : 'W'} ${esc(Model.SCREENS[r.screen].name)}${r.screen === 'post' ? ' ' + esc(r.params.id) : ''}</span>`;
+  let st = '';
+  if (s.app !== 'running') st = '<div class="stk on muted">앱이 꺼져 있다</div>';
+  else {
+    const ts = Model.tabset(s);
+    st = ts.tabs.filter(t => t.root).map(t => `<div class="stk${t.id === s.tab ? ' on' : ''}"><span class="tn">${t.label} 탭${t.id === s.tab ? ' ●' : ''}</span>${s.stacks[t.id].map(chip).join('<span class="arr">›</span>')}</div>`).join('');
+    st += `<div class="stk on"><span class="tn">탭 막대를 덮음</span>${s.covers.length ? s.covers.map(chip).join('<span class="arr">›</span>') : '<span class="muted">없음</span>'}</div>`;
+  }
+  $('#stacks').innerHTML = st;
+  $('#stacks').classList.toggle('changed', stacksChanged);
+  const cls = w => ({ Web: 'web', Host: 'host', 'Web→Host': 'bridge', 'Host→Web': 'bridge', OS: 'os', '서버': 'server' })[w] || '';
+  $('#trace').innerHTML = s.trace.map(t => `<div class="tr${t.n > ui.prevN && s.n > 0 ? ' new' : ''}"><span class="n">${t.n}</span><span class="w ${cls(t.who)}">${t.who}</span>${t.kind ? `<span class="k">${t.kind}</span>` : ''}<span>${esc(t.text)}</span></div>`).join('');
+}
+function renderWalk() {
+  const w = currentWalk(), steps = visibleSteps(w);
+  $('#wtabs').innerHTML = WALKS.map(x => `<button class="${x.id === ui.walk ? 'on' : ''}" data-walk="${x.id}">${x.short}</button>`).join('');
+  $('#walk').innerHTML = `<h3>${w.title}</h3><p><b>상황</b> ${w.situation}</p><p class="watch"><b>볼 것</b> ${w.watch}</p>
+    <button class="restart" data-restart="1">처음부터 다시</button>
+    ${steps.length ? `<ol class="steps">${steps.map((st, i) => `<li class="${i < ui.step ? 'done' : i === ui.step ? 'cur' : 'todo'}"><button data-step="${i}"${i !== ui.step ? ' disabled' : ''}>${esc(val(st.label, ui.opts, state.os))}</button>${st.note ? `<div class="note">${esc(val(st.note, ui.opts, state.os))}</div>` : ''}</li>`).join('')}</ol>` : ''}
+    ${steps.length && ui.step >= steps.length ? '<div class="finish">끝. 오른쪽 결정 후보를 바꾸면 같은 흐름을 다른 방식으로 다시 볼 수 있다.</div>' : ''}`;
+}
+function renderOptions() {
+  const o = Object.entries(Model.OPTIONS).map(([k, opt]) => `<fieldset class="opt"><legend><span class="grp">${opt.group}</span>${opt.label}</legend>
+    ${Object.entries(opt.choices).map(([v, l]) => `<label><input type="radio" name="opt-${k}" value="${v}" data-opt="${k}"${ui.opts[k] === v ? ' checked' : ''}><span>${esc(l)}${opt.suggest === v ? ' <span class="sug">제안</span>' : ''}</span></label>`).join('')}
+    ${opt.decidedIn ? `<div class="owner-note">확정은 「${opt.decidedIn}」에서</div>` : ''}</fieldset>`).join('');
+  const castSel = `<fieldset class="opt"><legend><span class="grp">이름</span>앱 이름과 가상의 아티스트</legend>
+    ${Object.entries(CASTS).map(([k, c]) => `<label><input type="radio" name="cast" value="${k}" data-cast="1"${ui.cast === k ? ' checked' : ''}><span>${esc(c.label)}${k === 'a' ? ' <span class="sug">제안</span>' : ''}</span></label>`).join('')}
+    <div class="owner-note">글 다섯 개(아티스트 글, 멤버 전용 글, 팬 글 둘, 공지)와 가짜 메시지가 예시 콘텐츠다. 도메인은 ${D}</div></fieldset>`;
+  $('#opts').innerHTML = o + castSel;
+}
+function renderCatalog() {
+  const s = state;
+  const tagFor = screen => { const k = Model.kindOf(s, screen); return `<span class="tag ${k}">${k === 'host' ? 'Host' : 'Web'}</span>`; };
+  $('#catalog').innerHTML = `<table class="cat"><thead><tr><th>화면</th><th>후보</th><th>어디서 열리나</th><th>왜</th></tr></thead><tbody>
+    ${CATALOG.map(c => c.s
+      ? `<tr><td>${esc(Model.SCREENS[c.s].name)}${Model.SCREENS[c.s].path && Model.kindOf(s, c.s) === 'web' ? `<div class="sm muted">${Model.SCREENS[c.s].path}</div>` : ''}</td><td>${tagFor(c.s)}${c.s === 'login' ? '<div class="sm muted">Host·Web 모두 후보</div>' : ''}</td><td>${esc(c.where)}</td><td>${esc(c.why)}</td></tr>`
+      : `<tr><td>${esc(c.name)}</td><td><span class="tag ${c.tag}">${esc(c.tagText)}</span></td><td>${esc(c.where)}</td><td>${esc(c.why)}</td></tr>`).join('')}
+    </tbody></table><div class="sm muted" style="margin-top:6px">후보 칸은 지금 고른 결정 후보(탭 구성, 로그인 화면)를 따른다.</div>`;
+}
+function render() { renderPhone(); renderWorld(); renderState(); renderWalk(); renderCatalog(); }
+
+// ---------- 입력 ----------
+document.addEventListener('click', e => {
+  if (e.target.classList && e.target.classList.contains('ov')) { apply([{ type: 'dismiss' }]); return; }
+  const os = e.target.closest('[data-os]');
+  if (os) { ui.os = os.dataset.os; startWalk(ui.walk); return; }
+  const w = e.target.closest('[data-walk]');
+  if (w) { startWalk(w.dataset.walk); return; }
+  if (e.target.closest('[data-restart]')) { startWalk(ui.walk); return; }
+  const st = e.target.closest('[data-step]');
+  if (st) { runStep(Number(st.dataset.step)); return; }
+  const a = e.target.closest('[data-act]');
+  if (a) apply([JSON.parse(a.dataset.act)]);
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.opt) { ui.opts[t.dataset.opt] = t.value; renderOptions(); startWalk(ui.walk); }
+  if (t.dataset.cast) { ui.cast = t.value; renderOptions(); render(); }
+});
+
+renderOptions();
+startWalk('S1');
+</script>
+</body>
+</html>
