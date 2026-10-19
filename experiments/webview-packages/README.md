@@ -65,7 +65,7 @@ python3 summarize.py results/*.jsonl
 | B. `webview_flutter` + 플랫폼 코드 | ○ | ○ | ○ | ○ |
 | C. `flutter_inappwebview` 6.2.0-beta.3 | ○ | ○ | ○ | ○ |
 
-- C를 AGP 9.1로 빌드할 때 6.1.5에서 보고된 proguard 실패(#2765)가 나지 않았다.
+- C를 AGP 9.1로 빌드할 때 6.1.5에서 보고된 proguard 실패([flutter_inappwebview #2765](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2765))가 나지 않았다.
 - 두 후보 모두 iOS 플러그인이 SwiftPM으로 해석됐다. 생성 패키지에 플러그인이 들어가고 Podfile이 생기지 않았으므로 CocoaPods 대체 경로를 타지 않았다.
 - B는 Runner 타깃에서 `import webview_flutter_wkwebview`로 External API(`webView(forIdentifier:withPluginRegistrar:)`)를 썼다. 레지스트라는 UIScene 템플릿의 `didInitializeImplicitFlutterEngine`에서 `pluginRegistry.registrar(forPlugin:)`으로 얻었다.
 
@@ -95,7 +95,7 @@ Dart 쪽은 WebView 식별자 얻기, 통로 붙이기 호출, 받은 Message �
 | `WebMessageListener` 주입 규칙 | ○ 허용 규칙대로 주입됨 | × 포트를 명시한 규칙(`http://localhost:8080`)으로는 메인 프레임에도 주입되지 않음. 주입 JS가 규칙의 포트(숫자)와 `location.port`(문자열)를 `===`로 비교한다. 포트를 생략한 출처(`http://localhost`, 80)에서는 주입됨 |
 | `WebMessageListener` 응답 | × 리스너마다 reply proxy를 하나만 두고 새 Message가 올 때마다 덮어쓴다. 그래서 여러 프레임이 보내면 응답이 다른 프레임으로 간다(기본 설정 14건 중 4건, 제한 설정 8건 중 2건). 메인 프레임 몫의 응답이 출처가 다른 iframe에 도착한 경우도 있다 | × iframe 몫의 응답이 메인 프레임으로 간다(10건 중 8건) |
 | Bridge 제한 설정(`javaScriptBridgeForMainFrameOnly`·`javaScriptBridgeOriginAllowList`·`javaScriptHandlersForMainFrameOnly`·`javaScriptHandlersOriginAllowList`) | △ iframe에서 `callHandler`가 사라져 Dart 콜백까지 가지 않는다. 하지만 `window.flutter_inappwebview` 객체는 남는다. 허용 목록은 `addWebMessageListener` 규칙으로 해석된다 | ○ iframe에서 Bridge가 사라진다. 허용 목록은 JS 정규식으로 해석된다(앵커가 없으면 부분 일치) |
-| release 콜드 스타트 `onWebViewCreated`(#2843) | 30회 모두 불림. 3초 판정 기준으로는 9회가 늦었다(3.4–6.1초, 에뮬레이터 부하 평균 8). 보고된 교대 실패는 재현되지 않음 | 시뮬레이터는 release로 실행할 수 없음 |
+| release 콜드 스타트 `onWebViewCreated`([flutter_inappwebview #2843](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2843)) | 30회 모두 불림. 3초 판정 기준으로는 9회가 늦었다(3.4–6.1초, 에뮬레이터 부하 평균 8). 보고된 교대 실패는 재현되지 않음 | 시뮬레이터는 release로 실행할 수 없음 |
 | UIScene(iOS 27) | — | ○ 앱 실행, 내장 WebView, JS alert(자기 `window.rootViewController`로 표시), InAppBrowser 열고 닫기(닫은 뒤 메인 WebView 정상), ChromeSafariBrowser 열기·로드·닫기, HeadlessInAppWebView 로드와 JS 실행이 모두 동작했다. `keyWindow`·`delegate.window`를 쓰는 경로가 scene 하나인 앱에서는 깨지지 않았다 |
 
 화면: [InAppBrowser](results/iaw_beta-ios-uiscene-inappbrowser.png), [ChromeSafariBrowser](results/iaw_beta-ios-uiscene-safari.png), [JS alert](results/iaw_beta-ios-uiscene-alert.png)
@@ -113,7 +113,7 @@ Dart 쪽은 WebView 식별자 얻기, 통로 붙이기 호출, 받은 Message �
 
 ## 확인하지 못한 것
 
-- Android 실기기 release 콜드 스타트(#2843 보고 환경). 연결된 Android 기기가 없어 에뮬레이터로만 봤다. 보고자도 에뮬레이터에서는 재현되지 않았다고 적었다.
+- Android 실기기 release 콜드 스타트([flutter_inappwebview #2843](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2843) 보고 환경). 연결된 Android 기기가 없어 에뮬레이터로만 봤다. 보고자도 에뮬레이터에서는 재현되지 않았다고 적었다.
 - iOS 실기기. UIScene 필수 요건은 iOS 27 SDK로 빌드해 iOS 27에서 실행할 때 걸리므로 시뮬레이터로 확인했다.
 - 다른 Android WebView 버전과 낮은 API에서의 기능 지원. 지원 여부는 기기의 WebView 버전에 따라 런타임에 정해진다.
 - `flutter_inappwebview` 6.1.5(선택지 D), `regexToCancelSubFramesLoading`, iPad 다중 scene.
