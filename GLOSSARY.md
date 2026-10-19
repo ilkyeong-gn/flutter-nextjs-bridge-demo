@@ -38,6 +38,10 @@ _Avoid_: 네이티브 화면
 Host의 WebView 안에 Web을 띄운 화면.
 _Avoid_: 웹뷰 화면
 
+**Third-party Content (서드파티 콘텐츠)**:
+Web 화면 안에 들어 있지만 Web이 아닌 출처에서 온 프레임이나 스크립트.
+_Avoid_: 외부 콘텐츠, 써드파티
+
 **Host Capability (Host 기능)**:
 Host가 Bridge를 통해 Web에 빌려주는 기기·앱 기능(카메라, 사진 선택, 공유 등).
 _Avoid_: 네이티브 기능, 플러그인
