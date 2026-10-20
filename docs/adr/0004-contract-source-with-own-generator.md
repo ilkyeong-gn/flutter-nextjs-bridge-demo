@@ -12,9 +12,11 @@ Bridge 계약(Call·Message·Event의 payload와 메타데이터)은 언어 중�
 
 ## Consequences
 
-- 봉투(`kind`·`id`·에러 객체)는 원천에 넣지 않고 양쪽 Bridge 모듈에 손으로 고정한다. 원천에는 payload와 메타데이터만 들어간다.
+- 봉투(`kind`·`id`·에러 객체)와 `hello`는 원천에 넣지 않고 손으로 고정한다. TS 쪽은 Web과 가짜 Host가 함께 쓰도록 계약 패키지 안의 손작성 프로토콜 코드에 둔다. 가짜 Host는 Web을 import할 수 없기 때문이다. 원천에는 payload와 메타데이터만 들어간다.
+- 생성기는 원천을 언어 중립 중간 표현으로 바꾼 뒤 언어별 출력기로 내보낸다. 그래서 Dart 출력기는 원천을 바꾸지 않고 나중에 붙일 수 있다. 호환성 검사기도 원천 파일이 아니라 중간 표현끼리 비교한다.
 - 생성물은 커밋한다. 그래서 Host 빌드에 Node가 필요 없다. CI는 다시 생성한 결과가 커밋된 생성물과 다르면 실패한다.
-- `buf breaking`에 해당하는 검사는 직접 만든 검사기가 맡는다. 원천을 버전마다 스냅숏으로 남기고, 현재 원천과의 차이를 분류해 major·minor가 맞게 올랐는지 확인한다. 같은 major 안에서는 이전 버전의 픽스처를 계속 디코딩할 수 있어야 한다.
+- `buf breaking`에 해당하는 검사는 직접 만든 검사기가 맡는다. 원천을 버전마다 스냅숏으로 남기고, 현재 원천과의 차이를 분류해 major·minor가 맞게 올랐는지 확인한다. 같은 major 안에서는 이전 버전의 픽스처를 계속 디코딩할 수 있어야 한다. 첫 Host 출시 전에는 계약 버전을 `0.x`로 두고 스냅숏을 남기지 않는다. 첫 스냅숏은 첫 Host 출시 때 `1.0`과 함께 남긴다.
+- 보안 속성 칸은 아직 원천에 두지 않는다. 그 값을 강제하는 방식이 인증 방식과 출처 판정에 달려 있기 때문이다.
 - Demo 스펙이 범위 밖으로 뒀던 Message 규약 코드 생성기를 Reference App에서는 둔다.
 
-결정의 자세한 내용: [Bridge 계약 단일 원천 결정](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/40)
+결정의 자세한 내용: [Bridge 계약 단일 원천 결정](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/40), [계약 원천 형식과 TS 생성물 결정](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/63)
