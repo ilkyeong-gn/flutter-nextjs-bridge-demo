@@ -1,3 +1,7 @@
+---
+status: superseded by ADR-0016
+---
+
 # Host는 Event를 플랫폼 응답 통로로만 보낸다 (iOS는 대기 응답)
 
 Host가 Web에 보내는 Event도 Call 응답처럼 출처를 판정한 프레임에만 가야 한다. 그래서 `evaluateJavaScript`로 전역 함수를 부르거나 `CustomEvent`를 띄우지 않고, 플랫폼 응답 통로로만 보낸다. Android는 출처를 판정한 프레임의 reply proxy를 쓴다. iOS는 대기 응답을 쓴다. Web이 `listen` 요청을 보내 두면 Host는 Event가 생길 때 그 Promise를 Event 묶음으로 이행하고, Web은 받자마자 `listen`을 다시 보낸다. 이렇게 하면 [ADR 0002](0002-webview-package-with-platform-code.md)의 "Bridge 통로는 출처 판정 통로 하나뿐"이 Event에도 그대로 적용된다.
