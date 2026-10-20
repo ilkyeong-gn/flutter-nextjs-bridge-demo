@@ -1,3 +1,7 @@
+---
+status: partially superseded by ADR-0018
+---
+
 # Web은 데이터를 클라이언트에서 HTTP로만 읽고, 이동은 `shared/nav`로만 한다
 
 Web의 페이지는 얇은 서버 컴포넌트다. 데이터는 클라이언트에서 TanStack Query가 `shared/api`의 `fetch` 래퍼로 읽는다. 서버 컴포넌트의 prefetch와 `HydrationBoundary`는 쓰지 않는다. 가짜 API는 같은 Next.js 앱의 Route Handlers에 있지만, Web 코드는 그것을 별도 백엔드처럼 HTTP로만 다룬다. 실제 하이브리드 앱의 API는 보통 별도 서버라서, 이렇게 해야 Reference App의 패턴을 그대로 가져다 쓸 수 있다. 인증 검사도 Route Handlers 한 곳에만 생긴다.

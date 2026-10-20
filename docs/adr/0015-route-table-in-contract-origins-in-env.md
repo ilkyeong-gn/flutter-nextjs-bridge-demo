@@ -1,3 +1,7 @@
+---
+status: partially superseded by ADR-0018
+---
+
 # 경로 표는 계약 원천에 두고, 허용 출처는 환경 파일에 둔다
 
 경로 표는 계약 원천 YAML의 `routes` 절에 둔다. 생성기가 Dart·TypeScript 계약 패키지로 표를 내보내고, Host·Web·가짜 Host가 모두 이 표를 읽는다. 행마다 딥링크와 콘텐츠 속 링크로 열 수 있는지, 그리고 그 경로가 어느 WebView(`tab`·`stacked`·`compose`·`handoff`)의 메인 프레임이 될 수 있는지를 적는다. Android intent-filter 블록도 이 표에서 생성하고, AASA는 Web이 표에서 만들어 서빙한다. 허용 출처는 환경마다 값이 다르므로 원천에 넣지 않는다. `APP_ORIGIN`은 Host의 `app/config/<env>.json`과 Web의 `web/.env.<env>`에 따로 적고, PR 워크플로가 둘이 같은지 검사한다. 경로 표는 모든 환경에서 같고, Host와 Web이 함께 지키는 약속이다. 그래서 Call·Event처럼 버전과 호환성 검사를 받는다.
