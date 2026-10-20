@@ -16,5 +16,6 @@ Host는 Web을 원격 URL에서만 불러온다. 앱에는 Web 파일을 하나�
 - 모든 페이지가 `no-store`로 나가므로 WebView에 오래된 HTML이 남지 않는다. 대신 `'use cache'`와 정적 셸은 쓰지 않는다. 데이터는 TanStack Query로 클라이언트에서 가져온다.
 - nonce와 `cacheComponents`가 실제로 함께 동작하지 않는지는 실측하지 않았다. 문서 근거로 정했으므로 구현할 때 한 번 확인한다.
 - `deploymentId`는 빌드의 git SHA로 둔다. Web 클라이언트와 Web 서버가 어긋나면 Next가 전체 새로고침을 하고, Web은 핸드셰이크를 다시 한다. 이때 아직 올리지 않은 첨부는 사라진다([ADR 0007](0007-host-picks-and-uploads-attachments.md)).
+- 가짜 영상 임베드의 로컬 출처는 `http://127.0.0.1:3001`이다. `localhost`의 다른 포트로 두면 쿠키를 함께 쓰고 같은 사이트가 되어, 실제 서드파티와 조건이 달라진다. 그래서 debug·profile 빌드의 Android 평문 허용 목록에 `127.0.0.1`도 넣는다([가짜 API 설계](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/55)).
 
 결정의 자세한 내용: [Web 전달 방식과 버전·환경 정책 결정](https://github.com/ilkyeong-gn/flutter-nextjs-bridge-demo/issues/46)
