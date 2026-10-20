@@ -1,3 +1,7 @@
+---
+status: partially superseded by ADR-0019
+---
+
 # Web은 원격 URL로만 띄우고, CSP nonce를 위해 모든 페이지를 동적 렌더링한다
 
 Host는 Web을 원격 URL에서만 불러온다. 앱에는 Web 파일을 하나도 넣지 않고, 로딩에 실패하면 Host 화면을 보인다. 가짜 API는 Next.js Route Handlers에 그대로 두어 Web과 같은 출처에 있다. 그래야 서버가 만든 HttpOnly 쿠키로 Web 세션을 유지할 수 있다([ADR 0006](0006-web-session-by-offscreen-handoff.md)). 또 동적 라우트 `/posts/{id}`도 그대로 쓸 수 있다. CSP `script-src`는 `'self' 'nonce-…' 'strict-dynamic'`으로 둔다. 메인 프레임에서 주입된 인라인 스크립트가 Bridge를 부르지 못하게 하는 방법은 nonce뿐이기 때문이다([ADR 0005](0005-main-frame-stays-in-route-table.md)). nonce를 쓰려면 모든 페이지를 동적으로 렌더링해야 한다. Next.js 문서는 PPR과 nonce를 함께 쓸 수 없다고 적고 있으므로 `cacheComponents`는 끈다.
