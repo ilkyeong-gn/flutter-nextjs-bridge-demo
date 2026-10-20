@@ -163,6 +163,10 @@ _Avoid_: 목 브릿지, 모의 앱, 스텁
 Web 없이 Host를 돌리려고 Web 자리에 들어가, Bridge 계약대로 Message·Call·Event를 주고받는 대역.
 _Avoid_: 목 페이지, 테스트 페이지
 
+**Browser Test (브라우저 테스트)**:
+실제 Host 없이 가짜 Host를 심은 Web을 실제 브라우저에서 돌려 확인하는 테스트. Host와 Web을 함께 돌리는 E2E와 다르다.
+_Avoid_: E2E(가짜 Host로 돌릴 때)
+
 **Fake API (가짜 API)**:
 실제 백엔드 대신 Web과 같은 출처에서 돌며, 로그인 세션·글·미디어·멤버십·메시지를 실제처럼 다루는 서버. Host와 Web 모두 이것을 진짜 백엔드로 대한다.
 _Avoid_: 목 서버, 스텁 API, 백엔드(가짜 API를 가리킬 때)
