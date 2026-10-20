@@ -1,0 +1,15 @@
+== warm #1 openurl exit=0 url=fanapp://app/posts/3?run=warm-1 pid(before)=14887
+pid(after)=14887
+DLE stream fanapp://app/posts/3?run=warm-1 (+21363ms)
+== warm #2 openurl exit=0 url=fanapp://app/posts/3?run=warm-2 pid(before)=14887
+pid(after)=14887
+DLE stream fanapp://app/posts/3?run=warm-2 (+39664ms)
+== warm #3 openurl exit=0 url=fanapp://app/posts/3?run=warm-3 pid(before)=14887
+pid(after)=14887
+DLE stream fanapp://app/posts/3?run=warm-3 (+57944ms)
+== warm #4 openurl exit=0 url=fanapp://app/posts/3?run=warm-4 pid(before)=14887
+pid(after)=14887
+DLE stream fanapp://app/posts/3?run=warm-4 (+76210ms)
+== warm #5 openurl exit=0 url=fanapp://app/posts/3?run=warm-5 pid(before)=14887
+pid(after)=14887
+DLE stream fanapp://app/posts/3?run=warm-5 (+94246ms)

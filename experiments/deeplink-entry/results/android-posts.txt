@@ -1,0 +1,42 @@
+                <data android:scheme="https" android:host="fan.example" android:pathPrefix="/posts/" /><!-- APPLINK_DATA -->
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Success
+--- get-app-links
+  example.fan.exp.dle:
+    ID: 8ee7e999-c1fe-4c95-bd0d-f23b0a47dc11
+    Signatures: [6B:4D:CD:C4:FC:51:B5:9A:C1:CA:90:9F:4E:D1:38:8B:78:37:4A:45:DE:3A:3B:89:FE:C3:F5:B7:5A:88:BE:BB]
+    Domain verification state:
+      fan.example: approved
+== posts /not-in-table #1
+topResumedActivity=ActivityRecord{72040316 u0 com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity t36}
+DLE main start (+0ms)
+DLE initial null (+1679ms)
+DLE launchUrl https://fan.example/not-in-table -> true (+11757ms)
+== posts /not-in-table #2
+topResumedActivity=ActivityRecord{136521852 u0 com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity t38}
+DLE main start (+0ms)
+DLE initial null (+1680ms)
+DLE launchUrl https://fan.example/not-in-table -> true (+11388ms)
+== posts /not-in-table #3
+topResumedActivity=ActivityRecord{129349335 u0 com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity t40}
+DLE main start (+0ms)
+DLE initial null (+1730ms)
+DLE launchUrl https://fan.example/not-in-table -> true (+11692ms)
+== posts /posts/3 #1
+topResumedActivity=ActivityRecord{250938501 u0 example.fan.exp.dle/.MainActivity t41}
+DLE main start (+0ms)
+DLE initial null (+1580ms)
+DLE launchUrl https://fan.example/posts/3 -> true (+11142ms)
+DLE stream https://fan.example/posts/3 (+11230ms)
+== posts /posts/3 #2
+topResumedActivity=ActivityRecord{127847067 u0 example.fan.exp.dle/.MainActivity t42}
+DLE main start (+0ms)
+DLE initial null (+1536ms)
+DLE launchUrl https://fan.example/posts/3 -> true (+9421ms)
+DLE stream https://fan.example/posts/3 (+9500ms)
+== posts /posts/3 #3
+topResumedActivity=ActivityRecord{176957395 u0 example.fan.exp.dle/.MainActivity t43}
+DLE main start (+0ms)
+DLE initial null (+743ms)
+DLE launchUrl https://fan.example/posts/3 -> true (+8688ms)
+DLE stream https://fan.example/posts/3 (+8718ms)

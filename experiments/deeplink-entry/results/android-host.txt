@@ -1,0 +1,45 @@
+                <data android:scheme="https" android:host="fan.example" /><!-- APPLINK_DATA -->
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Success
+--- get-app-links
+  example.fan.exp.dle:
+    ID: 66e270e6-0768-4893-bf03-2949e2d7ee25
+    Signatures: [6B:4D:CD:C4:FC:51:B5:9A:C1:CA:90:9F:4E:D1:38:8B:78:37:4A:45:DE:3A:3B:89:FE:C3:F5:B7:5A:88:BE:BB]
+    Domain verification state:
+      fan.example: approved
+== host /not-in-table #1
+topResumedActivity=ActivityRecord{244630064 u0 example.fan.exp.dle/.MainActivity t29}
+DLE main start (+0ms)
+DLE initial null (+1533ms)
+DLE launchUrl https://fan.example/not-in-table -> true (+11601ms)
+DLE stream https://fan.example/not-in-table (+11630ms)
+== host /not-in-table #2
+topResumedActivity=ActivityRecord{136439026 u0 example.fan.exp.dle/.MainActivity t30}
+DLE main start (+0ms)
+DLE initial null (+1702ms)
+DLE launchUrl https://fan.example/not-in-table -> true (+12017ms)
+DLE stream https://fan.example/not-in-table (+12174ms)
+== host /not-in-table #3
+topResumedActivity=ActivityRecord{42813699 u0 example.fan.exp.dle/.MainActivity t31}
+DLE main start (+0ms)
+DLE initial null (+2102ms)
+DLE launchUrl https://fan.example/not-in-table -> true (+12019ms)
+DLE stream https://fan.example/not-in-table (+12188ms)
+== host /posts/3 #1
+topResumedActivity=ActivityRecord{184960638 u0 example.fan.exp.dle/.MainActivity t32}
+DLE main start (+0ms)
+DLE initial null (+1650ms)
+DLE launchUrl https://fan.example/posts/3 -> true (+11225ms)
+DLE stream https://fan.example/posts/3 (+11357ms)
+== host /posts/3 #2
+topResumedActivity=ActivityRecord{51691495 u0 example.fan.exp.dle/.MainActivity t33}
+DLE main start (+0ms)
+DLE initial null (+1853ms)
+DLE launchUrl https://fan.example/posts/3 -> true (+11981ms)
+DLE stream https://fan.example/posts/3 (+12116ms)
+== host /posts/3 #3
+topResumedActivity=ActivityRecord{175492742 u0 example.fan.exp.dle/.MainActivity t34}
+DLE main start (+0ms)
+DLE initial null (+1833ms)
+DLE launchUrl https://fan.example/posts/3 -> true (+11814ms)
+DLE stream https://fan.example/posts/3 (+11951ms)
