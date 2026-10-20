@@ -102,6 +102,16 @@ _Avoid_: 프로토콜, 스펙, 인터페이스, 스키마
 핸드셰이크에서 Host가 알려 주는, 지금 이 Host에서 쓸 수 있는 Call·Message·Event 이름의 목록. Web은 기능마다 이 목록을 보고 분기한다.
 _Avoid_: 기능 플래그, capabilities
 
+### 버전
+
+**Version Skew (버전 어긋남)**:
+배포된 Web이 기대하는 Bridge 계약과 설치된 Host가 지원하는 Bridge 계약이 다른 상태. Web은 Host 출시와 따로 배포되므로 대개 새 Web이 옛 Host 위에서 돈다.
+_Avoid_: 버전 불일치, 호환성 문제
+
+**Minimum Host Version (최소 Host 버전)**:
+Web이 동작을 보장하는 가장 낮은 Host 앱 버전. 이보다 낮은 Host는 업데이트 안내만 보이고 Web 화면을 열지 않는다.
+_Avoid_: 강제 업데이트 버전, 최소 지원 버전
+
 ### 로그인
 
 **Login Session (로그인 세션)**:
