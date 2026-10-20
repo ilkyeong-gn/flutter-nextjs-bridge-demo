@@ -1,3 +1,7 @@
+---
+status: partially superseded by ADR-0020
+---
+
 # 가짜 Host는 코어 하나로 Host 역할을 실제 API로 하고, 출처 판정은 흉내 내지 않는다
 
 브라우저 개발용 가짜 Host와 Playwright용 가짜 Host는 코어 하나를 함께 쓴다. 코어는 봉투, 핸드셰이크, iOS의 `listen` 대기 응답과 Android의 reply proxy를 흉내 낸다. 껍데기는 둘이다. 개발 껍데기는 조작 패널을 붙인다. 테스트 껍데기는 IIFE 번들로 `addInitScript`에 심는다. 흉내 내는 코드가 둘이면 둘이 서로 다르게 틀어지기 때문에 하나로 만든다. 개발 껍데기는 Host가 할 일을 실제 API로 한다. 로그인 API로 토큰을 받고, `fetch`로 `POST /auth/handoff`를 보내 HttpOnly 쿠키를 만든다. 첨부도 Bearer로 `POST /api/media`에 실제로 올린다. 그래서 개발 전용 인증 경로를 만들지 않고, 핸드오프 서버 코드가 브라우저에서도 매번 돈다. 출처·메인 프레임 판정은 흉내 내지 않는다. 대신 허용 출처의 최상위 문서에만 통로 객체를 넣는다. 다른 출처 iframe은 브라우저의 동일 출처 정책 때문에 그 객체에 닿지 못한다.
