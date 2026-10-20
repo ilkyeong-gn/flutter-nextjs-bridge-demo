@@ -136,6 +136,16 @@ _Avoid_: 파일, 업로드 항목
 서버에 올라가서 글에 붙일 수 있게 된 사진·영상. 첨부를 올리면 미디어가 된다.
 _Avoid_: 에셋, 첨부(올린 뒤를 가리킬 때)
 
+### 개발과 테스트
+
+**Fake Host (가짜 Host)**:
+Host 없이 Web을 돌리려고 Host 자리에 들어가, Bridge 계약대로 Message·Call·Event를 주고받는 대역.
+_Avoid_: 목 브릿지, 모의 앱, 스텁
+
+**Fake Web (가짜 Web)**:
+Web 없이 Host를 돌리려고 Web 자리에 들어가, Bridge 계약대로 Message·Call·Event를 주고받는 대역.
+_Avoid_: 목 페이지, 테스트 페이지
+
 ### 단계
 
 **Stage (단계)**:
