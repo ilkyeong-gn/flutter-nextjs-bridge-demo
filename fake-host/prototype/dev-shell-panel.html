@@ -1,0 +1,655 @@
+<!doctype html>
+<!--
+  PROTOTYPE — 버리는 코드. 운영·main에 들이지 않는다.
+  질문(지도 #58의 「가짜 Host 개발 껍데기 모양 프로토타입」): 일반 브라우저에서 Web을 개발할 때
+  가짜 Host는 어떻게 켜지고, 어떤 조작 패널을 보여야 하는가?
+
+  모양: 조작 패널 시안 셋을 같은 페이지에서 `?variant=A|B|C`로 바꿔 본다.
+  아직 Next.js 앱이 없어서 파일 하나에 세 층을 흉내 냈다.
+    1. 표본 계약(생성물 흉내) — 메서드 이름은 예시일 뿐 계약 결정이 아니다
+    2. 가짜 Host 코어(DOM 없음) + 개발 껍데기(`window.BridgeHost` 설치, 패널은 Shadow DOM)
+    3. 표본 Web 화면과 작은 Bridge 클라이언트(`hello` → status, Call, Event 구독)
+  켜기: `?fakeHost=1`(실제로는 쿠키, file://에서는 쿠키가 안 돼 sessionStorage로 흉내), 끄기: `?fakeHost=0`.
+  실행: 이 파일을 브라우저로 연다.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTOTYPE 가짜 Host 개발 껍데기</title>
+<style>
+  :root { font-family: system-ui, -apple-system, sans-serif; color: #1d2330; background: #f5f6f8; }
+  body { margin: 0; }
+  .web { max-width: 560px; margin: 0 auto; padding: 56px 16px 140px; }
+  .web h1 { font-size: 20px; margin: 0 0 4px; }
+  .web .sub { color: #667; font-size: 13px; margin-bottom: 16px; }
+  .card { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; box-shadow: 0 1px 2px #0001; }
+  .card h2 { font-size: 14px; margin: 0 0 8px; color: #445; }
+  .web button { font: inherit; font-size: 13px; padding: 7px 10px; border-radius: 8px; border: 1px solid #ccd; background: #fff; cursor: pointer; margin: 0 6px 6px 0; }
+  .status { font-weight: 600; }
+  .status.ready { color: #137a3a; } .status.none { color: #b3261e; } .status.connecting { color: #8a6d00; }
+  .devhint { background: #fff7d6; border: 1px dashed #c9a400; border-radius: 10px; padding: 10px 12px; font-size: 13px; margin-bottom: 12px; }
+  .devhint code { background: #0001; padding: 1px 4px; border-radius: 4px; }
+  ul.results { list-style: none; padding: 0; margin: 0; font: 12px ui-monospace, monospace; }
+  ul.results li { padding: 4px 0; border-top: 1px solid #eee; word-break: break-all; }
+  .ok { color: #137a3a; } .err { color: #b3261e; }
+  table { font-size: 13px; border-collapse: collapse; } td { padding: 2px 10px 2px 0; }
+  /* 시안 바꾸기 막대: 프로토타입 장치이지 평가 대상이 아니다. 시안 B·C가 아래·오른쪽을 차지해서 위 가운데에 둔다. */
+  #switcher { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 2147483647;
+    background: #111; color: #fff; border-radius: 999px; padding: 6px 8px; display: flex; gap: 8px; align-items: center;
+    font: 13px system-ui; box-shadow: 0 4px 14px #0005; }
+  #switcher button { background: #333; color: #fff; border: 0; border-radius: 999px; width: 28px; height: 28px; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="web" id="web"></div>
+<div id="switcher"></div>
+
+<script>
+/* ───────────────────── 1. 표본 계약(생성물 흉내) ───────────────────── */
+const ERROR_CODES = ['unknown_method', 'invalid_params', 'unsupported', 'unavailable', 'permission_denied', 'not_allowed', 'timeout', 'cancelled', 'internal'];
+const isStr = (v) => typeof v === 'string';
+const CONTRACT = {
+  version: '0.3',
+  calls: {
+    'browser.open': {
+      timeoutMs: 5000,
+      decodeParams: (p) => p && isStr(p.url) && /^https?:\/\//.test(p.url),
+      decodeResult: (v) => v === null,
+      errors: ['not_allowed', 'unavailable'],
+      fixtures: {
+        valid: [{ description: '시스템 브라우저로 열림', value: null }],
+        invalid: [{ description: '결과에 값이 붙어 옴', value: { opened: true } }],
+      },
+    },
+    'share.text': {
+      timeoutMs: 60000,
+      decodeParams: (p) => p && isStr(p.text),
+      decodeResult: (v) => v && typeof v.completed === 'boolean',
+      errors: ['cancelled', 'unavailable'],
+      fixtures: {
+        valid: [
+          { description: '공유 완료', value: { completed: true } },
+          { description: '공유 시트를 그냥 닫음', value: { completed: false } },
+        ],
+        invalid: [{ description: 'completed가 문자열', value: { completed: 'yes' } }],
+      },
+    },
+    'device.info': {
+      timeoutMs: 3000,
+      decodeParams: (p) => p == null || (typeof p === 'object' && Object.keys(p).length === 0),
+      decodeResult: (v) => v && isStr(v.platform) && isStr(v.osVersion),
+      errors: [],
+      fixtures: {
+        valid: [
+          { description: 'Android 15', value: { platform: 'android', osVersion: '15' } },
+          { description: 'iOS 18', value: { platform: 'ios', osVersion: '18.1' } },
+        ],
+        invalid: [{ description: 'platform 빠짐', value: { osVersion: '15' } }],
+      },
+    },
+  },
+  messages: {
+    'haptics.tap': { decode: (v) => v && ['light', 'medium'].includes(v.style) },
+  },
+  events: {
+    'app.lifecycle': {
+      kind: 'state',
+      decode: (v) => v && ['foreground', 'background'].includes(v.state),
+      fixtures: {
+        valid: [{ description: '포그라운드', value: { state: 'foreground' } }, { description: '백그라운드', value: { state: 'background' } }],
+        invalid: [{ description: '모르는 상태', value: { state: 'paused' } }],
+      },
+    },
+    'appearance': {
+      kind: 'state',
+      decode: (v) => v && ['light', 'dark'].includes(v.theme),
+      fixtures: {
+        valid: [{ description: '밝은 테마', value: { theme: 'light' } }, { description: '어두운 테마', value: { theme: 'dark' } }],
+        invalid: [{ description: 'theme 빠짐', value: {} }],
+      },
+    },
+    'host.memoryWarning': {
+      kind: 'oneoff',
+      decode: (v) => v && typeof v === 'object',
+      fixtures: { valid: [{ description: '메모리 경고', value: {} }], invalid: [{ description: '값 없음', value: null }] },
+    },
+  },
+};
+const major = (v) => String(v).split('.')[0];
+const ALL_NAMES = [...Object.keys(CONTRACT.calls), ...Object.keys(CONTRACT.messages), ...Object.keys(CONTRACT.events)];
+
+/* ───────────────────── 2a. 가짜 Host 코어(DOM 없음, 테스트 껍데기와 함께 씀) ───────────────────── */
+// config.calls[name].respond: 'valid:0' | 'invalid:0' | 'error:<code>' | 'silent' | 'ask'
+function defaultConfig() {
+  const calls = {};
+  for (const n of Object.keys(CONTRACT.calls)) calls[n] = { respond: 'valid:0', delayMs: 300 };
+  return { hello: { mode: 'ok', contractVersion: CONTRACT.version, hostAppVersion: '1.0.0' }, removed: [], calls };
+}
+
+function createFakeHostCore({ config, send }) {
+  const listeners = new Set();
+  const log = [];
+  const stateLast = {};
+  const oneoffQueue = [];
+  const asks = new Map(); // id -> { name, params }
+  let handshaken = false;
+  const changed = () => listeners.forEach((f) => f());
+  const record = (dir, env, note) => { log.push({ t: performance.now(), dir, env, note }); changed(); };
+  const out = (env, note) => { record('host→web', env, note); send(JSON.stringify(env)); };
+  const reply = (id, body, note) => out({ kind: 'result', id, ...body }, note);
+  const err = (code, message) => ({ error: { code, message: message ?? code } });
+  const offered = (name) => !config.removed.includes(name);
+
+  function resolveChoice(id, name, choice) {
+    const [k, rest] = choice.split(':');
+    if (k === 'valid' || k === 'invalid') {
+      const f = CONTRACT.calls[name].fixtures[k][Number(rest)];
+      reply(id, { value: f.value }, `픽스처 ${k}: ${f.description}`);
+    } else if (k === 'error') reply(id, err(rest, `가짜 Host가 고른 에러`), `에러 ${rest}`);
+    else if (k === 'silent') record('host', { id, name }, '응답 안 함 → Web 타임아웃');
+  }
+
+  function receive(text) {
+    let env;
+    try { env = JSON.parse(text); } catch { return; }
+    if (!env || !['call', 'message'].includes(env.kind)) return;
+    record('web→host', env);
+    if (env.kind === 'message') {
+      const m = CONTRACT.messages[env.name];
+      if (!m || !offered(env.name)) return record('host', env, '모르는 Message, 버림');
+      if (!m.decode(env.value)) return record('host', env, 'Message 디코딩 실패, 버림');
+      return;
+    }
+    if (env.name === 'hello') {
+      const h = config.hello;
+      if (h.mode === 'silent') return record('host', env, 'hello에 응답 안 함(설정)');
+      if (h.mode === 'error') return reply(env.id, err('internal'), 'hello 에러(설정)');
+      reply(env.id, { value: { contractVersion: h.contractVersion, hostAppVersion: h.hostAppVersion, capabilities: ALL_NAMES.filter(offered) } });
+      handshaken = true;
+      for (const [name, value] of Object.entries(stateLast)) out({ kind: 'event', name, value }, '핸드셰이크 뒤 마지막 상태값');
+      while (oneoffQueue.length) out(oneoffQueue.shift(), '핸드셰이크 뒤 큐에서 꺼냄');
+      return;
+    }
+    const c = CONTRACT.calls[env.name];
+    if (!c || !offered(env.name)) return reply(env.id, err('unknown_method'), '옛 Host 흉내: 모르는 메서드');
+    if (!c.decodeParams(env.params)) return reply(env.id, err('invalid_params'), '매개변수 디코딩 실패');
+    const { respond, delayMs } = config.calls[env.name];
+    if (respond === 'ask') { asks.set(env.id, { name: env.name, params: env.params }); return changed(); }
+    setTimeout(() => resolveChoice(env.id, env.name, respond), delayMs);
+  }
+
+  function emit(name, value, note) {
+    const e = CONTRACT.events[name];
+    if (!offered(name)) return record('host', { name }, '기능 목록에서 뺀 Event라 보내지 않음');
+    const env = { kind: 'event', name, value };
+    if (e.kind === 'state') stateLast[name] = value;
+    if (handshaken) return out(env, note);
+    if (e.kind === 'oneoff') oneoffQueue.push(env);
+    record('host', env, '핸드셰이크 전이라 보관');
+  }
+
+  function answer(id, choice) {
+    const a = asks.get(id);
+    if (!a) return;
+    asks.delete(id);
+    resolveChoice(id, a.name, choice);
+  }
+
+  return {
+    receive, emit, answer,
+    get log() { return log; }, get asks() { return asks; }, get stateLast() { return stateLast; }, get handshaken() { return handshaken; },
+    clearLog() { log.length = 0; changed(); },
+    subscribe(f) { listeners.add(f); return () => listeners.delete(f); },
+  };
+}
+
+/* ───────────────────── 2b. 개발 껍데기: 켜기·설정 보관·window.BridgeHost 설치 ───────────────────── */
+// 실제로는 next dev + 쿠키. 여기서는 file://에서도 돌게 sessionStorage로 흉내 낸다.
+const KEY_ON = 'PROTOTYPE-fakeHost-on';
+const KEY_CFG = 'PROTOTYPE-fakeHost-config';
+const qs = new URLSearchParams(location.search);
+if (qs.get('fakeHost') === '1') sessionStorage.setItem(KEY_ON, '1');
+if (qs.get('fakeHost') === '0') sessionStorage.removeItem(KEY_ON);
+const FAKE_HOST_ON = sessionStorage.getItem(KEY_ON) === '1';
+// 핸드셰이크에 쓰인 설정(이 문서에서는 고정)과 지금 패널의 설정을 따로 둔다.
+const bootConfig = JSON.parse(sessionStorage.getItem(KEY_CFG) || 'null') || defaultConfig();
+const panelConfig = structuredClone(bootConfig);
+const saveConfig = () => sessionStorage.setItem(KEY_CFG, JSON.stringify(panelConfig));
+const needsReload = () => JSON.stringify([bootConfig.hello, bootConfig.removed]) !== JSON.stringify([panelConfig.hello, panelConfig.removed]);
+
+let core = null;
+if (FAKE_HOST_ON) {
+  const target = new EventTarget();
+  core = createFakeHostCore({
+    config: panelConfig, // Call 응답 설정은 바로 적용, hello·기능 목록은 다음 문서부터(needsReload)
+    send: (text) => queueMicrotask(() => target.dispatchEvent(new MessageEvent('message', { data: text }))),
+  });
+  // Android addWebMessageListener 모양의 중립 객체(ADR 0017). BridgeBoot의 start()보다 먼저 설치한다.
+  window.BridgeHost = {
+    postMessage: (text) => core.receive(text),
+    addEventListener: (type, fn) => target.addEventListener(type, fn),
+    removeEventListener: (type, fn) => target.removeEventListener(type, fn),
+  };
+}
+
+/* ───────────────────── 3. 표본 Web: 작은 Bridge 클라이언트 ───────────────────── */
+const bridge = (() => {
+  let status = 'connecting';
+  let caps = new Set();
+  let transport = null;
+  const pending = new Map();
+  const prefix = Math.random().toString(36).slice(2, 6);
+  let seq = 0;
+  const subs = new Set();
+  const eventSubs = new Set();
+  const setStatus = (s) => { status = s; subs.forEach((f) => f()); };
+  function connect() {
+    const h = window.BridgeHost;
+    if (!h || typeof h.postMessage !== 'function' || typeof h.addEventListener !== 'function') return null;
+    return { send: (t) => h.postMessage(t), onMessage: (fn) => h.addEventListener('message', (e) => isStr(e.data) && fn(e.data)) };
+  }
+  function onText(text) {
+    let env;
+    try { env = JSON.parse(text); } catch { return; }
+    if (env.kind === 'result') {
+      const p = pending.get(env.id);
+      if (!p) return;
+      pending.delete(env.id); clearTimeout(p.timer);
+      p.resolve(env.error ? { ok: false, error: env.error } : { ok: true, value: env.value });
+    } else if (env.kind === 'event') {
+      const e = CONTRACT.events[env.name];
+      if (!e || !caps.has(env.name)) return;
+      const ok = e.decode(env.value);
+      eventSubs.forEach((f) => f(env.name, env.value, ok));
+    }
+  }
+  function rawCall(name, params, timeoutMs) {
+    const id = `${prefix}-${++seq}`;
+    return new Promise((resolve) => {
+      const timer = setTimeout(() => { pending.delete(id); resolve({ ok: false, error: { code: 'timeout', message: `${timeoutMs}ms 안에 응답 없음` } }); }, timeoutMs);
+      pending.set(id, { resolve, timer });
+      transport.send(JSON.stringify({ kind: 'call', id, name, params }));
+    });
+  }
+  return {
+    get status() { return status; },
+    get caps() { return caps; },
+    start() {
+      transport = connect();
+      if (!transport) return setStatus({ none: 'no-channel' });
+      transport.onMessage(onText);
+      rawCall('hello', { contractVersion: CONTRACT.version }, 3000).then((r) => {
+        const v = r.ok && r.value;
+        if (!v || !isStr(v.contractVersion) || !Array.isArray(v.capabilities)) return setStatus({ none: 'handshake' });
+        if (major(v.contractVersion) !== major(CONTRACT.version)) return setStatus({ none: 'major' });
+        caps = new Set(v.capabilities);
+        setStatus({ ready: { contractVersion: v.contractVersion, hostAppVersion: v.hostAppVersion } });
+      });
+    },
+    async call(name, params) {
+      if (!status.ready) return { ok: false, error: { code: 'unavailable', message: 'Bridge 없음' } };
+      if (!caps.has(name)) return { ok: false, error: { code: 'unsupported', message: '기능 목록에 없음(보내지 않음)' } };
+      const r = await rawCall(name, params, CONTRACT.calls[name].timeoutMs);
+      if (r.ok && !CONTRACT.calls[name].decodeResult(r.value)) return { ok: false, error: { code: 'internal', message: '결과 디코딩 실패' } };
+      return r;
+    },
+    message(name, value) {
+      if (!status.ready || !caps.has(name)) return false;
+      transport.send(JSON.stringify({ kind: 'message', name, value }));
+      return true;
+    },
+    onStatus(f) { subs.add(f); },
+    onEvent(f) { eventSubs.add(f); },
+  };
+})();
+
+const webState = { results: [], states: {}, oneoffs: [] };
+function statusText(s) {
+  if (s === 'connecting') return ['connecting', '핸드셰이크 대기'];
+  if (s.ready) return ['ready', `ready · 계약 ${s.ready.contractVersion} · Host 앱 ${s.ready.hostAppVersion}`];
+  return ['none', `Bridge 없음 (${s.none})`];
+}
+async function runCall(label, name, params) {
+  const r = await bridge.call(name, params);
+  webState.results.unshift({ label, r });
+  renderWeb();
+}
+function renderWeb() {
+  const [cls, text] = statusText(bridge.status);
+  const hint = !FAKE_HOST_ON
+    ? `<div class="devhint"><b>개발 모드 안내</b>(next dev에서만 보임): 일반 브라우저라 Bridge 없음입니다. 가짜 Host를 켜려면 <code>?fakeHost=1</code>로 다시 여세요. <button onclick="location.search='?variant=${variant}&fakeHost=1'">가짜 Host 켜고 다시 불러오기</button></div>`
+    : '';
+  document.getElementById('web').innerHTML = `
+    <h1>표본 Web 화면</h1>
+    <div class="sub">Web 팀이 개발 중인 아무 화면. 아래 버튼은 Web 코드가 Bridge를 쓰는 자리를 흉내 낸다.</div>
+    ${hint}
+    <div class="card"><h2>Bridge 상태</h2><span class="status ${cls}">${text}</span>
+      <div style="margin-top:8px"><button onclick="location.reload()">문서 다시 불러오기</button></div></div>
+    <div class="card"><h2>Call 해 보기</h2>
+      <button onclick="runCall('외부 링크 열기','browser.open',{url:'https://example.com'})">외부 링크 열기</button>
+      <button onclick="runCall('공유','share.text',{text:'안녕'})">텍스트 공유</button>
+      <button onclick="runCall('기기 정보','device.info',{})">기기 정보</button>
+      <button onclick="runCall('잘못된 URL','browser.open',{url:'javascript:alert(1)'})">잘못된 매개변수</button>
+      <button onclick="bridge.message('haptics.tap',{style:'light'})">Message: haptics.tap</button>
+      <ul class="results">${webState.results.slice(0, 6).map(({ label, r }) =>
+        `<li><b>${label}</b> → ${r.ok ? `<span class="ok">ok ${JSON.stringify(r.value)}</span>` : `<span class="err">${r.error.code}: ${r.error.message}</span>`}</li>`).join('')}</ul></div>
+    <div class="card"><h2>받은 상태 Event</h2><table>${Object.entries(webState.states).map(([n, v]) => `<tr><td>${n}</td><td>${JSON.stringify(v)}</td></tr>`).join('') || '<tr><td>아직 없음</td></tr>'}</table></div>
+    <div class="card"><h2>받은 일회 Event</h2><ul class="results">${webState.oneoffs.map((o) => `<li>${o}</li>`).join('') || '<li>아직 없음</li>'}</ul></div>`;
+}
+bridge.onStatus(renderWeb);
+bridge.onEvent((name, value, ok) => {
+  if (!ok) webState.oneoffs.unshift(`<span class="err">${name} 디코딩 실패, 버림</span>`);
+  else if (CONTRACT.events[name].kind === 'state') webState.states[name] = value;
+  else webState.oneoffs.unshift(`${new Date().toLocaleTimeString()} ${name} ${JSON.stringify(value)}`);
+  renderWeb();
+});
+
+/* ───────────────────── 패널 공용 조각 ───────────────────── */
+const VARIANTS = { A: '도크 + 탭', B: '계약 항목 사이드바', C: '가로채기 콘솔' };
+const variant = VARIANTS[qs.get('variant')] ? qs.get('variant') : 'A';
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+function choiceOptions(name, selected, withAsk = true) {
+  const c = CONTRACT.calls[name];
+  const opt = (v, label) => `<option value="${v}" ${v === selected ? 'selected' : ''}>${esc(label)}</option>`;
+  return [
+    `<optgroup label="valid 픽스처">${c.fixtures.valid.map((f, i) => opt(`valid:${i}`, f.description)).join('')}</optgroup>`,
+    `<optgroup label="invalid 픽스처">${c.fixtures.invalid.map((f, i) => opt(`invalid:${i}`, f.description)).join('')}</optgroup>`,
+    `<optgroup label="에러">${[...c.errors, ...ERROR_CODES.filter((e) => !c.errors.includes(e) && !['unknown_method', 'invalid_params', 'unsupported', 'timeout'].includes(e))].map((e) => opt(`error:${e}`, e + (c.errors.includes(e) ? ' (메서드 코드)' : ''))).join('')}</optgroup>`,
+    `<optgroup label="그 밖">${opt('silent', '응답 안 함(타임아웃)')}${withAsk ? opt('ask', '매번 물어보기') : ''}</optgroup>`,
+  ].join('');
+}
+function eventValueOptions(name) {
+  const f = CONTRACT.events[name].fixtures;
+  return [...f.valid.map((x, i) => `<option value="valid:${i}">${esc(x.description)}</option>`),
+    ...f.invalid.map((x, i) => `<option value="invalid:${i}">invalid: ${esc(x.description)}</option>`)].join('');
+}
+const fixtureValue = (name, choice) => { const [k, i] = choice.split(':'); return CONTRACT.events[name].fixtures[k][Number(i)].value; };
+function logLine(l) {
+  const env = l.env || {};
+  const what = env.kind ? `${env.kind} ${env.name ?? ''} ${env.id ? `#${env.id}` : ''}` : (env.name ?? '');
+  const body = env.params ?? env.value ?? env.error;
+  return { dir: l.dir, what, body: body === undefined ? '' : JSON.stringify(body), note: l.note || '', t: (l.t / 1000).toFixed(2) };
+}
+const BASE_CSS = `
+  :host { all: initial; font: 12px system-ui, -apple-system, sans-serif; color: #e7e9ee; }
+  * { box-sizing: border-box; }
+  select, input, button { font: inherit; color: inherit; background: #262b36; border: 1px solid #3a4150; border-radius: 6px; padding: 3px 6px; }
+  button { cursor: pointer; } button.primary { background: #3b6cf6; border-color: #3b6cf6; }
+  .muted { color: #8b93a5; } .warn { color: #ffcf5c; } .bad { color: #ff8a80; } .good { color: #7ee2a8; }
+  .mono { font-family: ui-monospace, monospace; }
+  .reload { background: #4a3a00; border: 1px solid #806400; border-radius: 6px; padding: 6px 8px; margin: 6px 0; display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+  .badge { display: inline-block; padding: 0 5px; border-radius: 4px; font-size: 10px; background: #3a4150; }
+  .badge.state { background: #234d7a; } .badge.oneoff { background: #6b3a7a; } .badge.call { background: #2d5a3d; } .badge.message { background: #5a4a2d; }
+`;
+function handshakeControls() {
+  const h = panelConfig.hello;
+  return `
+    <div><label>hello 응답 <select data-hello="mode">
+      <option value="ok" ${h.mode === 'ok' ? 'selected' : ''}>정상</option>
+      <option value="silent" ${h.mode === 'silent' ? 'selected' : ''}>응답 안 함(handshake)</option>
+      <option value="error" ${h.mode === 'error' ? 'selected' : ''}>에러(handshake)</option></select></label></div>
+    <div style="margin-top:6px"><label>Host 계약 버전 <select data-hello="contractVersion">
+      ${['0.3', '0.2', '1.0'].map((v) => `<option ${v === h.contractVersion ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+      <span class="muted">Web은 ${CONTRACT.version}</span></div>
+    <div style="margin-top:6px"><label>Host 앱 버전 <select data-hello="hostAppVersion">
+      ${['1.0.0', '0.9.0'].map((v) => `<option ${v === h.hostAppVersion ? 'selected' : ''}>${v}</option>`).join('')}</select></label></div>`;
+}
+function reloadNotice() {
+  return needsReload() ? `<div class="reload"><span class="warn">핸드셰이크 설정이 바뀜 · 다음 문서부터 적용</span><button class="primary" data-act="reload">다시 불러오기</button></div>` : '';
+}
+// 패널 공통 이벤트 위임: data-* 속성으로 설정을 바꾼다.
+function wireCommon(root, rerender) {
+  root.addEventListener('change', (e) => {
+    const t = e.target;
+    if (t.dataset.respond) { panelConfig.calls[t.dataset.respond].respond = t.value; saveConfig(); }
+    if (t.dataset.delay) { panelConfig.calls[t.dataset.delay].delayMs = Number(t.value) || 0; saveConfig(); }
+    if (t.dataset.hello) { panelConfig.hello[t.dataset.hello] = t.value; saveConfig(); rerender(); }
+    if (t.dataset.offer) {
+      const n = t.dataset.offer;
+      panelConfig.removed = t.checked ? panelConfig.removed.filter((x) => x !== n) : [...panelConfig.removed, n];
+      saveConfig(); rerender();
+    }
+  });
+  root.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-act]');
+    if (!t) return;
+    const act = t.dataset.act;
+    if (act === 'reload') location.reload();
+    if (act === 'off') { sessionStorage.removeItem(KEY_ON); location.reload(); }
+    if (act === 'reset') { sessionStorage.removeItem(KEY_CFG); location.reload(); }
+    if (act === 'emit') {
+      const n = t.dataset.name;
+      const sel = root.querySelector(`select[data-evval="${n}"]`);
+      core.emit(n, fixtureValue(n, sel.value), '패널에서 보냄');
+    }
+    if (act === 'answer') core.answer(t.dataset.id, t.dataset.choice || root.querySelector(`select[data-answer="${t.dataset.id}"]`).value);
+    if (act === 'clear') core.clearLog();
+  });
+}
+function offerCheckbox(n) {
+  return `<input type="checkbox" data-offer="${n}" ${panelConfig.removed.includes(n) ? '' : 'checked'} title="기능 목록에 넣기">`;
+}
+
+/* ───────────────────── 시안 A: 도크 + 탭 ───────────────────── */
+// 접힌 둥근 단추(상태 점 + 대기 중인 물어보기 수). 펼치면 탭 넷: Call 응답 / Event / 핸드셰이크·기능 / 로그.
+function mountA(shadow) {
+  let open = false, tab = 'calls';
+  shadow.innerHTML = `<style>${BASE_CSS}
+    .fab { position: fixed; right: 16px; bottom: 16px; width: 48px; height: 48px; border-radius: 50%; background: #1b1f27; border: 2px solid #3b6cf6; display: grid; place-items: center; cursor: pointer; box-shadow: 0 4px 14px #0006; font-weight: 700; }
+    .dot { position: absolute; top: 4px; right: 4px; width: 12px; height: 12px; border-radius: 50%; }
+    .count { position: absolute; bottom: -4px; right: -4px; background: #ff8a80; color: #000; border-radius: 999px; padding: 0 5px; font-size: 11px; }
+    .panel { position: fixed; right: 16px; bottom: 76px; width: 400px; max-height: 70vh; display: flex; flex-direction: column; background: #1b1f27; border-radius: 12px; box-shadow: 0 10px 30px #0008; overflow: hidden; }
+    .tabs { display: flex; border-bottom: 1px solid #333a48; } .tabs button { flex: 1; border: 0; border-radius: 0; background: none; padding: 8px 0; }
+    .tabs button.on { border-bottom: 2px solid #3b6cf6; color: #fff; }
+    .body { padding: 10px 12px; overflow: auto; }
+    .row { padding: 8px 0; border-bottom: 1px solid #2a303c; }
+    .row .name { font-weight: 600; margin-bottom: 4px; }
+    .ctl { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .log div { padding: 3px 0; border-bottom: 1px solid #2a303c; word-break: break-all; }
+    .foot { display: flex; gap: 6px; padding: 8px 12px; border-top: 1px solid #333a48; }
+  </style><div id="r"></div>`;
+  const r = shadow.getElementById('r');
+  const render = () => {
+    const s = bridge.status;
+    const color = s === 'connecting' ? '#ffcf5c' : s.ready ? '#7ee2a8' : '#ff8a80';
+    const body = {
+      calls: () => Object.keys(CONTRACT.calls).map((n) => `<div class="row"><div class="name mono">${n}</div><div class="ctl">
+          <select data-respond="${n}">${choiceOptions(n, panelConfig.calls[n].respond)}</select>
+          <label>지연 <input type="number" step="100" style="width:70px" data-delay="${n}" value="${panelConfig.calls[n].delayMs}">ms</label></div></div>`).join('')
+        + [...core.asks].map(([id, a]) => `<div class="row"><div class="name warn">대기 중: ${a.name} #${id}</div><div class="mono muted">${esc(JSON.stringify(a.params))}</div>
+          <div class="ctl"><select data-answer="${id}">${choiceOptions(a.name, 'valid:0', false)}</select><button class="primary" data-act="answer" data-id="${id}">응답</button></div></div>`).join(''),
+      events: () => Object.entries(CONTRACT.events).map(([n, e]) => `<div class="row"><div class="name"><span class="mono">${n}</span> <span class="badge ${e.kind}">${e.kind === 'state' ? '상태' : '일회'}</span></div>
+          <div class="ctl"><select data-evval="${n}">${eventValueOptions(n)}</select><button class="primary" data-act="emit" data-name="${n}">보내기</button></div>
+          ${e.kind === 'state' ? `<div class="muted">마지막 값: ${esc(JSON.stringify(core.stateLast[n] ?? '없음'))}</div>` : ''}</div>`).join(''),
+      handshake: () => `${reloadNotice()}${handshakeControls()}<div class="row"><div class="name">기능 목록 <span class="muted">(빼면 옛 Host 흉내)</span></div>
+          ${ALL_NAMES.map((n) => `<div><label>${offerCheckbox(n)} <span class="mono">${n}</span></label></div>`).join('')}</div>`,
+      log: () => `<div class="log mono">${core.log.slice().reverse().map(logLine).map((l) =>
+          `<div><span class="muted">${l.t}s</span> ${l.dir === 'web→host' ? '→' : l.dir === 'host→web' ? '←' : '·'} ${esc(l.what)} <span class="muted">${esc(l.body)}</span> ${l.note ? `<span class="warn">${esc(l.note)}</span>` : ''}</div>`).join('') || '<span class="muted">없음</span>'}</div>`,
+    };
+    const tabs = { calls: `Call 응답${core.asks.size ? ` (${core.asks.size})` : ''}`, events: 'Event', handshake: `핸드셰이크·기능${needsReload() ? ' ●' : ''}`, log: `로그 ${core.log.length}` };
+    r.innerHTML = `<div class="fab" data-act="toggle">FH<span class="dot" style="background:${color}"></span>${core.asks.size ? `<span class="count">${core.asks.size}</span>` : ''}</div>
+      ${open ? `<div class="panel"><div class="tabs">${Object.entries(tabs).map(([k, v]) => `<button class="${k === tab ? 'on' : ''}" data-tab="${k}">${v}</button>`).join('')}</div>
+        <div class="body">${body[tab]()}</div>
+        <div class="foot"><button data-act="clear">로그 비우기</button><button data-act="reset">설정 초기화</button><span style="flex:1"></span><button data-act="off">가짜 Host 끄기</button></div></div>` : ''}`;
+  };
+  shadow.addEventListener('click', (e) => {
+    if (e.target.closest('[data-act="toggle"]')) { open = !open; render(); }
+    const t = e.target.closest('[data-tab]'); if (t) { tab = t.dataset.tab; render(); }
+  });
+  wireCommon(shadow, render);
+  // 입력 중에 다시 그리지 않도록 로그 변화는 로그·Call 탭에서만 반영
+  core.subscribe(() => { if (!open || tab === 'log' || tab === 'calls' || tab === 'events') render(); });
+  bridge.onStatus(render);
+  render();
+}
+
+/* ───────────────────── 시안 B: 계약 항목 사이드바 ───────────────────── */
+// 오른쪽에 붙박인 사이드바가 화면을 밀어낸다. 계약 항목마다 한 줄: 기능 목록 체크 + 응답 설정(Call)/값 고르고 보내기(Event).
+// 로그는 패널에 두지 않고 브라우저 콘솔(console.groupCollapsed)로 보낸다.
+function mountB(shadow) {
+  document.documentElement.style.marginRight = '340px';
+  shadow.innerHTML = `<style>${BASE_CSS}
+    .side { position: fixed; top: 0; right: 0; bottom: 0; width: 340px; background: #1b1f27; overflow: auto; padding: 12px; border-left: 1px solid #333a48; }
+    h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #8b93a5; margin: 14px 0 6px; }
+    .item { padding: 7px 0; border-bottom: 1px solid #2a303c; }
+    .item .top { display: flex; align-items: center; gap: 6px; }
+    .item .top .mono { flex: 1; }
+    .item .sub { display: flex; gap: 6px; margin: 5px 0 0 22px; align-items: center; flex-wrap: wrap; }
+    .item.off { opacity: .45; }
+    .head { display: flex; align-items: center; gap: 8px; }
+    .pending { background: #4a3a00; border-radius: 6px; padding: 6px; margin: 5px 0 0 22px; }
+  </style><div id="r"></div>`;
+  const r = shadow.getElementById('r');
+  const render = () => {
+    const [, st] = statusText(bridge.status);
+    const item = (n, kind, inner) => `<div class="item ${panelConfig.removed.includes(n) ? 'off' : ''}"><div class="top">${offerCheckbox(n)}<span class="mono">${n}</span><span class="badge ${kind}">${{ call: 'Call', message: 'Msg', state: '상태', oneoff: '일회' }[kind]}</span></div>${inner}</div>`;
+    r.innerHTML = `<div class="side">
+      <div class="head"><b>가짜 Host</b><span class="muted" style="flex:1">${st}</span><button data-act="off">끄기</button></div>
+      ${reloadNotice()}
+      <h3>핸드셰이크</h3>${handshakeControls()}
+      <h3>Call</h3>${Object.keys(CONTRACT.calls).map((n) => item(n, 'call', `<div class="sub">
+        <select data-respond="${n}" style="max-width:190px">${choiceOptions(n, panelConfig.calls[n].respond)}</select>
+        <input type="number" step="100" style="width:64px" data-delay="${n}" value="${panelConfig.calls[n].delayMs}">ms</div>
+        ${[...core.asks].filter(([, a]) => a.name === n).map(([id, a]) => `<div class="pending">대기 #${id} <span class="mono muted">${esc(JSON.stringify(a.params))}</span><br>
+          <select data-answer="${id}">${choiceOptions(n, 'valid:0', false)}</select> <button class="primary" data-act="answer" data-id="${id}">응답</button></div>`).join('')}`)).join('')}
+      <h3>Event</h3>${Object.entries(CONTRACT.events).map(([n, e]) => item(n, e.kind, `<div class="sub">
+        <select data-evval="${n}">${eventValueOptions(n)}</select><button class="primary" data-act="emit" data-name="${n}">보내기</button>
+        ${e.kind === 'state' ? `<span class="muted">지금 ${esc(JSON.stringify(core.stateLast[n] ?? '—'))}</span>` : ''}</div>`)).join('')}
+      <h3>Message (Web→Host)</h3>${Object.keys(CONTRACT.messages).map((n) => item(n, 'message', '')).join('')}
+      <p class="muted">로그는 브라우저 콘솔의 [fake-host] 그룹에 찍힌다.</p>
+      <button data-act="reset">설정 초기화</button></div>`;
+  };
+  let seen = 0;
+  core.subscribe(() => {
+    for (; seen < core.log.length; seen++) {
+      const l = logLine(core.log[seen]);
+      console.groupCollapsed(`[fake-host] ${l.dir} ${l.what} ${l.note}`);
+      console.log(core.log[seen].env);
+      console.groupEnd();
+    }
+    render();
+  });
+  wireCommon(shadow, render);
+  bridge.onStatus(render);
+  render();
+}
+
+/* ───────────────────── 시안 C: 가로채기 콘솔 ───────────────────── */
+// 아래 서랍. 주인공은 Message 타임라인이다. 기본은 "매번 물어보기": Call이 오면 타임라인에 멈춘 줄로 나타나고
+// 그 줄에서 픽스처·에러·무응답 단추로 답한다. Event는 명령줄로 보낸다: `emit app.lifecycle background`.
+function mountC(shadow) {
+  // 이 시안의 기본값: 모든 Call을 물어보기로(설정이 처음일 때만)
+  if (!sessionStorage.getItem(KEY_CFG)) { for (const n in panelConfig.calls) panelConfig.calls[n].respond = 'ask'; saveConfig(); }
+  document.documentElement.style.paddingBottom = '300px';
+  shadow.innerHTML = `<style>${BASE_CSS}
+    .drawer { position: fixed; left: 0; right: 0; bottom: 0; height: 290px; background: #14171d; border-top: 2px solid #3b6cf6; display: flex; flex-direction: column; }
+    .bar { display: flex; gap: 8px; align-items: center; padding: 6px 10px; border-bottom: 1px solid #2a303c; flex-wrap: wrap; }
+    .chip { border-radius: 999px; padding: 1px 8px; border: 1px solid #3a4150; cursor: pointer; }
+    .chip.off { text-decoration: line-through; opacity: .5; }
+    .tl { flex: 1; overflow: auto; font-family: ui-monospace, monospace; }
+    .ln { display: grid; grid-template-columns: 52px 22px 230px 1fr; gap: 6px; padding: 3px 10px; border-bottom: 1px solid #1f242d; align-items: start; }
+    .ln.ask { background: #3a2f00; }
+    .ln .acts { grid-column: 3 / 5; display: flex; gap: 4px; flex-wrap: wrap; }
+    .cmd { display: flex; gap: 6px; padding: 6px 10px; border-top: 1px solid #2a303c; }
+    .cmd input { flex: 1; font-family: ui-monospace, monospace; }
+    .cfg { position: absolute; right: 10px; bottom: 300px; width: 330px; background: #1b1f27; border-radius: 10px; padding: 10px; box-shadow: 0 8px 24px #0008; }
+  </style>
+  <div class="drawer">
+    <div class="bar" id="bar"></div>
+    <div class="tl" id="tl"></div>
+    <div class="cmd"><input id="cmd" list="cmds" placeholder="emit app.lifecycle background · emit host.memoryWarning · auto on|off"><datalist id="cmds"></datalist><button class="primary" id="run">실행</button></div>
+  </div><div id="cfg"></div>`;
+  const bar = shadow.getElementById('bar'), tl = shadow.getElementById('tl'), cmd = shadow.getElementById('cmd'), cfgEl = shadow.getElementById('cfg');
+  let showCfg = false;
+  shadow.getElementById('cmds').innerHTML = Object.entries(CONTRACT.events).flatMap(([n, e]) =>
+    e.fixtures.valid.map((f) => `<option value="emit ${n} ${Object.values(f.value)[0] ?? ''}">${f.description}</option>`)).join('') + '<option value="auto on"><option value="auto off">';
+  const renderBar = () => {
+    const [cls, st] = statusText(bridge.status);
+    const auto = Object.values(panelConfig.calls).every((c) => c.respond !== 'ask');
+    bar.innerHTML = `<b>가짜 Host</b> <span class="${cls === 'ready' ? 'good' : cls === 'none' ? 'bad' : 'warn'}">${st}</span>
+      <span class="muted">기능:</span>${ALL_NAMES.map((n) => `<span class="chip mono ${panelConfig.removed.includes(n) ? 'off' : ''}" data-chip="${n}">${n}</span>`).join('')}
+      <span style="flex:1"></span><span class="muted">${auto ? '자동 응답' : '물어보기'}</span>
+      <button data-act="cfg">설정</button><button data-act="clear">비우기</button><button data-act="off">끄기</button>
+      ${needsReload() ? '<button class="primary" data-act="reload">다시 불러오기 ●</button>' : ''}`;
+  };
+  const renderTl = () => {
+    const rows = core.log.map((raw) => {
+      const l = logLine(raw);
+      const arrow = l.dir === 'web→host' ? '→' : l.dir === 'host→web' ? '←' : '·';
+      const id = raw.env?.id;
+      const asking = raw.env?.kind === 'call' && core.asks.has(id);
+      const name = raw.env?.name;
+      return `<div class="ln ${asking ? 'ask' : ''}"><span class="muted">${l.t}</span><span>${arrow}</span><span>${esc(l.what)}</span><span class="muted">${esc(l.body)} ${l.note ? `<span class="warn">${esc(l.note)}</span>` : ''}</span>
+        ${asking ? `<span></span><span></span><div class="acts">${CONTRACT.calls[name].fixtures.valid.map((f, i) => `<button class="primary" data-act="answer" data-id="${id}" data-choice="valid:${i}">${esc(f.description)}</button>`).join('')}
+          ${CONTRACT.calls[name].fixtures.invalid.map((f, i) => `<button data-act="answer" data-id="${id}" data-choice="invalid:${i}">invalid: ${esc(f.description)}</button>`).join('')}
+          ${[...CONTRACT.calls[name].errors, 'internal'].map((e) => `<button data-act="answer" data-id="${id}" data-choice="error:${e}" class="bad">${e}</button>`).join('')}
+          <button data-act="answer" data-id="${id}" data-choice="silent">무응답</button></div>` : ''}</div>`;
+    }).join('');
+    tl.innerHTML = rows || '<div class="muted" style="padding:10px">아직 오간 것 없음</div>';
+    tl.scrollTop = tl.scrollHeight;
+  };
+  const renderCfg = () => {
+    cfgEl.innerHTML = showCfg ? `<div class="cfg">${reloadNotice()}${handshakeControls()}<hr style="border-color:#2a303c">
+      ${Object.keys(CONTRACT.calls).map((n) => `<div style="margin:4px 0"><span class="mono">${n}</span><br><select data-respond="${n}">${choiceOptions(n, panelConfig.calls[n].respond)}</select>
+        <input type="number" step="100" style="width:64px" data-delay="${n}" value="${panelConfig.calls[n].delayMs}">ms</div>`).join('')}
+      <button data-act="reset">설정 초기화</button></div>` : '';
+  };
+  const renderAll = () => { renderBar(); renderTl(); renderCfg(); };
+  const run = () => {
+    const [verb, a, b] = cmd.value.trim().split(/\s+/);
+    if (verb === 'auto') { for (const n in panelConfig.calls) panelConfig.calls[n].respond = b === 'off' || a === 'off' ? 'ask' : 'valid:0'; saveConfig(); renderAll(); }
+    if (verb === 'emit' && CONTRACT.events[a]) {
+      const f = CONTRACT.events[a].fixtures.valid.find((x) => !b || Object.values(x.value).includes(b)) ?? CONTRACT.events[a].fixtures.valid[0];
+      core.emit(a, f.value, `명령: ${cmd.value}`);
+    }
+    cmd.value = '';
+  };
+  shadow.getElementById('run').onclick = run;
+  cmd.addEventListener('keydown', (e) => { if (e.key === 'Enter') run(); e.stopPropagation(); });
+  shadow.addEventListener('click', (e) => {
+    const chip = e.target.closest('[data-chip]');
+    if (chip) {
+      const n = chip.dataset.chip;
+      panelConfig.removed = panelConfig.removed.includes(n) ? panelConfig.removed.filter((x) => x !== n) : [...panelConfig.removed, n];
+      saveConfig(); renderAll();
+    }
+    if (e.target.closest('[data-act="cfg"]')) { showCfg = !showCfg; renderCfg(); }
+  });
+  wireCommon(shadow, renderAll);
+  core.subscribe(() => { renderBar(); renderTl(); });
+  bridge.onStatus(renderBar);
+  renderAll();
+}
+
+/* ───────────────────── 부팅: 개발 껍데기 → BridgeBoot(start) ───────────────────── */
+if (core) {
+  const hostEl = document.createElement('fake-host-panel');
+  document.body.appendChild(hostEl);
+  ({ A: mountA, B: mountB, C: mountC })[variant](hostEl.attachShadow({ mode: 'open' }));
+}
+renderWeb();
+bridge.start(); // BridgeBoot 자리. 가짜 Host는 이미 설치를 마쳤다.
+
+/* ───────────────────── 시안 바꾸기 막대 ───────────────────── */
+(function switcher() {
+  const keys = Object.keys(VARIANTS);
+  const go = (d) => {
+    const next = keys[(keys.indexOf(variant) + d + keys.length) % keys.length];
+    const p = new URLSearchParams(location.search); p.set('variant', next); p.delete('fakeHost');
+    location.search = p.toString(); // 시안마다 패널이 페이지를 다르게 차지해서 새로 불러온다
+  };
+  const el = document.getElementById('switcher');
+  el.innerHTML = `<button id="prev">←</button><span>${variant} (${VARIANTS[variant]})</span><button id="next">→</button>`;
+  el.querySelector('#prev').onclick = () => go(-1);
+  el.querySelector('#next').onclick = () => go(1);
+  addEventListener('keydown', (e) => {
+    if (e.target.closest?.('input, textarea, [contenteditable]') || e.composedPath().some((n) => ['INPUT', 'SELECT', 'TEXTAREA'].includes(n.tagName))) return;
+    if (e.key === 'ArrowLeft') go(-1);
+    if (e.key === 'ArrowRight') go(1);
+  });
+})();
+</script>
+</body>
+</html>
