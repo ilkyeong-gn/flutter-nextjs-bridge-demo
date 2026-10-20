@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<body style="margin:0;background:#ffe9b0;font:16px sans-serif">
+  <p id="label" style="margin:4px">iframe (:3001)</p>
+  <a id="next" style="display:block;margin:4px;padding:24px;background:#f90;color:#000">iframe 안 링크</a>
+  <script>
+    // 출처가 다른 iframe(:3001). ?n=번호로 몇 번째 문서인지 표시하고, 링크는 n+1로 간다.
+    // 부모가 postMessage('click')을 보내면 안의 링크를 JS로 누른다(사용자 활성화 없는 경로).
+    const n = Number(new URLSearchParams(location.search).get('n') || 1);
+    document.getElementById('label').textContent = 'iframe n=' + n + ' (:3001)';
+    const a = document.getElementById('next');
+    a.href = 'frame.html?n=' + (n + 1);
+    a.textContent = 'iframe 안 링크 → n=' + (n + 1);
+    function log(event, data) {
+      const body = JSON.stringify({ src: 'iframe', via: 'fetch', event, data, href: location.href, histLen: history.length, t: Date.now() });
+      fetch('http://' + location.hostname + ':8090/log', { method: 'POST', body, keepalive: true, headers: { 'content-type': 'text/plain' } }).catch(() => {});
+    }
+    log('iframe.load', { n });
+    addEventListener('message', (e) => { if (e.data === 'click') a.click(); });
+  </script>
+</body>

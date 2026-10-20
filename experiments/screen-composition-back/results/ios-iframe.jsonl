@@ -1,0 +1,325 @@
+{"src": "dart", "platform": "ios", "event": "app.launch", "data": null, "t": 1792454544684, "recvTs": 1792454544993}
+{"src": "dart", "platform": "ios", "event": "route.push", "data": "/", "t": 1792454544797, "recvTs": 1792454544995}
+{"src": "dart", "platform": "ios", "event": "webpage.init", "data": {"id": "root"}, "t": 1792454544833, "recvTs": 1792454544996}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454545179, "recvTs": 1792454545189}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3000/", "isMainFrame": true}, "t": 1792454545621, "recvTs": 1792454545638}
+{"src": "dart", "platform": "ios", "event": "page.started", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454545697, "recvTs": 1792454545698}
+{"src": "dart", "platform": "ios", "event": "page.finished", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454545796, "recvTs": 1792454545798}
+{"src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/"}, "t": 1792454545801, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454545811}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454545804, "src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/"}, "t": 1792454545801, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454545804, "recvTs": 1792454545811}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454545809, "src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454545801, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454545809, "recvTs": 1792454545813}
+{"src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454545801, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454545815}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454546804, "src": "js", "event": "tick", "t": 1792454546803, "vis": "visible", "path": "/", "histLen": 1, "tick": 1, "via": "channel"}, "t": 1792454546804, "recvTs": 1792454546807}
+{"src": "js", "event": "tick", "t": 1792454546803, "vis": "visible", "path": "/", "histLen": 1, "tick": 1, "via": "fetch", "recvTs": 1792454546812}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454547804, "src": "js", "event": "tick", "t": 1792454547803, "vis": "visible", "path": "/", "histLen": 1, "tick": 2, "via": "channel"}, "t": 1792454547804, "recvTs": 1792454547805}
+{"src": "js", "event": "tick", "t": 1792454547803, "vis": "visible", "path": "/", "histLen": 1, "tick": 2, "via": "fetch", "recvTs": 1792454547807}
+{"src": "js", "event": "tick", "t": 1792454550067, "vis": "visible", "path": "/", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454550072}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454550079, "src": "js", "event": "tick", "t": 1792454550067, "vis": "visible", "path": "/", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454550079, "recvTs": 1792454550081}
+{"src": "js", "event": "tick", "t": 1792454551080, "vis": "visible", "path": "/", "histLen": 1, "tick": 4, "via": "fetch", "recvTs": 1792454551083}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454551096, "src": "js", "event": "tick", "t": 1792454551080, "vis": "visible", "path": "/", "histLen": 1, "tick": 4, "via": "channel"}, "t": 1792454551096, "recvTs": 1792454551098}
+{"t": 1792454551503, "event": "driver.ready", "src": "xcuitest", "recvTs": 1792454551721}
+{"src": "drive", "event": "mark", "data": "case: iframe 안 링크 실제 탭", "t": 1792454551752, "recvTs": 1792454551754}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "reset", "path": "/iframe"}, "t": 1792454551859, "recvTs": 1792454551865}
+{"src": "dart", "platform": "ios", "event": "route.push", "data": "root", "t": 1792454551862, "recvTs": 1792454551865}
+{"src": "dart", "platform": "ios", "event": "webpage.init", "data": {"id": "root"}, "t": 1792454551875, "recvTs": 1792454551927}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454551935, "recvTs": 1792454551937}
+{"src": "js", "event": "tick", "t": 1792454552080, "vis": "visible", "path": "/", "histLen": 1, "tick": 5, "via": "fetch", "recvTs": 1792454552085}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454552083, "src": "js", "event": "tick", "t": 1792454552080, "vis": "visible", "path": "/", "histLen": 1, "tick": 5, "via": "channel"}, "t": 1792454552083, "recvTs": 1792454552085}
+{"src": "dart", "platform": "ios", "event": "webpage.dispose", "data": {"id": "root"}, "t": 1792454552195, "recvTs": 1792454552203}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454552202, "src": "js", "event": "visibilitychange", "t": 1792454552199, "vis": "hidden", "path": "/", "histLen": 1, "tick": 5, "via": "channel"}, "t": 1792454552202, "recvTs": 1792454552204}
+{"src": "js", "event": "visibilitychange", "t": 1792454552199, "vis": "hidden", "path": "/", "histLen": 1, "tick": 5, "via": "fetch", "recvTs": 1792454552206}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3000/iframe", "isMainFrame": true}, "t": 1792454552365, "recvTs": 1792454552368}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454553081, "src": "js", "event": "tick", "t": 1792454553080, "vis": "hidden", "path": "/", "histLen": 1, "tick": 6, "via": "channel"}, "t": 1792454553081, "recvTs": 1792454553082}
+{"src": "js", "event": "tick", "t": 1792454553080, "vis": "hidden", "path": "/", "histLen": 1, "tick": 6, "via": "fetch", "recvTs": 1792454553084}
+{"src": "dart", "platform": "ios", "event": "page.started", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454553650, "recvTs": 1792454553652}
+{"src": "dart", "platform": "ios", "event": "page.finished", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454553749, "recvTs": 1792454553750}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454553761, "src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454553761, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454553761, "recvTs": 1792454553764}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454553762, "src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454553761, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454553762, "recvTs": 1792454553764}
+{"src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454553761, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454553766}
+{"src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454553761, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454553767}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454553770, "recvTs": 1792454553772}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 1, "t": 1792454553839, "recvTs": 1792454553843}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454554188, "src": "js", "event": "tick", "t": 1792454554187, "vis": "hidden", "path": "/", "histLen": 1, "tick": 7, "via": "channel"}, "t": 1792454554188, "recvTs": 1792454554190}
+{"src": "js", "event": "tick", "t": 1792454554187, "vis": "hidden", "path": "/", "histLen": 1, "tick": 7, "via": "fetch", "recvTs": 1792454554192}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454554762, "src": "js", "event": "tick", "t": 1792454554762, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "channel"}, "t": 1792454554762, "recvTs": 1792454554764}
+{"src": "js", "event": "tick", "t": 1792454554762, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "fetch", "recvTs": 1792454554765}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454555764, "src": "js", "event": "tick", "t": 1792454555763, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "channel"}, "t": 1792454555764, "recvTs": 1792454555769}
+{"src": "js", "event": "tick", "t": 1792454555763, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "fetch", "recvTs": 1792454555775}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454556256, "src": "js", "event": "tick", "t": 1792454556254, "vis": "hidden", "path": "/", "histLen": 1, "tick": 8, "via": "channel"}, "t": 1792454556256, "recvTs": 1792454556260}
+{"src": "js", "event": "tick", "t": 1792454556254, "vis": "hidden", "path": "/", "histLen": 1, "tick": 8, "via": "fetch", "recvTs": 1792454556268}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454556766, "src": "js", "event": "tick", "t": 1792454556764, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454556766, "recvTs": 1792454556770}
+{"src": "js", "event": "tick", "t": 1792454556764, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454556779}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-1", "id": "root"}, "t": 1792454557042, "recvTs": 1792454557045}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-1"}, "t": 1792454557046, "recvTs": 1792454557048}
+{"src": "drive", "event": "state.label", "data": {"label": "iframe 안 링크 실제 탭 / 처음", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-1"}, "t": 1792454557176, "recvTs": 1792454557178}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "rect", "tag": "rect-2", "id": "root", "selector": "#frame", "inFrame": true}, "t": 1792454557355, "recvTs": 1792454557362}
+{"src": "dart", "platform": "ios", "event": "rect", "data": {"selector": "#frame", "x": 203.0, "y": 186.0, "px": 609, "py": 558, "tag": "rect-2"}, "t": 1792454557363, "recvTs": 1792454557370}
+{"src": "drive", "event": "mark", "data": "tap #frame (iframe 안)", "t": 1792454557387, "recvTs": 1792454557389}
+{"src": "js", "event": "focus", "t": 1792454557756, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454557764}
+{"src": "js", "event": "focus", "t": 1792454557756, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454557765}
+{"src": "js", "event": "tick", "t": 1792454557764, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 4, "via": "fetch", "recvTs": 1792454557768}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454557775, "src": "js", "event": "focus", "t": 1792454557756, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454557775, "recvTs": 1792454557778}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454557776, "src": "js", "event": "focus", "t": 1792454557756, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454557776, "recvTs": 1792454557779}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454557776, "src": "js", "event": "tick", "t": 1792454557764, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 4, "via": "channel"}, "t": 1792454557776, "recvTs": 1792454557779}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454557792, "src": "js", "event": "blur", "t": 1792454557792, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 4, "via": "channel"}, "t": 1792454557792, "recvTs": 1792454557794}
+{"src": "js", "event": "blur", "t": 1792454557792, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 4, "via": "fetch", "recvTs": 1792454557796}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=2", "isMainFrame": false}, "t": 1792454557804, "recvTs": 1792454557807}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": true}, "t": 1792454557829, "recvTs": 1792454557831}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 2}, "href": "http://localhost:3001/frame.html?n=2", "histLen": 2, "t": 1792454557830, "recvTs": 1792454557837}
+{"cmd": {"n": 3, "x": 203, "g": "tap", "y": 186}, "event": "driver.done", "src": "xcuitest", "t": 1792454557918, "recvTs": 1792454557920}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454558275, "src": "js", "event": "tick", "t": 1792454558274, "vis": "hidden", "path": "/", "histLen": 1, "tick": 9, "via": "channel"}, "t": 1792454558275, "recvTs": 1792454558279}
+{"src": "js", "event": "tick", "t": 1792454558274, "vis": "hidden", "path": "/", "histLen": 1, "tick": 9, "via": "fetch", "recvTs": 1792454558287}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454558767, "src": "js", "event": "tick", "t": 1792454558765, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "channel"}, "t": 1792454558767, "recvTs": 1792454558771}
+{"src": "js", "event": "tick", "t": 1792454558765, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "fetch", "recvTs": 1792454558775}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454559766, "src": "js", "event": "tick", "t": 1792454559766, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "channel"}, "t": 1792454559766, "recvTs": 1792454559768}
+{"src": "js", "event": "tick", "t": 1792454559766, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "fetch", "recvTs": 1792454559770}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454560274, "src": "js", "event": "tick", "t": 1792454560272, "vis": "hidden", "path": "/", "histLen": 1, "tick": 10, "via": "channel"}, "t": 1792454560274, "recvTs": 1792454560279}
+{"src": "js", "event": "tick", "t": 1792454560272, "vis": "hidden", "path": "/", "histLen": 1, "tick": 10, "via": "fetch", "recvTs": 1792454560287}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454560770, "src": "js", "event": "tick", "t": 1792454560768, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "channel"}, "t": 1792454560770, "recvTs": 1792454560775}
+{"src": "js", "event": "tick", "t": 1792454560768, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "fetch", "recvTs": 1792454560784}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-4", "id": "root"}, "t": 1792454561346, "recvTs": 1792454561350}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-4"}, "t": 1792454561350, "recvTs": 1792454561354}
+{"src": "drive", "event": "state.label", "data": {"label": "iframe 안 링크 실제 탭 / 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-4"}, "t": 1792454561529, "recvTs": 1792454561532}
+{"src": "drive", "event": "mark", "data": "goBack()", "t": 1792454561533, "recvTs": 1792454561534}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "goBack"}, "t": 1792454561663, "recvTs": 1792454561671}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": false}, "t": 1792454561708, "recvTs": 1792454561713}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454561712, "recvTs": 1792454561714}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 2, "t": 1792454561730, "recvTs": 1792454561735}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454561772, "src": "js", "event": "tick", "t": 1792454561771, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "channel"}, "t": 1792454561772, "recvTs": 1792454561774}
+{"src": "js", "event": "tick", "t": 1792454561771, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "fetch", "recvTs": 1792454561776}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454562255, "src": "js", "event": "tick", "t": 1792454562253, "vis": "hidden", "path": "/", "histLen": 1, "tick": 11, "via": "channel"}, "t": 1792454562255, "recvTs": 1792454562260}
+{"src": "js", "event": "tick", "t": 1792454562253, "vis": "hidden", "path": "/", "histLen": 1, "tick": 11, "via": "fetch", "recvTs": 1792454562268}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454562778, "src": "js", "event": "tick", "t": 1792454562776, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "channel"}, "t": 1792454562778, "recvTs": 1792454562784}
+{"src": "js", "event": "tick", "t": 1792454562776, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "fetch", "recvTs": 1792454562790}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454563782, "src": "js", "event": "tick", "t": 1792454563780, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "channel"}, "t": 1792454563782, "recvTs": 1792454563787}
+{"src": "js", "event": "tick", "t": 1792454563780, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "fetch", "recvTs": 1792454563796}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454564287, "src": "js", "event": "tick", "t": 1792454564285, "vis": "hidden", "path": "/", "histLen": 1, "tick": 12, "via": "channel"}, "t": 1792454564287, "recvTs": 1792454564292}
+{"src": "js", "event": "tick", "t": 1792454564285, "vis": "hidden", "path": "/", "histLen": 1, "tick": 12, "via": "fetch", "recvTs": 1792454564299}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-5", "id": "root"}, "t": 1792454564738, "recvTs": 1792454564742}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-5"}, "t": 1792454564742, "recvTs": 1792454564748}
+{"src": "drive", "event": "state.label", "data": {"label": "iframe 안 링크 실제 탭 / goBack() 뒤", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-5"}, "t": 1792454564750, "recvTs": 1792454564752}
+{"src": "drive", "event": "mark", "data": "case: 부모 단추 실제 탭으로 src 변경", "t": 1792454564753, "recvTs": 1792454564754}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454564785, "src": "js", "event": "tick", "t": 1792454564784, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "channel"}, "t": 1792454564785, "recvTs": 1792454564789}
+{"src": "js", "event": "tick", "t": 1792454564784, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "fetch", "recvTs": 1792454564793}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "reset", "path": "/iframe"}, "t": 1792454565060, "recvTs": 1792454565069}
+{"src": "dart", "platform": "ios", "event": "route.push", "data": "root", "t": 1792454565062, "recvTs": 1792454565070}
+{"src": "dart", "platform": "ios", "event": "webpage.init", "data": {"id": "root"}, "t": 1792454565076, "recvTs": 1792454565112}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454565115, "recvTs": 1792454565117}
+{"src": "dart", "platform": "ios", "event": "webpage.dispose", "data": {"id": "root"}, "t": 1792454565388, "recvTs": 1792454565405}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454565405, "src": "js", "event": "visibilitychange", "t": 1792454565399, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 11, "via": "channel"}, "t": 1792454565405, "recvTs": 1792454565406}
+{"src": "js", "event": "visibilitychange", "t": 1792454565399, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 11, "via": "fetch", "recvTs": 1792454565407}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3000/iframe", "isMainFrame": true}, "t": 1792454565553, "recvTs": 1792454565555}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454565789, "src": "js", "event": "tick", "t": 1792454565788, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 12, "via": "channel"}, "t": 1792454565789, "recvTs": 1792454565790}
+{"src": "js", "event": "tick", "t": 1792454565788, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 12, "via": "fetch", "recvTs": 1792454565792}
+{"src": "dart", "platform": "ios", "event": "page.started", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454566821, "recvTs": 1792454566823}
+{"src": "dart", "platform": "ios", "event": "page.finished", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454566867, "recvTs": 1792454566869}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454566873, "src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454566872, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454566873, "recvTs": 1792454566875}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454566874, "src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454566873, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454566874, "recvTs": 1792454566875}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454566876, "recvTs": 1792454566878}
+{"src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454566872, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454566878}
+{"src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454566873, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454566879}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 1, "t": 1792454566889, "recvTs": 1792454566895}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454567281, "src": "js", "event": "tick", "t": 1792454567281, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 13, "via": "channel"}, "t": 1792454567281, "recvTs": 1792454567283}
+{"src": "js", "event": "tick", "t": 1792454567281, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 13, "via": "fetch", "recvTs": 1792454567285}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454567875, "src": "js", "event": "tick", "t": 1792454567874, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "channel"}, "t": 1792454567875, "recvTs": 1792454567878}
+{"src": "js", "event": "tick", "t": 1792454567874, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "fetch", "recvTs": 1792454567880}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454568877, "src": "js", "event": "tick", "t": 1792454568875, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "channel"}, "t": 1792454568877, "recvTs": 1792454568882}
+{"src": "js", "event": "tick", "t": 1792454568875, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "fetch", "recvTs": 1792454568889}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454569374, "src": "js", "event": "tick", "t": 1792454569372, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 14, "via": "channel"}, "t": 1792454569374, "recvTs": 1792454569379}
+{"src": "js", "event": "tick", "t": 1792454569372, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 14, "via": "fetch", "recvTs": 1792454569387}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454569876, "src": "js", "event": "tick", "t": 1792454569876, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454569876, "recvTs": 1792454569878}
+{"src": "js", "event": "tick", "t": 1792454569876, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454569880}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-6", "id": "root"}, "t": 1792454569935, "recvTs": 1792454569936}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-6"}, "t": 1792454569935, "recvTs": 1792454569937}
+{"src": "drive", "event": "state.label", "data": {"label": "부모 단추 실제 탭으로 src 변경 / 처음", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-6"}, "t": 1792454569972, "recvTs": 1792454569974}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "rect", "tag": "rect-7", "id": "root", "selector": "#iframe-src", "inFrame": false}, "t": 1792454570242, "recvTs": 1792454570244}
+{"src": "dart", "platform": "ios", "event": "rect", "data": {"selector": "#iframe-src", "x": 201.0, "y": 319.0, "px": 603, "py": 957, "tag": "rect-7"}, "t": 1792454570244, "recvTs": 1792454570246}
+{"src": "drive", "event": "mark", "data": "tap #iframe-src", "t": 1792454570392, "recvTs": 1792454570394}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454570692, "src": "js", "event": "focus", "t": 1792454570692, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454570692, "recvTs": 1792454570695}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454570693, "src": "js", "event": "focus", "t": 1792454570692, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454570693, "recvTs": 1792454570697}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=101", "isMainFrame": false}, "t": 1792454570697, "recvTs": 1792454570699}
+{"src": "js", "event": "focus", "t": 1792454570692, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454570702}
+{"src": "js", "event": "focus", "t": 1792454570692, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454570703}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": true}, "t": 1792454570712, "recvTs": 1792454570714}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 101}, "href": "http://localhost:3001/frame.html?n=101", "histLen": 2, "t": 1792454570713, "recvTs": 1792454570716}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454570878, "src": "js", "event": "tick", "t": 1792454570877, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 4, "via": "channel"}, "t": 1792454570878, "recvTs": 1792454570881}
+{"src": "js", "event": "tick", "t": 1792454570877, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 4, "via": "fetch", "recvTs": 1792454570886}
+{"t": 1792454570891, "src": "xcuitest", "cmd": {"y": 319, "n": 8, "x": 201, "g": "tap"}, "event": "driver.done", "recvTs": 1792454570894}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454571382, "src": "js", "event": "tick", "t": 1792454571380, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 15, "via": "channel"}, "t": 1792454571382, "recvTs": 1792454571385}
+{"src": "js", "event": "tick", "t": 1792454571380, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 15, "via": "fetch", "recvTs": 1792454571392}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454571879, "src": "js", "event": "tick", "t": 1792454571878, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "channel"}, "t": 1792454571879, "recvTs": 1792454571883}
+{"src": "js", "event": "tick", "t": 1792454571878, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "fetch", "recvTs": 1792454571890}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454572880, "src": "js", "event": "tick", "t": 1792454572879, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "channel"}, "t": 1792454572880, "recvTs": 1792454572885}
+{"src": "js", "event": "tick", "t": 1792454572879, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "fetch", "recvTs": 1792454572890}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454573375, "src": "js", "event": "tick", "t": 1792454573373, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 16, "via": "channel"}, "t": 1792454573376, "recvTs": 1792454573381}
+{"src": "js", "event": "tick", "t": 1792454573373, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 16, "via": "fetch", "recvTs": 1792454573389}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454573883, "src": "js", "event": "tick", "t": 1792454573881, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "channel"}, "t": 1792454573883, "recvTs": 1792454573888}
+{"src": "js", "event": "tick", "t": 1792454573881, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "fetch", "recvTs": 1792454573896}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-9", "id": "root"}, "t": 1792454573912, "recvTs": 1792454573915}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-9"}, "t": 1792454573914, "recvTs": 1792454573916}
+{"src": "drive", "event": "state.label", "data": {"label": "부모 단추 실제 탭으로 src 변경 / 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-9"}, "t": 1792454574119, "recvTs": 1792454574121}
+{"src": "drive", "event": "mark", "data": "goBack()", "t": 1792454574122, "recvTs": 1792454574123}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "goBack"}, "t": 1792454574223, "recvTs": 1792454574229}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": false}, "t": 1792454574248, "recvTs": 1792454574255}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454574255, "recvTs": 1792454574262}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 2, "t": 1792454574283, "recvTs": 1792454574288}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454574887, "src": "js", "event": "tick", "t": 1792454574886, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "channel"}, "t": 1792454574887, "recvTs": 1792454574892}
+{"src": "js", "event": "tick", "t": 1792454574886, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "fetch", "recvTs": 1792454574897}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454575374, "src": "js", "event": "tick", "t": 1792454575371, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 17, "via": "channel"}, "t": 1792454575374, "recvTs": 1792454575379}
+{"src": "js", "event": "tick", "t": 1792454575371, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 17, "via": "fetch", "recvTs": 1792454575386}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454575891, "src": "js", "event": "tick", "t": 1792454575890, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "channel"}, "t": 1792454575891, "recvTs": 1792454575896}
+{"src": "js", "event": "tick", "t": 1792454575890, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "fetch", "recvTs": 1792454575906}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454576895, "src": "js", "event": "tick", "t": 1792454576893, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "channel"}, "t": 1792454576895, "recvTs": 1792454576900}
+{"src": "js", "event": "tick", "t": 1792454576893, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "fetch", "recvTs": 1792454576908}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-10", "id": "root"}, "t": 1792454577290, "recvTs": 1792454577294}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-10"}, "t": 1792454577294, "recvTs": 1792454577298}
+{"src": "drive", "event": "state.label", "data": {"label": "부모 단추 실제 탭으로 src 변경 / goBack() 뒤", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-10"}, "t": 1792454577339, "recvTs": 1792454577341}
+{"src": "drive", "event": "mark", "data": "case: iframe 안 링크 JS click", "t": 1792454577342, "recvTs": 1792454577344}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454577381, "src": "js", "event": "tick", "t": 1792454577379, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 18, "via": "channel"}, "t": 1792454577381, "recvTs": 1792454577384}
+{"src": "js", "event": "tick", "t": 1792454577379, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 18, "via": "fetch", "recvTs": 1792454577389}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "reset", "path": "/iframe"}, "t": 1792454577605, "recvTs": 1792454577613}
+{"src": "dart", "platform": "ios", "event": "route.push", "data": "root", "t": 1792454577608, "recvTs": 1792454577613}
+{"src": "dart", "platform": "ios", "event": "webpage.init", "data": {"id": "root"}, "t": 1792454577627, "recvTs": 1792454577661}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454577662, "recvTs": 1792454577668}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454577898, "src": "js", "event": "tick", "t": 1792454577897, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "channel"}, "t": 1792454577898, "recvTs": 1792454577900}
+{"src": "js", "event": "tick", "t": 1792454577897, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "fetch", "recvTs": 1792454577902}
+{"src": "dart", "platform": "ios", "event": "webpage.dispose", "data": {"id": "root"}, "t": 1792454577955, "recvTs": 1792454577962}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454577964, "src": "js", "event": "blur", "t": 1792454577959, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "channel"}, "t": 1792454577964, "recvTs": 1792454577969}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454577968, "src": "js", "event": "visibilitychange", "t": 1792454577961, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 11, "via": "channel"}, "t": 1792454577968, "recvTs": 1792454577969}
+{"src": "js", "event": "blur", "t": 1792454577959, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "fetch", "recvTs": 1792454577970}
+{"src": "js", "event": "visibilitychange", "t": 1792454577961, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 11, "via": "fetch", "recvTs": 1792454577971}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3000/iframe", "isMainFrame": true}, "t": 1792454578090, "recvTs": 1792454578091}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454578902, "src": "js", "event": "tick", "t": 1792454578901, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 12, "via": "channel"}, "t": 1792454578902, "recvTs": 1792454578904}
+{"src": "js", "event": "tick", "t": 1792454578901, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 12, "via": "fetch", "recvTs": 1792454578906}
+{"src": "dart", "platform": "ios", "event": "page.started", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454579364, "recvTs": 1792454579366}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454579377, "src": "js", "event": "tick", "t": 1792454579376, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 19, "via": "channel"}, "t": 1792454579377, "recvTs": 1792454579378}
+{"src": "js", "event": "tick", "t": 1792454579376, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 19, "via": "fetch", "recvTs": 1792454579380}
+{"src": "dart", "platform": "ios", "event": "page.finished", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454579406, "recvTs": 1792454579408}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454579411, "src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454579411, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454579411, "recvTs": 1792454579413}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454579412, "src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454579411, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454579412, "recvTs": 1792454579413}
+{"src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454579411, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454579416}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454579415, "recvTs": 1792454579417}
+{"src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454579411, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454579417}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 1, "t": 1792454579426, "recvTs": 1792454579429}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454580419, "src": "js", "event": "tick", "t": 1792454580418, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "channel"}, "t": 1792454580419, "recvTs": 1792454580421}
+{"src": "js", "event": "tick", "t": 1792454580418, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "fetch", "recvTs": 1792454580424}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454580755, "src": "js", "event": "tick", "t": 1792454580754, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 13, "via": "channel"}, "t": 1792454580755, "recvTs": 1792454580757}
+{"src": "js", "event": "tick", "t": 1792454580754, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 13, "via": "fetch", "recvTs": 1792454580760}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454581382, "src": "js", "event": "tick", "t": 1792454581380, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 20, "via": "channel"}, "t": 1792454581382, "recvTs": 1792454581387}
+{"src": "js", "event": "tick", "t": 1792454581380, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 20, "via": "fetch", "recvTs": 1792454581399}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454581421, "src": "js", "event": "tick", "t": 1792454581419, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "channel"}, "t": 1792454581421, "recvTs": 1792454581425}
+{"src": "js", "event": "tick", "t": 1792454581419, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "fetch", "recvTs": 1792454581431}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454582422, "src": "js", "event": "tick", "t": 1792454582420, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454582422, "recvTs": 1792454582427}
+{"src": "js", "event": "tick", "t": 1792454582420, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454582433}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-11", "id": "root"}, "t": 1792454582479, "recvTs": 1792454582483}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-11"}, "t": 1792454582483, "recvTs": 1792454582487}
+{"src": "drive", "event": "state.label", "data": {"label": "iframe 안 링크 JS click / 처음", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-11"}, "t": 1792454582563, "recvTs": 1792454582565}
+{"src": "drive", "event": "mark", "data": "js click #iframe-click", "t": 1792454582566, "recvTs": 1792454582568}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454582755, "src": "js", "event": "tick", "t": 1792454582753, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 14, "via": "channel"}, "t": 1792454582755, "recvTs": 1792454582760}
+{"src": "js", "event": "tick", "t": 1792454582753, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 14, "via": "fetch", "recvTs": 1792454582767}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "js", "id": "root", "code": "document.querySelector('#iframe-click').click()"}, "t": 1792454582794, "recvTs": 1792454582798}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=2", "isMainFrame": false}, "t": 1792454582809, "recvTs": 1792454582812}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": true}, "t": 1792454582837, "recvTs": 1792454582839}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 2}, "href": "http://localhost:3001/frame.html?n=2", "histLen": 2, "t": 1792454582837, "recvTs": 1792454582843}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454583374, "src": "js", "event": "tick", "t": 1792454583371, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 21, "via": "channel"}, "t": 1792454583374, "recvTs": 1792454583379}
+{"src": "js", "event": "tick", "t": 1792454583371, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 21, "via": "fetch", "recvTs": 1792454583385}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454583423, "src": "js", "event": "tick", "t": 1792454583421, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 4, "via": "channel"}, "t": 1792454583423, "recvTs": 1792454583426}
+{"src": "js", "event": "tick", "t": 1792454583421, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 4, "via": "fetch", "recvTs": 1792454583433}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454584424, "src": "js", "event": "tick", "t": 1792454584422, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "channel"}, "t": 1792454584424, "recvTs": 1792454584429}
+{"src": "js", "event": "tick", "t": 1792454584422, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "fetch", "recvTs": 1792454584439}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454584758, "src": "js", "event": "tick", "t": 1792454584756, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 15, "via": "channel"}, "t": 1792454584758, "recvTs": 1792454584763}
+{"src": "js", "event": "tick", "t": 1792454584756, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 15, "via": "fetch", "recvTs": 1792454584772}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454585378, "src": "js", "event": "tick", "t": 1792454585376, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 22, "via": "channel"}, "t": 1792454585378, "recvTs": 1792454585383}
+{"src": "js", "event": "tick", "t": 1792454585376, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 22, "via": "fetch", "recvTs": 1792454585391}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454585425, "src": "js", "event": "tick", "t": 1792454585423, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "channel"}, "t": 1792454585425, "recvTs": 1792454585430}
+{"src": "js", "event": "tick", "t": 1792454585423, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "fetch", "recvTs": 1792454585436}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-12", "id": "root"}, "t": 1792454585875, "recvTs": 1792454585878}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-12"}, "t": 1792454585878, "recvTs": 1792454585882}
+{"src": "drive", "event": "state.label", "data": {"label": "iframe 안 링크 JS click / 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-12"}, "t": 1792454585998, "recvTs": 1792454586000}
+{"src": "drive", "event": "mark", "data": "goBack()", "t": 1792454586001, "recvTs": 1792454586003}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "goBack"}, "t": 1792454586190, "recvTs": 1792454586194}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": false}, "t": 1792454586209, "recvTs": 1792454586215}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454586214, "recvTs": 1792454586218}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 2, "t": 1792454586242, "recvTs": 1792454586246}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454586429, "src": "js", "event": "tick", "t": 1792454586427, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "channel"}, "t": 1792454586430, "recvTs": 1792454586434}
+{"src": "js", "event": "tick", "t": 1792454586427, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "fetch", "recvTs": 1792454586443}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454586754, "src": "js", "event": "tick", "t": 1792454586752, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 16, "via": "channel"}, "t": 1792454586754, "recvTs": 1792454586757}
+{"src": "js", "event": "tick", "t": 1792454586752, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 16, "via": "fetch", "recvTs": 1792454586762}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454587373, "src": "js", "event": "tick", "t": 1792454587371, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 23, "via": "channel"}, "t": 1792454587373, "recvTs": 1792454587380}
+{"src": "js", "event": "tick", "t": 1792454587371, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 23, "via": "fetch", "recvTs": 1792454587388}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454587433, "src": "js", "event": "tick", "t": 1792454587431, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "channel"}, "t": 1792454587433, "recvTs": 1792454587437}
+{"src": "js", "event": "tick", "t": 1792454587431, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "fetch", "recvTs": 1792454587446}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454588437, "src": "js", "event": "tick", "t": 1792454588435, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "channel"}, "t": 1792454588437, "recvTs": 1792454588440}
+{"src": "js", "event": "tick", "t": 1792454588435, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "fetch", "recvTs": 1792454588444}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454588754, "src": "js", "event": "tick", "t": 1792454588753, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 17, "via": "channel"}, "t": 1792454588754, "recvTs": 1792454588756}
+{"src": "js", "event": "tick", "t": 1792454588753, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 17, "via": "fetch", "recvTs": 1792454588760}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-13", "id": "root"}, "t": 1792454589254, "recvTs": 1792454589258}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-13"}, "t": 1792454589257, "recvTs": 1792454589260}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454589378, "src": "js", "event": "tick", "t": 1792454589376, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 24, "via": "channel"}, "t": 1792454589378, "recvTs": 1792454589383}
+{"src": "js", "event": "tick", "t": 1792454589376, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 24, "via": "fetch", "recvTs": 1792454589391}
+{"src": "drive", "event": "state.label", "data": {"label": "iframe 안 링크 JS click / goBack() 뒤", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-13"}, "t": 1792454589439, "recvTs": 1792454589441}
+{"src": "drive", "event": "mark", "data": "case: 부모 JS로 src 변경(사용자 활성화 없음)", "t": 1792454589443, "recvTs": 1792454589446}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454589441, "src": "js", "event": "tick", "t": 1792454589439, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "channel"}, "t": 1792454589441, "recvTs": 1792454589446}
+{"src": "js", "event": "tick", "t": 1792454589439, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "fetch", "recvTs": 1792454589458}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "reset", "path": "/iframe"}, "t": 1792454589568, "recvTs": 1792454589574}
+{"src": "dart", "platform": "ios", "event": "route.push", "data": "root", "t": 1792454589569, "recvTs": 1792454589575}
+{"src": "dart", "platform": "ios", "event": "webpage.init", "data": {"id": "root"}, "t": 1792454589593, "recvTs": 1792454589625}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454589626, "recvTs": 1792454589631}
+{"src": "dart", "platform": "ios", "event": "webpage.dispose", "data": {"id": "root"}, "t": 1792454589905, "recvTs": 1792454589912}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454589912, "src": "js", "event": "visibilitychange", "t": 1792454589908, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 10, "via": "channel"}, "t": 1792454589912, "recvTs": 1792454589913}
+{"src": "js", "event": "visibilitychange", "t": 1792454589908, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 10, "via": "fetch", "recvTs": 1792454589914}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3000/iframe", "isMainFrame": true}, "t": 1792454590049, "recvTs": 1792454590050}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454590444, "src": "js", "event": "tick", "t": 1792454590443, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 11, "via": "channel"}, "t": 1792454590444, "recvTs": 1792454590445}
+{"src": "js", "event": "tick", "t": 1792454590443, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 11, "via": "fetch", "recvTs": 1792454590447}
+{"src": "dart", "platform": "ios", "event": "page.started", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454591290, "recvTs": 1792454591292}
+{"src": "dart", "platform": "ios", "event": "page.finished", "data": {"id": "root", "url": "http://localhost:3000/iframe"}, "t": 1792454591332, "recvTs": 1792454591333}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454591338, "src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454591337, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454591338, "recvTs": 1792454591339}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454591337, "src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454591337, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454591337, "recvTs": 1792454591339}
+{"src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/iframe"}, "t": 1792454591337, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454591342}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454591341, "recvTs": 1792454591342}
+{"src": "js", "event": "route", "data": {"pathname": "/iframe"}, "t": 1792454591337, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454591343}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 1, "t": 1792454591356, "recvTs": 1792454591361}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454592161, "src": "js", "event": "tick", "t": 1792454592160, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 12, "via": "channel"}, "t": 1792454592161, "recvTs": 1792454592164}
+{"src": "js", "event": "tick", "t": 1792454592160, "vis": "hidden", "path": "/iframe", "histLen": 2, "tick": 12, "via": "fetch", "recvTs": 1792454592167}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454592367, "src": "js", "event": "tick", "t": 1792454592366, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "channel"}, "t": 1792454592367, "recvTs": 1792454592368}
+{"src": "js", "event": "tick", "t": 1792454592366, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 1, "via": "fetch", "recvTs": 1792454592370}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454593369, "src": "js", "event": "tick", "t": 1792454593367, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "channel"}, "t": 1792454593369, "recvTs": 1792454593374}
+{"src": "js", "event": "tick", "t": 1792454593367, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 2, "via": "fetch", "recvTs": 1792454593384}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454594370, "src": "js", "event": "tick", "t": 1792454594368, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454594370, "recvTs": 1792454594375}
+{"src": "js", "event": "tick", "t": 1792454594368, "vis": "visible", "path": "/iframe", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454594384}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-14", "id": "root"}, "t": 1792454594751, "recvTs": 1792454594755}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-14"}, "t": 1792454594755, "recvTs": 1792454594759}
+{"src": "drive", "event": "state.label", "data": {"label": "부모 JS로 src 변경(사용자 활성화 없음) / 처음", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-14"}, "t": 1792454594883, "recvTs": 1792454594885}
+{"src": "drive", "event": "mark", "data": "js click #iframe-src", "t": 1792454594886, "recvTs": 1792454594888}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "js", "id": "root", "code": "document.querySelector('#iframe-src').click()"}, "t": 1792454595067, "recvTs": 1792454595071}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=101", "isMainFrame": false}, "t": 1792454595077, "recvTs": 1792454595082}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": true}, "t": 1792454595102, "recvTs": 1792454595104}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 101}, "href": "http://localhost:3001/frame.html?n=101", "histLen": 2, "t": 1792454595102, "recvTs": 1792454595108}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454595371, "src": "js", "event": "tick", "t": 1792454595369, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 4, "via": "channel"}, "t": 1792454595371, "recvTs": 1792454595375}
+{"src": "js", "event": "tick", "t": 1792454595369, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 4, "via": "fetch", "recvTs": 1792454595381}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454596372, "src": "js", "event": "tick", "t": 1792454596370, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "channel"}, "t": 1792454596372, "recvTs": 1792454596377}
+{"src": "js", "event": "tick", "t": 1792454596370, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 5, "via": "fetch", "recvTs": 1792454596384}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454597373, "src": "js", "event": "tick", "t": 1792454597371, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "channel"}, "t": 1792454597373, "recvTs": 1792454597379}
+{"src": "js", "event": "tick", "t": 1792454597371, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 6, "via": "fetch", "recvTs": 1792454597385}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-15", "id": "root"}, "t": 1792454598133, "recvTs": 1792454598139}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-15"}, "t": 1792454598136, "recvTs": 1792454598140}
+{"src": "drive", "event": "state.label", "data": {"label": "부모 JS로 src 변경(사용자 활성화 없음) / 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/iframe", "tag": "state-15"}, "t": 1792454598321, "recvTs": 1792454598323}
+{"src": "drive", "event": "mark", "data": "goBack()", "t": 1792454598324, "recvTs": 1792454598326}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454598375, "src": "js", "event": "tick", "t": 1792454598373, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "channel"}, "t": 1792454598375, "recvTs": 1792454598380}
+{"src": "js", "event": "tick", "t": 1792454598373, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 7, "via": "fetch", "recvTs": 1792454598387}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "goBack"}, "t": 1792454598448, "recvTs": 1792454598454}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": false}, "t": 1792454598474, "recvTs": 1792454598479}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3001/frame.html?n=1", "isMainFrame": false}, "t": 1792454598479, "recvTs": 1792454598481}
+{"src": "iframe", "via": "fetch", "event": "iframe.load", "data": {"n": 1}, "href": "http://localhost:3001/frame.html?n=1", "histLen": 2, "t": 1792454598501, "recvTs": 1792454598506}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454599379, "src": "js", "event": "tick", "t": 1792454599377, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "channel"}, "t": 1792454599379, "recvTs": 1792454599382}
+{"src": "js", "event": "tick", "t": 1792454599377, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 8, "via": "fetch", "recvTs": 1792454599390}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454600381, "src": "js", "event": "tick", "t": 1792454600381, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "channel"}, "t": 1792454600381, "recvTs": 1792454600384}
+{"src": "js", "event": "tick", "t": 1792454600381, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 9, "via": "fetch", "recvTs": 1792454600386}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454601386, "src": "js", "event": "tick", "t": 1792454601385, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "channel"}, "t": 1792454601386, "recvTs": 1792454601390}
+{"src": "js", "event": "tick", "t": 1792454601385, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 10, "via": "fetch", "recvTs": 1792454601399}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-16", "id": "root"}, "t": 1792454601508, "recvTs": 1792454601512}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-16"}, "t": 1792454601512, "recvTs": 1792454601516}
+{"src": "drive", "event": "state.label", "data": {"label": "부모 JS로 src 변경(사용자 활성화 없음) / goBack() 뒤", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/iframe", "tag": "state-16"}, "t": 1792454601546, "recvTs": 1792454601548}
+{"src": "xcuitest", "t": 1792454601607, "event": "driver.quit", "recvTs": 1792454601614}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454602391, "src": "js", "event": "tick", "t": 1792454602389, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "channel"}, "t": 1792454602391, "recvTs": 1792454602394}
+{"src": "js", "event": "tick", "t": 1792454602389, "vis": "visible", "path": "/iframe", "histLen": 2, "tick": 11, "via": "fetch", "recvTs": 1792454602399}

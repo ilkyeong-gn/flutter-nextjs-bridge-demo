@@ -1,0 +1,184 @@
+{"src": "dart", "platform": "ios", "event": "app.launch", "data": null, "t": 1792454399831, "recvTs": 1792454400163}
+{"src": "dart", "platform": "ios", "event": "route.push", "data": "/", "t": 1792454399964, "recvTs": 1792454400166}
+{"src": "dart", "platform": "ios", "event": "webpage.init", "data": {"id": "root"}, "t": 1792454400001, "recvTs": 1792454400166}
+{"src": "dart", "platform": "ios", "event": "app.lifecycle", "data": "resumed", "t": 1792454400166, "recvTs": 1792454400686}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454400689, "recvTs": 1792454400937}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3000/", "isMainFrame": true}, "t": 1792454401485, "recvTs": 1792454401488}
+{"src": "dart", "platform": "ios", "event": "page.started", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454401642, "recvTs": 1792454401644}
+{"src": "dart", "platform": "ios", "event": "page.finished", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454402004, "recvTs": 1792454402006}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454402026, "src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/"}, "t": 1792454402019, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454402026, "recvTs": 1792454402027}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454402030, "src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454402030, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454402030, "recvTs": 1792454402032}
+{"src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/"}, "t": 1792454402019, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454402035}
+{"src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454402030, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454402037}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454403031, "src": "js", "event": "tick", "t": 1792454403031, "vis": "visible", "path": "/", "histLen": 1, "tick": 1, "via": "channel"}, "t": 1792454403031, "recvTs": 1792454403033}
+{"src": "js", "event": "tick", "t": 1792454403031, "vis": "visible", "path": "/", "histLen": 1, "tick": 1, "via": "fetch", "recvTs": 1792454403044}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454404032, "src": "js", "event": "tick", "t": 1792454404031, "vis": "visible", "path": "/", "histLen": 1, "tick": 2, "via": "channel"}, "t": 1792454404032, "recvTs": 1792454404034}
+{"src": "js", "event": "tick", "t": 1792454404031, "vis": "visible", "path": "/", "histLen": 1, "tick": 2, "via": "fetch", "recvTs": 1792454404038}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454405033, "src": "js", "event": "tick", "t": 1792454405032, "vis": "visible", "path": "/", "histLen": 1, "tick": 3, "via": "channel"}, "t": 1792454405033, "recvTs": 1792454405035}
+{"src": "js", "event": "tick", "t": 1792454405032, "vis": "visible", "path": "/", "histLen": 1, "tick": 3, "via": "fetch", "recvTs": 1792454405036}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454406033, "src": "js", "event": "tick", "t": 1792454406033, "vis": "visible", "path": "/", "histLen": 1, "tick": 4, "via": "channel"}, "t": 1792454406033, "recvTs": 1792454406035}
+{"src": "js", "event": "tick", "t": 1792454406033, "vis": "visible", "path": "/", "histLen": 1, "tick": 4, "via": "fetch", "recvTs": 1792454406037}
+{"src": "js", "event": "tick", "t": 1792454407843, "vis": "visible", "path": "/", "histLen": 1, "tick": 5, "via": "fetch", "recvTs": 1792454407855}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454407859, "src": "js", "event": "tick", "t": 1792454407843, "vis": "visible", "path": "/", "histLen": 1, "tick": 5, "via": "channel"}, "t": 1792454407859, "recvTs": 1792454407861}
+{"src": "js", "event": "tick", "t": 1792454408843, "vis": "visible", "path": "/", "histLen": 1, "tick": 6, "via": "fetch", "recvTs": 1792454408851}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454408876, "src": "js", "event": "tick", "t": 1792454408843, "vis": "visible", "path": "/", "histLen": 1, "tick": 6, "via": "channel"}, "t": 1792454408876, "recvTs": 1792454408878}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454409848, "src": "js", "event": "tick", "t": 1792454409848, "vis": "visible", "path": "/", "histLen": 1, "tick": 7, "via": "channel"}, "t": 1792454409848, "recvTs": 1792454409850}
+{"src": "js", "event": "tick", "t": 1792454409848, "vis": "visible", "path": "/", "histLen": 1, "tick": 7, "via": "fetch", "recvTs": 1792454409854}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454410852, "src": "js", "event": "tick", "t": 1792454410851, "vis": "visible", "path": "/", "histLen": 1, "tick": 8, "via": "channel"}, "t": 1792454410852, "recvTs": 1792454410855}
+{"src": "js", "event": "tick", "t": 1792454410851, "vis": "visible", "path": "/", "histLen": 1, "tick": 8, "via": "fetch", "recvTs": 1792454410863}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454411865, "src": "js", "event": "tick", "t": 1792454411858, "vis": "visible", "path": "/", "histLen": 1, "tick": 9, "via": "channel"}, "t": 1792454411865, "recvTs": 1792454411867}
+{"src": "js", "event": "tick", "t": 1792454411858, "vis": "visible", "path": "/", "histLen": 1, "tick": 9, "via": "fetch", "recvTs": 1792454411876}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454412860, "src": "js", "event": "tick", "t": 1792454412859, "vis": "visible", "path": "/", "histLen": 1, "tick": 10, "via": "channel"}, "t": 1792454412860, "recvTs": 1792454412862}
+{"src": "js", "event": "tick", "t": 1792454412859, "vis": "visible", "path": "/", "histLen": 1, "tick": 10, "via": "fetch", "recvTs": 1792454412863}
+{"t": 1792454413436, "src": "xcuitest", "event": "driver.ready", "recvTs": 1792454413481}
+{"src": "js", "event": "tick", "t": 1792454413864, "vis": "visible", "path": "/", "histLen": 1, "tick": 11, "via": "fetch", "recvTs": 1792454413879}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454413901, "src": "js", "event": "tick", "t": 1792454413864, "vis": "visible", "path": "/", "histLen": 1, "tick": 11, "via": "channel"}, "t": 1792454413901, "recvTs": 1792454413903}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454414869, "src": "js", "event": "tick", "t": 1792454414868, "vis": "visible", "path": "/", "histLen": 1, "tick": 12, "via": "channel"}, "t": 1792454414869, "recvTs": 1792454414872}
+{"src": "js", "event": "tick", "t": 1792454414868, "vis": "visible", "path": "/", "histLen": 1, "tick": 12, "via": "fetch", "recvTs": 1792454414874}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454415872, "src": "js", "event": "tick", "t": 1792454415871, "vis": "visible", "path": "/", "histLen": 1, "tick": 13, "via": "channel"}, "t": 1792454415872, "recvTs": 1792454415874}
+{"src": "js", "event": "tick", "t": 1792454415871, "vis": "visible", "path": "/", "histLen": 1, "tick": 13, "via": "fetch", "recvTs": 1792454415876}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454416876, "src": "js", "event": "tick", "t": 1792454416876, "vis": "visible", "path": "/", "histLen": 1, "tick": 14, "via": "channel"}, "t": 1792454416876, "recvTs": 1792454416879}
+{"src": "js", "event": "tick", "t": 1792454416876, "vis": "visible", "path": "/", "histLen": 1, "tick": 14, "via": "fetch", "recvTs": 1792454416881}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454417882, "src": "js", "event": "tick", "t": 1792454417879, "vis": "visible", "path": "/", "histLen": 1, "tick": 15, "via": "channel"}, "t": 1792454417882, "recvTs": 1792454417887}
+{"src": "js", "event": "tick", "t": 1792454417879, "vis": "visible", "path": "/", "histLen": 1, "tick": 15, "via": "fetch", "recvTs": 1792454417895}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-1", "id": "root"}, "t": 1792454417907, "recvTs": 1792454417917}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-1"}, "t": 1792454417916, "recvTs": 1792454417920}
+{"src": "drive", "event": "state.label", "data": {"label": "처음", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-1"}, "t": 1792454418033, "recvTs": 1792454418034}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "rect", "tag": "rect-2", "id": "root", "selector": "#to-a", "inFrame": false}, "t": 1792454418229, "recvTs": 1792454418244}
+{"src": "dart", "platform": "ios", "event": "rect", "data": {"selector": "#to-a", "x": 219.0, "y": 192.0, "px": 657, "py": 576, "tag": "rect-2"}, "t": 1792454418269, "recvTs": 1792454418274}
+{"src": "drive", "event": "mark", "data": "tap #to-a", "t": 1792454418456, "recvTs": 1792454418458}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454418883, "src": "js", "event": "tick", "t": 1792454418883, "vis": "visible", "path": "/", "histLen": 1, "tick": 16, "via": "channel"}, "t": 1792454418883, "recvTs": 1792454418886}
+{"src": "js", "event": "tick", "t": 1792454418883, "vis": "visible", "path": "/", "histLen": 1, "tick": 16, "via": "fetch", "recvTs": 1792454418891}
+{"src": "js", "event": "focus", "t": 1792454419301, "vis": "visible", "path": "/", "histLen": 1, "tick": 16, "via": "fetch", "recvTs": 1792454419308}
+{"src": "js", "event": "focus", "t": 1792454419301, "vis": "visible", "path": "/", "histLen": 1, "tick": 16, "via": "fetch", "recvTs": 1792454419309}
+{"src": "js", "event": "route", "data": {"pathname": "/a"}, "t": 1792454419368, "vis": "visible", "path": "/a", "histLen": 2, "tick": 16, "via": "fetch", "recvTs": 1792454419404}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454419393, "src": "js", "event": "focus", "t": 1792454419301, "vis": "visible", "path": "/", "histLen": 1, "tick": 16, "via": "channel"}, "t": 1792454419393, "recvTs": 1792454419405}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454419394, "src": "js", "event": "focus", "t": 1792454419301, "vis": "visible", "path": "/", "histLen": 1, "tick": 16, "via": "channel"}, "t": 1792454419394, "recvTs": 1792454419405}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": true}, "t": 1792454419398, "recvTs": 1792454419406}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454419402, "src": "js", "event": "route", "data": {"pathname": "/a"}, "t": 1792454419368, "vis": "visible", "path": "/a", "histLen": 2, "tick": 16, "via": "channel"}, "t": 1792454419402, "recvTs": 1792454419406}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/a"}, "t": 1792454419404, "recvTs": 1792454419407}
+{"src": "xcuitest", "t": 1792454419404, "event": "driver.done", "cmd": {"g": "tap", "x": 219, "n": 3, "y": 192}, "recvTs": 1792454419407}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454419889, "src": "js", "event": "tick", "t": 1792454419887, "vis": "visible", "path": "/a", "histLen": 2, "tick": 17, "via": "channel"}, "t": 1792454419889, "recvTs": 1792454419892}
+{"src": "js", "event": "tick", "t": 1792454419887, "vis": "visible", "path": "/a", "histLen": 2, "tick": 17, "via": "fetch", "recvTs": 1792454419896}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454420892, "src": "js", "event": "tick", "t": 1792454420891, "vis": "visible", "path": "/a", "histLen": 2, "tick": 18, "via": "channel"}, "t": 1792454420892, "recvTs": 1792454420897}
+{"src": "js", "event": "tick", "t": 1792454420891, "vis": "visible", "path": "/a", "histLen": 2, "tick": 18, "via": "fetch", "recvTs": 1792454420903}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-4", "id": "root"}, "t": 1792454421865, "recvTs": 1792454421870}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/a", "tag": "state-4"}, "t": 1792454421869, "recvTs": 1792454421876}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454421897, "src": "js", "event": "tick", "t": 1792454421895, "vis": "visible", "path": "/a", "histLen": 2, "tick": 19, "via": "channel"}, "t": 1792454421897, "recvTs": 1792454421901}
+{"src": "js", "event": "tick", "t": 1792454421895, "vis": "visible", "path": "/a", "histLen": 2, "tick": 19, "via": "fetch", "recvTs": 1792454421906}
+{"src": "drive", "event": "state.label", "data": {"label": "<Link> 탭 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/a", "tag": "state-4"}, "t": 1792454422012, "recvTs": 1792454422013}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "rect", "tag": "rect-5", "id": "root", "selector": "#push-b", "inFrame": false}, "t": 1792454422185, "recvTs": 1792454422191}
+{"src": "dart", "platform": "ios", "event": "rect", "data": {"selector": "#push-b", "x": 201.0, "y": 256.0, "px": 603, "py": 768, "tag": "rect-5"}, "t": 1792454422191, "recvTs": 1792454422196}
+{"src": "drive", "event": "mark", "data": "tap #push-b", "t": 1792454422224, "recvTs": 1792454422225}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/b"}, "t": 1792454422588, "recvTs": 1792454422590}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454422590, "src": "js", "event": "route", "data": {"pathname": "/b"}, "t": 1792454422589, "vis": "visible", "path": "/b", "histLen": 3, "tick": 19, "via": "channel"}, "t": 1792454422590, "recvTs": 1792454422593}
+{"src": "js", "event": "route", "data": {"pathname": "/b"}, "t": 1792454422589, "vis": "visible", "path": "/b", "histLen": 3, "tick": 19, "via": "fetch", "recvTs": 1792454422596}
+{"event": "driver.done", "t": 1792454422743, "cmd": {"n": 6, "y": 256, "g": "tap", "x": 201}, "src": "xcuitest", "recvTs": 1792454422747}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454422901, "src": "js", "event": "tick", "t": 1792454422899, "vis": "visible", "path": "/b", "histLen": 3, "tick": 20, "via": "channel"}, "t": 1792454422901, "recvTs": 1792454422905}
+{"src": "js", "event": "tick", "t": 1792454422899, "vis": "visible", "path": "/b", "histLen": 3, "tick": 20, "via": "fetch", "recvTs": 1792454422918}
+{"src": "js", "event": "tick", "t": 1792454423903, "vis": "visible", "path": "/b", "histLen": 3, "tick": 21, "via": "fetch", "recvTs": 1792454423920}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454423906, "src": "js", "event": "tick", "t": 1792454423903, "vis": "visible", "path": "/b", "histLen": 3, "tick": 21, "via": "channel"}, "t": 1792454423906, "recvTs": 1792454423921}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454424909, "src": "js", "event": "tick", "t": 1792454424907, "vis": "visible", "path": "/b", "histLen": 3, "tick": 22, "via": "channel"}, "t": 1792454424909, "recvTs": 1792454424914}
+{"src": "js", "event": "tick", "t": 1792454424907, "vis": "visible", "path": "/b", "histLen": 3, "tick": 22, "via": "fetch", "recvTs": 1792454424921}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-7", "id": "root"}, "t": 1792454424959, "recvTs": 1792454424963}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/b", "tag": "state-7"}, "t": 1792454424963, "recvTs": 1792454424965}
+{"src": "drive", "event": "state.label", "data": {"label": "router.push 탭 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/b", "tag": "state-7"}, "t": 1792454425162, "recvTs": 1792454425164}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "rect", "tag": "rect-8", "id": "root", "selector": "#back", "inFrame": false}, "t": 1792454425270, "recvTs": 1792454425272}
+{"src": "dart", "platform": "ios", "event": "rect", "data": {"selector": "#back", "x": 201.0, "y": 320.0, "px": 603, "py": 960, "tag": "rect-8"}, "t": 1792454425271, "recvTs": 1792454425273}
+{"src": "drive", "event": "mark", "data": "tap #back", "t": 1792454425379, "recvTs": 1792454425381}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454425682, "src": "js", "event": "popstate", "data": {"href": "http://localhost:3000/a"}, "t": 1792454425681, "vis": "visible", "path": "/a", "histLen": 3, "tick": 22, "via": "channel"}, "t": 1792454425682, "recvTs": 1792454425683}
+{"src": "js", "event": "popstate", "data": {"href": "http://localhost:3000/a"}, "t": 1792454425681, "vis": "visible", "path": "/a", "histLen": 3, "tick": 22, "via": "fetch", "recvTs": 1792454425687}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454425702, "src": "js", "event": "route", "data": {"pathname": "/a"}, "t": 1792454425701, "vis": "visible", "path": "/a", "histLen": 3, "tick": 22, "via": "channel"}, "t": 1792454425702, "recvTs": 1792454425704}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/a"}, "t": 1792454425703, "recvTs": 1792454425705}
+{"src": "js", "event": "route", "data": {"pathname": "/a"}, "t": 1792454425701, "vis": "visible", "path": "/a", "histLen": 3, "tick": 22, "via": "fetch", "recvTs": 1792454425708}
+{"event": "driver.done", "t": 1792454425863, "cmd": {"g": "tap", "x": 201, "n": 9, "y": 320}, "src": "xcuitest", "recvTs": 1792454425865}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454425912, "src": "js", "event": "tick", "t": 1792454425911, "vis": "visible", "path": "/a", "histLen": 3, "tick": 23, "via": "channel"}, "t": 1792454425912, "recvTs": 1792454425913}
+{"src": "js", "event": "tick", "t": 1792454425911, "vis": "visible", "path": "/a", "histLen": 3, "tick": 23, "via": "fetch", "recvTs": 1792454425915}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454426917, "src": "js", "event": "tick", "t": 1792454426915, "vis": "visible", "path": "/a", "histLen": 3, "tick": 24, "via": "channel"}, "t": 1792454426917, "recvTs": 1792454426921}
+{"src": "js", "event": "tick", "t": 1792454426915, "vis": "visible", "path": "/a", "histLen": 3, "tick": 24, "via": "fetch", "recvTs": 1792454426926}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454427922, "src": "js", "event": "tick", "t": 1792454427919, "vis": "visible", "path": "/a", "histLen": 3, "tick": 25, "via": "channel"}, "t": 1792454427922, "recvTs": 1792454427927}
+{"src": "js", "event": "tick", "t": 1792454427919, "vis": "visible", "path": "/a", "histLen": 3, "tick": 25, "via": "fetch", "recvTs": 1792454427937}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-10", "id": "root"}, "t": 1792454428022, "recvTs": 1792454428026}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/a", "tag": "state-10"}, "t": 1792454428026, "recvTs": 1792454428030}
+{"src": "drive", "event": "state.label", "data": {"label": "router.back 탭 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/a", "tag": "state-10"}, "t": 1792454428113, "recvTs": 1792454428115}
+{"src": "drive", "event": "mark", "data": "goBack()", "t": 1792454428116, "recvTs": 1792454428118}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "goBack"}, "t": 1792454428338, "recvTs": 1792454428346}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": false}, "t": 1792454428365, "recvTs": 1792454428375}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454428369, "recvTs": 1792454428376}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454428371, "src": "js", "event": "popstate", "data": {"href": "http://localhost:3000/"}, "t": 1792454428366, "vis": "visible", "path": "/", "histLen": 3, "tick": 25, "via": "channel"}, "t": 1792454428371, "recvTs": 1792454428379}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454428380, "src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454428372, "vis": "visible", "path": "/", "histLen": 3, "tick": 25, "via": "channel"}, "t": 1792454428380, "recvTs": 1792454428383}
+{"src": "js", "event": "popstate", "data": {"href": "http://localhost:3000/"}, "t": 1792454428366, "vis": "visible", "path": "/", "histLen": 3, "tick": 25, "via": "fetch", "recvTs": 1792454428387}
+{"src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454428372, "vis": "visible", "path": "/", "histLen": 3, "tick": 25, "via": "fetch", "recvTs": 1792454428389}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454428926, "src": "js", "event": "tick", "t": 1792454428924, "vis": "visible", "path": "/", "histLen": 3, "tick": 26, "via": "channel"}, "t": 1792454428926, "recvTs": 1792454428931}
+{"src": "js", "event": "tick", "t": 1792454428924, "vis": "visible", "path": "/", "histLen": 3, "tick": 26, "via": "fetch", "recvTs": 1792454428940}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454429930, "src": "js", "event": "tick", "t": 1792454429927, "vis": "visible", "path": "/", "histLen": 3, "tick": 27, "via": "channel"}, "t": 1792454429930, "recvTs": 1792454429935}
+{"src": "js", "event": "tick", "t": 1792454429927, "vis": "visible", "path": "/", "histLen": 3, "tick": 27, "via": "fetch", "recvTs": 1792454429946}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-11", "id": "root"}, "t": 1792454430183, "recvTs": 1792454430188}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-11"}, "t": 1792454430187, "recvTs": 1792454430191}
+{"src": "drive", "event": "state.label", "data": {"label": "goBack() 뒤", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-11"}, "t": 1792454430336, "recvTs": 1792454430338}
+{"src": "drive", "event": "mark", "data": "reset (사용자 활성화 없는 경우)", "t": 1792454430339, "recvTs": 1792454430340}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "reset", "path": "/"}, "t": 1792454430498, "recvTs": 1792454430527}
+{"src": "dart", "platform": "ios", "event": "route.push", "data": "root", "t": 1792454430519, "recvTs": 1792454430528}
+{"src": "dart", "platform": "ios", "event": "webpage.init", "data": {"id": "root"}, "t": 1792454430552, "recvTs": 1792454430744}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454430746, "recvTs": 1792454430748}
+{"src": "dart", "platform": "ios", "event": "webpage.dispose", "data": {"id": "root"}, "t": 1792454430892, "recvTs": 1792454430909}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454430906, "src": "js", "event": "blur", "t": 1792454430901, "vis": "visible", "path": "/", "histLen": 3, "tick": 27, "via": "channel"}, "t": 1792454430906, "recvTs": 1792454430912}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454430907, "src": "js", "event": "visibilitychange", "t": 1792454430904, "vis": "hidden", "path": "/", "histLen": 3, "tick": 27, "via": "channel"}, "t": 1792454430907, "recvTs": 1792454430912}
+{"src": "js", "event": "blur", "t": 1792454430901, "vis": "visible", "path": "/", "histLen": 3, "tick": 27, "via": "fetch", "recvTs": 1792454430918}
+{"src": "js", "event": "visibilitychange", "t": 1792454430904, "vis": "hidden", "path": "/", "histLen": 3, "tick": 27, "via": "fetch", "recvTs": 1792454430919}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454430931, "src": "js", "event": "tick", "t": 1792454430930, "vis": "hidden", "path": "/", "histLen": 3, "tick": 28, "via": "channel"}, "t": 1792454430931, "recvTs": 1792454430932}
+{"src": "js", "event": "tick", "t": 1792454430930, "vis": "hidden", "path": "/", "histLen": 3, "tick": 28, "via": "fetch", "recvTs": 1792454430934}
+{"src": "dart", "platform": "ios", "event": "nav.request", "data": {"id": "root", "url": "http://localhost:3000/", "isMainFrame": true}, "t": 1792454431268, "recvTs": 1792454431270}
+{"src": "dart", "platform": "ios", "event": "page.started", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454432605, "recvTs": 1792454432607}
+{"src": "dart", "platform": "ios", "event": "page.finished", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454433082, "recvTs": 1792454433084}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454433089, "src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/"}, "t": 1792454433088, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454433089, "recvTs": 1792454433091}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454433089, "src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454433089, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "channel"}, "t": 1792454433089, "recvTs": 1792454433091}
+{"src": "js", "event": "probe.start", "data": {"href": "http://localhost:3000/"}, "t": 1792454433088, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454433093}
+{"src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454433089, "vis": "visible", "path": "/", "histLen": 1, "tick": 0, "via": "fetch", "recvTs": 1792454433094}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454434117, "src": "js", "event": "tick", "t": 1792454434116, "vis": "visible", "path": "/", "histLen": 1, "tick": 1, "via": "channel"}, "t": 1792454434117, "recvTs": 1792454434119}
+{"src": "js", "event": "tick", "t": 1792454434116, "vis": "visible", "path": "/", "histLen": 1, "tick": 1, "via": "fetch", "recvTs": 1792454434121}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-12", "id": "root"}, "t": 1792454434517, "recvTs": 1792454434521}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-12"}, "t": 1792454434521, "recvTs": 1792454434524}
+{"src": "drive", "event": "state.label", "data": {"label": "reset 뒤", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-12"}, "t": 1792454434562, "recvTs": 1792454434564}
+{"src": "drive", "event": "mark", "data": "js click #to-a", "t": 1792454434565, "recvTs": 1792454434566}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "js", "id": "root", "code": "document.querySelector('#to-a').click()"}, "t": 1792454434828, "recvTs": 1792454434830}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": true}, "t": 1792454434851, "recvTs": 1792454434854}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454434852, "src": "js", "event": "route", "data": {"pathname": "/a"}, "t": 1792454434841, "vis": "visible", "path": "/a", "histLen": 2, "tick": 1, "via": "channel"}, "t": 1792454434852, "recvTs": 1792454434856}
+{"src": "js", "event": "route", "data": {"pathname": "/a"}, "t": 1792454434841, "vis": "visible", "path": "/a", "histLen": 2, "tick": 1, "via": "fetch", "recvTs": 1792454434856}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/a"}, "t": 1792454434853, "recvTs": 1792454434856}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454435119, "src": "js", "event": "tick", "t": 1792454435117, "vis": "visible", "path": "/a", "histLen": 2, "tick": 2, "via": "channel"}, "t": 1792454435119, "recvTs": 1792454435124}
+{"src": "js", "event": "tick", "t": 1792454435117, "vis": "visible", "path": "/a", "histLen": 2, "tick": 2, "via": "fetch", "recvTs": 1792454435132}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454436119, "src": "js", "event": "tick", "t": 1792454436118, "vis": "visible", "path": "/a", "histLen": 2, "tick": 3, "via": "channel"}, "t": 1792454436119, "recvTs": 1792454436122}
+{"src": "js", "event": "tick", "t": 1792454436118, "vis": "visible", "path": "/a", "histLen": 2, "tick": 3, "via": "fetch", "recvTs": 1792454436124}
+{"src": "drive", "event": "mark", "data": "js click #push-b", "t": 1792454436574, "recvTs": 1792454436575}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "js", "id": "root", "code": "document.querySelector('#push-b').click()"}, "t": 1792454436664, "recvTs": 1792454436666}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454436690, "src": "js", "event": "route", "data": {"pathname": "/b"}, "t": 1792454436679, "vis": "visible", "path": "/b", "histLen": 3, "tick": 3, "via": "channel"}, "t": 1792454436690, "recvTs": 1792454436692}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/b"}, "t": 1792454436691, "recvTs": 1792454436692}
+{"src": "js", "event": "route", "data": {"pathname": "/b"}, "t": 1792454436679, "vis": "visible", "path": "/b", "histLen": 3, "tick": 3, "via": "fetch", "recvTs": 1792454436694}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454437121, "src": "js", "event": "tick", "t": 1792454437119, "vis": "visible", "path": "/b", "histLen": 3, "tick": 4, "via": "channel"}, "t": 1792454437121, "recvTs": 1792454437126}
+{"src": "js", "event": "tick", "t": 1792454437119, "vis": "visible", "path": "/b", "histLen": 3, "tick": 4, "via": "fetch", "recvTs": 1792454437133}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454438123, "src": "js", "event": "tick", "t": 1792454438121, "vis": "visible", "path": "/b", "histLen": 3, "tick": 5, "via": "channel"}, "t": 1792454438123, "recvTs": 1792454438127}
+{"src": "js", "event": "tick", "t": 1792454438121, "vis": "visible", "path": "/b", "histLen": 3, "tick": 5, "via": "fetch", "recvTs": 1792454438133}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-13", "id": "root"}, "t": 1792454438809, "recvTs": 1792454438813}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/b", "tag": "state-13"}, "t": 1792454438813, "recvTs": 1792454438817}
+{"src": "drive", "event": "state.label", "data": {"label": "JS로 두 번 누른 뒤", "id": "root", "canGoBack": true, "currentUrl": "http://localhost:3000/b", "tag": "state-13"}, "t": 1792454439004, "recvTs": 1792454439006}
+{"src": "drive", "event": "mark", "data": "goBack()", "t": 1792454439007, "recvTs": 1792454439009}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454439124, "src": "js", "event": "tick", "t": 1792454439122, "vis": "visible", "path": "/b", "histLen": 3, "tick": 6, "via": "channel"}, "t": 1792454439124, "recvTs": 1792454439128}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "goBack"}, "t": 1792454439129, "recvTs": 1792454439135}
+{"src": "js", "event": "tick", "t": 1792454439122, "vis": "visible", "path": "/b", "histLen": 3, "tick": 6, "via": "fetch", "recvTs": 1792454439142}
+{"src": "dart", "platform": "ios", "event": "url.change", "data": {"id": "root", "url": "http://localhost:3000/"}, "t": 1792454439135, "recvTs": 1792454439162}
+{"src": "dart", "platform": "ios", "event": "ios.canGoBackChange", "data": {"id": "root", "canGoBack": false}, "t": 1792454439158, "recvTs": 1792454439168}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454439163, "src": "js", "event": "popstate", "data": {"href": "http://localhost:3000/"}, "t": 1792454439159, "vis": "visible", "path": "/", "histLen": 3, "tick": 6, "via": "channel"}, "t": 1792454439163, "recvTs": 1792454439170}
+{"src": "js", "event": "popstate", "data": {"href": "http://localhost:3000/"}, "t": 1792454439159, "vis": "visible", "path": "/", "histLen": 3, "tick": 6, "via": "fetch", "recvTs": 1792454439171}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454439168, "src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454439164, "vis": "visible", "path": "/", "histLen": 3, "tick": 6, "via": "channel"}, "t": 1792454439168, "recvTs": 1792454439171}
+{"src": "js", "event": "route", "data": {"pathname": "/"}, "t": 1792454439164, "vis": "visible", "path": "/", "histLen": 3, "tick": 6, "via": "fetch", "recvTs": 1792454439173}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454440128, "src": "js", "event": "tick", "t": 1792454440126, "vis": "visible", "path": "/", "histLen": 3, "tick": 7, "via": "channel"}, "t": 1792454440128, "recvTs": 1792454440133}
+{"src": "js", "event": "tick", "t": 1792454440126, "vis": "visible", "path": "/", "histLen": 3, "tick": 7, "via": "fetch", "recvTs": 1792454440140}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454441131, "src": "js", "event": "tick", "t": 1792454441129, "vis": "visible", "path": "/", "histLen": 3, "tick": 8, "via": "channel"}, "t": 1792454441132, "recvTs": 1792454441136}
+{"src": "js", "event": "tick", "t": 1792454441129, "vis": "visible", "path": "/", "histLen": 3, "tick": 8, "via": "fetch", "recvTs": 1792454441145}
+{"src": "dart", "platform": "ios", "event": "cmd", "data": {"cmd": "state", "tag": "state-14", "id": "root"}, "t": 1792454441279, "recvTs": 1792454441284}
+{"src": "dart", "platform": "ios", "event": "state", "data": {"id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-14"}, "t": 1792454441284, "recvTs": 1792454441288}
+{"src": "drive", "event": "state.label", "data": {"label": "goBack() 뒤", "id": "root", "canGoBack": false, "currentUrl": "http://localhost:3000/", "tag": "state-14"}, "t": 1792454441445, "recvTs": 1792454441447}
+{"src": "xcuitest", "event": "driver.quit", "t": 1792454441608, "recvTs": 1792454441613}
+{"src": "dart", "platform": "ios", "event": "js.channel", "data": {"id": "root", "recvT": 1792454442135, "src": "js", "event": "tick", "t": 1792454442134, "vis": "visible", "path": "/", "histLen": 3, "tick": 9, "via": "channel"}, "t": 1792454442135, "recvTs": 1792454442138}
+{"src": "js", "event": "tick", "t": 1792454442134, "vis": "visible", "path": "/", "histLen": 3, "tick": 9, "via": "fetch", "recvTs": 1792454442140}
