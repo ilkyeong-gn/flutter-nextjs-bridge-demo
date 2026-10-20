@@ -104,6 +104,10 @@ _Avoid_: 요청, RPC, invoke
 Web이 문서를 불러올 때마다 가장 먼저 보내는 Call. Web이 준비됐음을 알리고, Host가 지원하는 계약 버전과 기능 목록을 받는다.
 _Avoid_: 초기화, init, ready
 
+**Bridge Unavailable (Bridge 없음)**:
+Web이 핸드셰이크를 마치지 못했거나 Host의 계약 major를 지원하지 않아서, 이 문서에서는 Host와 대화하지 않기로 한 상태. 문서를 다시 불러올 때까지 바뀌지 않는다.
+_Avoid_: 오프라인, 연결 끊김, 브라우저 모드
+
 **Bridge Contract (Bridge 계약)**:
 Bridge로 오가는 Call·Message·Event의 이름과 모양, 그리고 그 버전(major.minor)의 정의. 한 원천에만 적는다.
 _Avoid_: 프로토콜, 스펙, 인터페이스, 스키마
